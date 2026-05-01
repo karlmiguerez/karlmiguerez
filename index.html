@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karlmiguerez — Senior UI/UX Design Developer</title>
+  <meta name="description" content="Designer & Creative based in the Philippines." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="#" class="nav-logo">karlmiguerez<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#about" class="mobile-link">About</a></li>
+      <li><a href="#work" class="mobile-link">Work</a></li>
+      <li><a href="#contact" class="mobile-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-tag">Available for work</div>
+    <h1 class="hero-headline">
+      Crafting interfaces<br />
+      <em>people remember.</em>
+    </h1>
+    <p class="hero-sub">
+      Designer & Creative based in Manila, Philippines —<br />
+      specializing in UI/UX, brand identity, and digital experiences.
+    </p>
+    <div class="hero-cta">
+      <a href="#work" class="btn-primary">View Work</a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-line"></span>
+      <span class="scroll-label">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section" id="about">
+    <div class="section-label">01 — About</div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2 class="section-heading">Design is <em>clarity</em> in motion.</h2>
+        <p>
+          I'm a designer who believes great work lives at the intersection of form and function.
+          I create digital products that are intuitive, thoughtful, and grounded in real human needs.
+        </p>
+        <p>
+          With a background in visual design and a curiosity for the web,
+          I bring ideas to life from concept to final pixel — clean, purposeful, and built to last.
+        </p>
+        <div class="skills-row">
+          <div class="skill-chip">UI / UX Design</div>
+          <div class="skill-chip">Brand Identity</div>
+          <div class="skill-chip">Web Design</div>
+          <div class="skill-chip">Figma</div>
+          <div class="skill-chip">HTML / CSS</div>
+          <div class="skill-chip">Motion</div>
+        </div>
+      </div>
+      <div class="about-image">
+        <!-- Replace with your photo: <img src="your-photo.jpg" alt="Your Name" /> -->
+        <div class="photo-placeholder">
+          <span>Your Photo</span>
+        </div>
+        <div class="about-stat-block">
+          <div class="stat">
+            <span class="stat-num">3+</span>
+            <span class="stat-label">Years of experience</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">20+</span>
+            <span class="stat-label">Projects delivered</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="work section" id="work">
+    <div class="section-label">02 — Work</div>
+    <h2 class="section-heading">Selected Projects</h2>
+
+    <div class="projects-grid">
+
+      <!-- Project 1 -->
+      <article class="project-card" data-index="01">
+        <div class="project-img">
+          <!-- Replace with: <img src="project1.jpg" alt="Project Name" /> -->
+          <div class="img-placeholder"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-meta">
+            <span class="project-type">Brand Identity</span>
+            <span class="project-year">2024</span>
+          </div>
+          <h3 class="project-title">Project One</h3>
+          <p class="project-desc">A brief description of what this project is about and the impact it created.</p>
+          <a href="#" class="project-link" target="_blank" rel="noopener">
+            View Project <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 2 -->
+      <article class="project-card" data-index="02">
+        <div class="project-img">
+          <div class="img-placeholder"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-meta">
+            <span class="project-type">UI / UX Design</span>
+            <span class="project-year">2024</span>
+          </div>
+          <h3 class="project-title">Project Two</h3>
+          <p class="project-desc">A brief description of what this project is about and the impact it created.</p>
+          <a href="#" class="project-link" target="_blank" rel="noopener">
+            View Project <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Project 3 -->
+      <article class="project-card" data-index="03">
+        <div class="project-img">
+          <div class="img-placeholder"></div>
+        </div>
+        <div class="project-info">
+          <div class="project-meta">
+            <span class="project-type">Web Design</span>
+            <span class="project-year">2023</span>
+          </div>
+          <h3 class="project-title">Project Three</h3>
+          <p class="project-desc">A brief description of what this project is about and the impact it created.</p>
+          <a href="#" class="project-link" target="_blank" rel="noopener">
+            View Project <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section" id="contact">
+    <div class="section-label">03 — Contact</div>
+    <div class="contact-inner">
+      <h2 class="contact-heading">Let's make something<br /><em>great together.</em></h2>
+      <p class="contact-sub">
+        Open to freelance, collaborations, and full-time opportunities.
+      </p>
+      <a href="mailto:hello@yourname.com" class="contact-email">
+        hello@yourname.com
+      </a>
+      <div class="social-row">
+        <a href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="divider">·</span>
+        <a href="https://dribbble.com/yourhandle" target="_blank" rel="noopener">Dribbble</a>
+        <span class="divider">·</span>
+        <a href="https://github.com/yourhandle" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© <span id="year"></span> Your Name. Built with care.</span>
+    <a href="#home" class="back-top">Back to top ↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

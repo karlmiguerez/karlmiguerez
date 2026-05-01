@@ -13,8 +13,8 @@ A clean, minimal designer portfolio built with plain HTML, CSS, and JavaScript.
 
 ```bash
 # Clone the repo
-git clone https://github.com/yourusername/portfolio.git
-cd portfolio
+git clone https://github.com/karlmiguerez/karlmiguerez.git
+cd karlmiguerez
 
 # Open locally — no build step needed
 open index.html
