@@ -2,6 +2,45 @@
    PORTFOLIO — script.js
    ============================================ */
 
+// ---------- Headline cycling animation ----------
+const headlineCopies = [
+  'people remember.',
+  'that just work.',
+  'with intention.',
+];
+
+const animEl = document.querySelector('.headline-animate');
+
+// Wrap in overflow-hidden container for clean clip
+const wrapper = document.createElement('span');
+wrapper.className = 'headline-animate-wrapper';
+animEl.parentNode.insertBefore(wrapper, animEl);
+wrapper.appendChild(animEl);
+
+let currentIndex = 0;
+
+function cycleHeadline() {
+  const nextIndex = (currentIndex + 1) % headlineCopies.length;
+
+  // Slide current out
+  animEl.classList.add('slide-out');
+
+  setTimeout(() => {
+    animEl.classList.remove('slide-out');
+    animEl.textContent = headlineCopies[nextIndex];
+    animEl.classList.add('slide-in');
+
+    setTimeout(() => {
+      animEl.classList.remove('slide-in');
+    }, 450);
+
+    currentIndex = nextIndex;
+  }, 450);
+}
+
+setInterval(cycleHeadline, 3000);
+
+
 // ---------- Year in footer ----------
 document.getElementById('year').textContent = new Date().getFullYear();
 
