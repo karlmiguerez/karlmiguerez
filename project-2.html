@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Two — Karlmiguerez</title>
+  <meta name="description" content="Project Two — UI/UX Design by Karlmiguerez." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav scrolled" id="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/images/logo.png" alt="Karlmiguerez" class="nav-logo-img" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
+      <span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="index.html#about" class="mobile-link">About</a></li>
+      <li><a href="index.html#work" class="mobile-link">Work</a></li>
+      <li><a href="index.html#contact" class="mobile-link">Contact</a></li>
+    </ul>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="bc-sep">→</span>
+      <a href="index.html#work">Work</a>
+      <span class="bc-sep">→</span>
+      <span class="bc-current">Project Two</span>
+    </nav>
+  </div>
+
+  <!-- PROJECT HERO -->
+  <section class="project-hero">
+    <div class="project-hero-inner">
+      <div class="project-hero-meta">
+        <span class="project-type">UI / UX Design</span>
+        <span class="bc-sep">·</span>
+        <span class="project-year">2024</span>
+      </div>
+      <h1 class="project-hero-title">Project Two</h1>
+      <p class="project-hero-brief">
+        A short punchy summary of the project — what it is, who it's for, and what makes it worth looking at. Keep this to 2–3 sentences max.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROJECT COVER IMAGE -->
+  <div class="project-cover">
+    <div class="project-cover-placeholder">
+      <!-- Replace with: <img src="assets/images/project-2-cover.jpg" alt="Project Two" /> -->
+      Cover Image
+    </div>
+  </div>
+
+  <!-- PROJECT CONTENT -->
+  <article class="project-content section-inner">
+
+    <div class="project-details-grid">
+      <div class="project-overview">
+        <h2 class="project-section-title">Overview</h2>
+        <p>Write a fuller description of the project here — the context, the problem being solved, and the approach you took.</p>
+        <p>Keep it conversational and focused. What was the challenge? What decisions did you make and why? What was the outcome?</p>
+      </div>
+      <aside class="project-meta-aside">
+        <div class="meta-block">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">UI/UX Designer</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Tools</span>
+          <span class="meta-value">Figma, Prototyping</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Year</span>
+          <span class="meta-value">2024</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Type</span>
+          <span class="meta-value">UI / UX Design</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="project-img-block">
+      <div class="project-img-placeholder tall">Image / Mockup 01</div>
+    </div>
+
+    <div class="project-body">
+      <h2 class="project-section-title">Process</h2>
+      <p>Describe your process here — research, ideation, design decisions, iterations.</p>
+    </div>
+
+    <div class="project-img-grid">
+      <div class="project-img-placeholder">Image / Mockup 02</div>
+      <div class="project-img-placeholder">Image / Mockup 03</div>
+    </div>
+
+    <div class="project-body">
+      <h2 class="project-section-title">Outcome</h2>
+      <p>Summarize the result — what shipped, what impact it had, any metrics or feedback worth mentioning.</p>
+    </div>
+
+    <div class="project-img-block">
+      <div class="project-img-placeholder">Image / Mockup 04</div>
+    </div>
+
+  </article>
+
+  <!-- PREV / NEXT -->
+  <nav class="project-nav">
+    <div class="project-nav-inner">
+      <a href="project-1.html" class="project-nav-prev">
+        <span class="pn-label">← Previous</span>
+        <span class="pn-title">Project One</span>
+        <span class="pn-type">Brand Identity</span>
+      </a>
+      <a href="project-3.html" class="project-nav-next">
+        <span class="pn-label">Next →</span>
+        <span class="pn-title">Project Three</span>
+        <span class="pn-type">Web Design</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© <span id="year"></span> Karlmiguerez. Built with care.</span>
+    <a href="#" class="back-top">Back to top ↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
