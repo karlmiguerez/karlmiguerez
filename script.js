@@ -40,6 +40,28 @@ function cycleHeadline() {
 
 setInterval(cycleHeadline, 3000);
 
+// ---------- ASCII portrait glitch trigger ----------
+const asciiWrap = document.getElementById('asciiWrap');
+
+if (asciiWrap) {
+  const GLITCH_DURATION = 520;       // ms — matches animation length
+  const MIN_INTERVAL   = 4000;       // ms — min gap between glitches
+  const MAX_INTERVAL   = 9000;       // ms — max gap between glitches
+
+  function triggerGlitch() {
+    asciiWrap.classList.add('is-glitching');
+    setTimeout(() => {
+      asciiWrap.classList.remove('is-glitching');
+    }, GLITCH_DURATION);
+
+    // Schedule next glitch at a random interval
+    const next = MIN_INTERVAL + Math.random() * (MAX_INTERVAL - MIN_INTERVAL);
+    setTimeout(triggerGlitch, next + GLITCH_DURATION);
+  }
+
+  // First glitch fires after a short delay on load
+  setTimeout(triggerGlitch, 2000);
+}
 
 // ---------- Year in footer ----------
 document.getElementById('year').textContent = new Date().getFullYear();
