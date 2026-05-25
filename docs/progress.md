@@ -113,6 +113,7 @@ portfolio/
 - Added mobile responsiveness for Workflow steps: implemented a 1-column stack layout on mobile devices (`max-width: 480px`) where the step number and icon flex horizontally.
 - Added Project 1 cover images: updated `assets/images/project-1-cover.jpg` as the home page card thumbnail preview and `assets/images/project-1-inner-page-cover.jpg` on `project-1.html`.
 - Commented out `mix-blend-mode: multiply` on the ASCII art thumbnail for better layout compatibility.
+- Implemented desktop-specific hover transitions (`min-width: 769px`) for project cards: thumbnails display in grayscale (`filter: grayscale(100%)`) and fade into full color upon card hover.
 
 ---
 
