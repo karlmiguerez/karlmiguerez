@@ -2,7 +2,7 @@
 
 > **Status:** 🟢 Live  
 > **URL:** https://karlmiguerez.vercel.app  
-> **Last Updated:** May 2025 — Session 3
+> **Last Updated:** May 2026 — Session 4
 
 ---
 
@@ -19,9 +19,12 @@
 ```
 portfolio/
 ├── index.html              — main page
-├── project-1.html          — Brand Identity inner page
-├── project-2.html          — UI/UX Design inner page
-├── project-3.html          — Web Design inner page
+├── project-1.html          — W Labs Brand & Website Revamp (Brand Identity / UI/UX)
+├── project-2.html          — SnapLive 2.0 (UI/UX / Web to Mobile)
+├── project-3.html          — TMC (UI/UX / Web to Mobile)
+├── project-4.html          — AltInvest (UI/UX / Mobile App)
+├── project-5.html          — Cirrus White Label Sales & CRM (UI/UX / Web to Mobile)
+├── project-6.html          — WIZ Assistant (Brand Identity / Motion Graphics)
 ├── style.css               — all styles (shared across all pages)
 ├── script.js               — scroll reveal, nav, mobile menu, animations
 ├── README.md               — setup & customization guide
@@ -46,8 +49,8 @@ portfolio/
 ## Sections
 
 1. **Hero** — animated cycling headline (3 copies, slide-up, every 3s), subtitle, CTA buttons, available-for-work tag
-2. **About** — real bio copy, 8 skill chips, ASCII portrait with scanline + glitch animation, stat block (13+ yrs / 6 projects)
-3. **Work** — 3 project cards linking to individual inner pages
+2. **About** — real bio copy, 7 skill chips, ASCII portrait with scanline + glitch animation, stat block (8+ yrs / 6+ projects)
+3. **Work** — 6 project cards linking to individual inner pages
 4. **Contact** — `karlmiguerez@gmail.com` + LinkedIn (`/in/karlomiguelperez`) + GitHub (`/karlmiguerez`)
 5. **Footer** — © Karlmiguerez
 
@@ -91,6 +94,15 @@ portfolio/
 - Updated project cards on `index.html` to link to their respective inner pages
 - Nav on inner pages is always in `scrolled` state (no transparent flicker)
 
+### Session 4 — May 2026
+- Overhauled home page (`index.html`) about section with real bio copy, updated stats (8+ years of experience, 6+ projects), and customized skill chips (adding "AI-Assisted Development" and expanding others).
+- Integrated 3 additional projects (making 6 total): "AltInvest", "Cirrus White Label Sales & CRM", and "WIZ Assistant".
+- Created and customized 3 new inner project pages: `project-4.html`, `project-5.html`, and `project-6.html` with appropriate metadata, headings, and breadcrumbs.
+- Linked all 6 project cards on `index.html` to their respective inner pages.
+- Restructured the Prev/Next navigation loop on all 6 project pages to cycle properly from Project 1 through Project 6 (with Project 1 prev pointing to Project 6, and Project 6 next pointing to Project 1).
+- Refined layout and margins in `style.css` by commenting out the `max-width: 760px` restriction on `.project-hero-inner` to allow proper breathing room for wide project headings.
+- Added custom CSS status variables (`--success`, `--danger`, `--warning`, `--info`) to `:root` block for future expansion.
+
 ---
 
 ## Still To Do
@@ -98,8 +110,9 @@ portfolio/
 - [x] Replace photo placeholder with ASCII portrait + glitch animation
 - [x] Update bio copy in About section
 - [x] Confirm social handles (LinkedIn: `/in/karlomiguelperez`, GitHub: `/karlmiguerez`)
-- [x] Add inner project pages with breadcrumbs and prev/next nav
-- [ ] Fill in real project content (title, brief, overview, role/tools, images) for all 3 pages
+- [x] Add all 6 inner project pages with breadcrumbs and prev/next loop nav
+- [x] Fill in real project metadata, titles, and descriptions on home page and inner page heroes
+- [ ] Fill in real body content (overview, process, outcome) and images/mockups for all 6 inner pages
 - [ ] Add cover images to project cards on `index.html` (`assets/images/project-1-cover.jpg` etc.)
 - [ ] Audit `style.css` and `script.js` for any remaining flat asset paths (pre-`assets/images/` refactor)
 - [ ] Explore dark mode toggle
