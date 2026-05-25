@@ -437,13 +437,14 @@ ul {
   height: 100%;
   object-fit: cover;
   display: block;
+  mix-blend-mode: multiply;
 }
 
 /* Glitch layer — sits on top, hidden until triggered */
 .ascii-glitch-layer {
   opacity: 0;
   pointer-events: none;
-  mix-blend-mode: screen;
+  /* mix-blend-mode: screen; */
 }
 
 /* Scanline overlay via ::after */
@@ -687,14 +688,44 @@ ul {
 }
 
 .workflow-step {
-  display: grid;
+  /* display: grid;
   grid-template-columns: 120px 1fr;
   gap: 3rem;
   align-items: start;
   padding: 2.75rem 1rem;
   border-bottom: 1px solid var(--border);
   transition: background var(--transition);
+  position: relative; */
+
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 0 3rem;
+  align-items: start;
+  padding: 2.75rem 1rem;
+  border-bottom: 1px solid var(--border);
   position: relative;
+}
+
+/* Left column — number stacked above icon */
+.step-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-top: 0.15rem;
+}
+
+/* Icon */
+.step-icon {
+  width: 80px;
+  height: 80px;
+  opacity: 0.65;
+  transition: opacity var(--transition);
+  display: block;
+}
+
+.workflow-step:hover .step-icon {
+  opacity: 1;
 }
 
 .workflow-step::before {
@@ -754,7 +785,7 @@ ul {
   max-width: 64ch;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .workflow-header {
     grid-template-columns: 1fr;
@@ -762,7 +793,7 @@ ul {
     margin-bottom: 3rem;
   }
 
-  .workflow-step {
+  /* .workflow-step {
     grid-template-columns: 48px 1fr;
     gap: 1.5rem;
     padding: 2rem 0.5rem;
@@ -774,7 +805,46 @@ ul {
 
   .step-title {
     font-size: 1.15rem;
+  } */
+
+  .workflow-step {
+    grid-template-columns: 80px 1fr;
+    gap: 0 2rem;
+    padding: 2rem 0.5rem;
   }
+
+  /* .step-icon {
+    width: 40px;
+    height: 40px;
+  } */
+
+  .step-number {
+    font-size: 0.65rem;
+  }
+
+  .step-title {
+    font-size: 1.15rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .workflow-step {
+    grid-template-columns: 1fr;
+    gap: 1rem 0;
+    padding: 1.75rem 0;
+  }
+
+  .step-left {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.875rem;
+  }
+
+  /* .step-icon {
+    width: 32px;
+    height: 32px;
+  } */
 }
 
 /* ---------- WORK ---------- */
