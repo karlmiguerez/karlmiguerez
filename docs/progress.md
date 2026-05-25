@@ -108,6 +108,11 @@ portfolio/
 - Added a new "Presentation & Flow Designs" skill chip, bringing the total to 8 skill chips.
 - Shifted section ordering and labels: Work is now section 03 and Contact is section 04.
 - Incorporated `.workflow-step` elements into the scroll reveal animation list in `script.js`.
+- Integrated custom SVG icons (`workflow-1.svg` to `workflow-6.svg`) for each step of the Workflow section with active hover states and opacity transitions.
+- Redesigned the Workflow step columns from two-column (`120px 1fr`) to (`100px 1fr`) and wrapped the step number + icon into a new `.step-left` flex container.
+- Added mobile responsiveness for Workflow steps: implemented a 1-column stack layout on mobile devices (`max-width: 480px`) where the step number and icon flex horizontally.
+- Added Project 1 cover images: updated `assets/images/project-1-cover.jpg` as the home page card thumbnail preview and `assets/images/project-1-inner-page-cover.jpg` on `project-1.html`.
+- Commented out `mix-blend-mode: multiply` on the ASCII art thumbnail for better layout compatibility.
 
 ---
 
@@ -119,7 +124,7 @@ portfolio/
 - [x] Add all 6 inner project pages with breadcrumbs and prev/next loop nav
 - [x] Fill in real project metadata, titles, and descriptions on home page and inner page heroes
 - [ ] Fill in real body content (overview, process, outcome) and images/mockups for all 6 inner pages
-- [ ] Add cover images to project cards on `index.html` (`assets/images/project-1-cover.jpg` etc.)
+- [/] Add cover images to project cards on `index.html` (Project 1 cover added; Projects 2-6 pending cover uploads)
 - [ ] Audit `style.css` and `script.js` for any remaining flat asset paths (pre-`assets/images/` refactor)
 - [ ] Explore dark mode toggle
 - [ ] Add "Live Site" or "View on Figma" CTA inside project meta aside where applicable
