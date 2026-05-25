@@ -163,6 +163,7 @@ git push
 ## Notes
 
 - `Karlmiguerez` is one word — capitalized (`Karlmiguerez`) or lowercase (`karlmiguerez`) only. Never two words.
+- **Source of Truth**: The repository version of `docs/progress.md` is the primary source of truth. The Obsidian file at `/Users/karlomiguelperez/Documents/Zettelkasten/00 North Star (Personal)/Brand & Identity/Karlmiguerez/progress.md` should always follow this file (while retaining its frontmatter).
 - Assets live in `assets/images/` — always reference as `assets/images/filename.ext` in HTML/CSS
 - **Avoid overwriting index.html with older versions** — always use the latest output file as source of truth
 - Local testing: run `python3 -m http.server 3000` in the portfolio folder or use Live Server in VS Code / Antigravity
