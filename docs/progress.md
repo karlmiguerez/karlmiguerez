@@ -61,7 +61,7 @@ portfolio/
 - **Overview + Meta** — copy on left, Role/Tools/Year/Type aside on right
 - **Image Blocks** — tall full-width + 2-col pair + final single
 - **Process + Outcome** — copy sections
-- **Prev / Next Nav** — links between projects, disabled on first/last
+- **Prev / Next Nav** — loops through all 6 projects (Project 1 prev → Project 6, Project 6 next → Project 1)
 
 ---
 
