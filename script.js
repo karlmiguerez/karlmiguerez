@@ -45,8 +45,8 @@ const asciiWrap = document.getElementById('asciiWrap');
 
 if (asciiWrap) {
   const GLITCH_DURATION = 520;       // ms — matches animation length
-  const MIN_INTERVAL   = 4000;       // ms — min gap between glitches
-  const MAX_INTERVAL   = 9000;       // ms — max gap between glitches
+  const MIN_INTERVAL = 4000;       // ms — min gap between glitches
+  const MAX_INTERVAL = 9000;       // ms — max gap between glitches
 
   function triggerGlitch() {
     asciiWrap.classList.add('is-glitching');
@@ -108,7 +108,7 @@ document.querySelectorAll('.mobile-link').forEach(link => {
 // ---------- Scroll reveal ----------
 const revealEls = document.querySelectorAll(
   '.hero-tag, .hero-headline, .hero-sub, .hero-cta, ' +
-  '.about-grid, .project-card, .contact-inner'
+  '.about-grid, .workflow-step, .project-card, .contact-inner'
 );
 
 revealEls.forEach(el => el.classList.add('reveal'));
