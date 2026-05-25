@@ -49,10 +49,11 @@ portfolio/
 ## Sections
 
 1. **Hero** — animated cycling headline (3 copies, slide-up, every 3s), subtitle, CTA buttons, available-for-work tag
-2. **About** — real bio copy, 7 skill chips, ASCII portrait with scanline + glitch animation, stat block (8+ yrs / 6+ projects)
-3. **Work** — 6 project cards linking to individual inner pages
-4. **Contact** — `karlmiguerez@gmail.com` + LinkedIn (`/in/karlomiguelperez`) + GitHub (`/karlmiguerez`)
-5. **Footer** — © Karlmiguerez
+2. **About** — real bio copy, 8 skill chips, ASCII portrait with scanline + glitch animation, stat block (8+ yrs / 6+ projects)
+3. **Workflow** — 6 structured methodology steps (Understand, Define, Design, Build, Ship, Iterate) with scroll reveals and hover effects
+4. **Work** — 6 project cards linking to individual inner pages
+5. **Contact** — `karlmiguerez@gmail.com` + LinkedIn (`/in/karlomiguelperez`) + GitHub (`/karlmiguerez`)
+6. **Footer** — © Karlmiguerez
 
 ### Project Inner Pages (shared layout)
 - **Breadcrumb** — `Home → Work → Project Name`
@@ -102,6 +103,11 @@ portfolio/
 - Restructured the Prev/Next navigation loop on all 6 project pages to cycle properly from Project 1 through Project 6 (with Project 1 prev pointing to Project 6, and Project 6 next pointing to Project 1).
 - Refined layout and margins in `style.css` by commenting out the `max-width: 760px` restriction on `.project-hero-inner` to allow proper breathing room for wide project headings.
 - Added custom CSS status variables (`--success`, `--danger`, `--warning`, `--info`) to `:root` block for future expansion.
+- Added a new **Workflow** section detailing a 6-step structured methodology (Understand, Define, Design, Build, Ship, Iterate) with slide-in scroll reveal and interactive hover transitions.
+- Updated main navigation and mobile menu to include a link to the new "Workflow" section.
+- Added a new "Presentation & Flow Designs" skill chip, bringing the total to 8 skill chips.
+- Shifted section ordering and labels: Work is now section 03 and Contact is section 04.
+- Incorporated `.workflow-step` elements into the scroll reveal animation list in `script.js`.
 
 ---
 
