@@ -437,14 +437,14 @@ ul {
   height: 100%;
   object-fit: cover;
   display: block;
-  mix-blend-mode: multiply;
+  /* mix-blend-mode: multiply; */
 }
 
 /* Glitch layer — sits on top, hidden until triggered */
 .ascii-glitch-layer {
   opacity: 0;
   pointer-events: none;
-  /* mix-blend-mode: screen; */
+  mix-blend-mode: screen;
 }
 
 /* Scanline overlay via ::after */
