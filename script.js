@@ -146,3 +146,71 @@ const sectionObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.5 });
 
 sections.forEach(section => sectionObserver.observe(section));
+
+
+// ---------- Q&A Accordion + lazy video load ----------
+function lazyLoadQaVideo(item) {
+  const video = item.querySelector('.qa-video');
+  if (!video || video.dataset.loaded) return;
+
+  const source = video.querySelector('source[data-src]');
+  if (source) source.src = source.dataset.src;
+  if (video.dataset.poster) video.poster = video.dataset.poster;
+
+  video.load();
+  video.dataset.loaded = 'true';
+}
+
+document.querySelectorAll('.qa-trigger').forEach(trigger => {
+  trigger.addEventListener('click', () => {
+    const item = trigger.closest('.qa-item');
+    const isOpen = item.classList.contains('open');
+
+    // Close all — and pause/reset any video currently playing
+    document.querySelectorAll('.qa-item').forEach(i => {
+      const v = i.querySelector('.qa-video');
+      if (v && !v.paused) {
+        v.pause();
+        v.currentTime = 0; // resets so it replays from the start next time
+      }
+      i.classList.remove('open');
+      i.querySelector('.qa-trigger').setAttribute('aria-expanded', 'false');
+      i.querySelector('.qa-body').setAttribute('aria-hidden', 'true');
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      item.querySelector('.qa-body').setAttribute('aria-hidden', 'false');
+      lazyLoadQaVideo(item);
+
+      // Auto-play the newly opened item's video
+      const video = item.querySelector('.qa-video');
+      if (video) {
+        video.play().catch(() => {
+          // Autoplay blocked (rare) — play button overlay stays visible as fallback
+        });
+      }
+    }
+  });
+});
+
+
+// ---------- Q&A video play/pause ----------
+document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
+  const video = wrap.querySelector('.qa-video');
+  const playBtn = wrap.querySelector('.qa-video-play');
+
+  playBtn.addEventListener('click', () => {
+    // Pause any other playing Q&A video first
+    document.querySelectorAll('.qa-video').forEach(v => {
+      if (v !== video) v.pause();
+    });
+    video.play();
+  });
+
+  video.addEventListener('play', () => wrap.classList.add('is-playing'));
+  video.addEventListener('pause', () => wrap.classList.remove('is-playing'));
+  video.addEventListener('ended', () => wrap.classList.remove('is-playing'));
+});
