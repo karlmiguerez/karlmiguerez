@@ -2,7 +2,7 @@
 
 > **Status:** 🟢 Live  
 > **URL:** https://karlmiguerez.vercel.app  
-> **Last Updated:** May 2026 — Session 4
+> **Last Updated:** June 2026 — Session 5
 
 ---
 
@@ -29,10 +29,13 @@ portfolio/
 ├── script.js               — scroll reveal, nav, mobile menu, animations
 ├── README.md               — setup & customization guide
 └── assets/
-    └── images/
-        ├── logo.png        — ]k indigo nav logo
-        ├── favicon.svg     — svg favicon
-        └── ascii-art.png   — ASCII portrait (glitch animated)
+    ├── images/
+    │   ├── logo.png            — ]k indigo nav logo
+    │   ├── favicon.svg         — svg favicon
+    │   ├── ascii-art.png       — ASCII portrait (glitch animated)
+    │   └── qa-1 to qa-10-poster.jpg — poster frames for Q&A videos (lazy-loaded)
+    └── videos/
+        └── qa-1 to qa-10.mp4  — Q&A interview video clips (lazy-loaded)
 ```
 
 ---
@@ -115,6 +118,30 @@ portfolio/
 - Commented out `mix-blend-mode: multiply` on the ASCII art thumbnail for better layout compatibility.
 - Implemented desktop-specific hover transitions (`min-width: 769px`) for project cards: thumbnails display in grayscale (`filter: grayscale(100%)`) and fade into full color upon card hover.
 
+### Session 5 — June 2026
+
+#### Q&A Section — Video Lazy Loading
+- Replaced all `<source src="...">` attributes with `data-src` on Q&A video elements to prevent browsers from eagerly fetching all 10 video files on page load.
+- Added `preload="none"` on all `.qa-video` elements (was `preload="metadata"`) to eliminate network requests until a Q&A item is actually opened.
+- Assigned unique `data-poster` attributes per video (e.g., `assets/images/qa-1-poster.jpg` through `qa-10-poster.jpg`) for per-question poster frames instead of reusing a single shared image.
+- Implemented `lazyLoadQaVideo(item)` in `script.js` — called only when a Q&A accordion opens; it hydrates `source.src` and `video.poster` from their `data-*` counterparts, then calls `video.load()` to initiate the fetch.
+- Added `video.dataset.loaded` guard so the hydration only runs once per video, preventing repeated reloads on accordion toggle.
+
+#### Q&A Section — Auto-play & Video Pause on Close
+- Extended the accordion close loop to detect any currently-playing video (`!v.paused`) and call `v.pause(); v.currentTime = 0` — resetting playback so reopening any item replays from the start.
+- Added auto-play on accordion open: after `lazyLoadQaVideo` hydrates the source, `video.play()` is called with a `.catch()` no-op to silently handle autoplay-blocked environments.
+
+#### Q&A Section — HTML Structure Refactor
+- Flattened the Q&A HTML: each `.qa-item` is now a direct sibling `<div>` instead of being nested inside a shared parent wrapper. This fixes a structural issue where accordion body collapse was constrained by the shared container.
+- Added a blank line between `</video>` and the `<button class="qa-video-play">` overlay for readability.
+- Q&A items 2–10 now each have their own dedicated `qa-N.mp4` video source and `qa-N-poster.jpg` poster, replacing the placeholder `qa-1.mp4` copies used in earlier iterations.
+
+#### style.css — Q&A Layout Fix
+- Changed `.qa-body` padding from `padding-left: calc(50% + 2rem)` to `padding: 0 2rem` — corrects an alignment bug where answer content was being pushed entirely off-screen to the right on smaller viewports.
+
+#### index.html — Image Performance
+- Added `loading="lazy"` and `decoding="async"` to the main ASCII portrait `<img>` tag in the About section to defer its load and decode off the main thread, improving LCP.
+
 ---
 
 ## Still To Do
@@ -125,7 +152,8 @@ portfolio/
 - [x] Add all 6 inner project pages with breadcrumbs and prev/next loop nav
 - [x] Fill in real project metadata, titles, and descriptions on home page and inner page heroes
 - [ ] Fill in real body content (overview, process, outcome) and images/mockups for all 6 inner pages
-- [/] Add cover images to project cards on `index.html` (Project 1 cover added; Projects 2-6 pending cover uploads)
+- [/] Add cover images to project cards on `index.html` (Project 1 cover added; Projects 2–6 pending cover uploads)
+- [/] Upload and finalize Q&A video clips (`qa-1.mp4` through `qa-10.mp4`) and their poster frames (`qa-1-poster.jpg` through `qa-10-poster.jpg`) in `assets/videos/` and `assets/images/` respectively
 - [ ] Audit `style.css` and `script.js` for any remaining flat asset paths (pre-`assets/images/` refactor)
 - [ ] Explore dark mode toggle
 - [ ] Add "Live Site" or "View on Figma" CTA inside project meta aside where applicable
