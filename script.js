@@ -2,6 +2,32 @@
    PORTFOLIO — script.js
    ============================================ */
 
+
+// ---------- Load partials ----------
+async function loadPartial(id, file) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  try {
+    const res = await fetch(`/assets/partials/${file}`);
+    if (!res.ok) throw new Error(`Failed to load ${file}`);
+    el.outerHTML = await res.text();
+  } catch (err) {
+    console.warn('Partial load error:', err);
+  }
+}
+
+async function initPartials() {
+  await loadPartial('nav-partial', 'nav.html');
+  await loadPartial('footer-partial', 'footer.html');
+
+  // Re-init everything that depends on nav/footer DOM being present
+  initNav();
+  initFooterYear();
+}
+
+initPartials();
+
+
 // ---------- Headline cycling animation ----------
 const headlineCopies = [
   'people remember.',
@@ -67,35 +93,90 @@ if (asciiWrap) {
 
 
 // ---------- Year in footer ----------
-document.getElementById('year').textContent = new Date().getFullYear();
+function initFooterYear() {
+  const year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+}
 
-const nav = document.getElementById('nav');
+function initNav() {
+  const nav = document.getElementById('nav');
+  if (!nav) return;
 
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 60);
-}, { passive: true });
+  const isProjectPage = !document.querySelector('.hero');
+
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  let menuOpen = false;
+
+  navToggle.addEventListener('click', () => {
+    menuOpen = !menuOpen;
+    mobileMenu.classList.toggle('open', menuOpen);
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    const spans = navToggle.querySelectorAll('span');
+    if (menuOpen) {
+      spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
+      spans[1].style.transform = 'rotate(-45deg) translate(4px, -4px)';
+    } else {
+      spans[0].style.transform = '';
+      spans[1].style.transform = '';
+    }
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      menuOpen = false;
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+      const spans = navToggle.querySelectorAll('span');
+      spans[0].style.transform = '';
+      spans[1].style.transform = '';
+    });
+  });
+
+  // Active nav link highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.style.color = '';
+          if (link.getAttribute('href') === `/#${entry.target.id}`) {
+            link.style.color = 'var(--text)';
+          }
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(section => sectionObserver.observe(section));
+}
 
 
 // ---------- Mobile menu toggle ----------
-const navToggle = document.getElementById('navToggle');
-const mobileMenu = document.getElementById('mobileMenu');
-let menuOpen = false;
+// const navToggle = document.getElementById('navToggle');
+// const mobileMenu = document.getElementById('mobileMenu');
+// let menuOpen = false;
 
-navToggle.addEventListener('click', () => {
-  menuOpen = !menuOpen;
-  mobileMenu.classList.toggle('open', menuOpen);
-  document.body.style.overflow = menuOpen ? 'hidden' : '';
+// navToggle.addEventListener('click', () => {
+//   menuOpen = !menuOpen;
+//   mobileMenu.classList.toggle('open', menuOpen);
+//   document.body.style.overflow = menuOpen ? 'hidden' : '';
 
-  // Animate hamburger → X
-  const spans = navToggle.querySelectorAll('span');
-  if (menuOpen) {
-    spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
-    spans[1].style.transform = 'rotate(-45deg) translate(4px, -4px)';
-  } else {
-    spans[0].style.transform = '';
-    spans[1].style.transform = '';
-  }
-});
+//   // Animate hamburger → X
+//   const spans = navToggle.querySelectorAll('span');
+//   if (menuOpen) {
+//     spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
+//     spans[1].style.transform = 'rotate(-45deg) translate(4px, -4px)';
+//   } else {
+//     spans[0].style.transform = '';
+//     spans[1].style.transform = '';
+//   }
+// });
 
 // Close mobile menu on link click
 document.querySelectorAll('.mobile-link').forEach(link => {
@@ -133,23 +214,23 @@ const observer = new IntersectionObserver((entries) => {
 revealEls.forEach(el => observer.observe(el));
 
 // ---------- Smooth active nav link highlight ----------
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
+// const sections = document.querySelectorAll('section[id]');
+// const navLinks = document.querySelectorAll('.nav-links a');
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(link => {
-        link.style.color = '';
-        if (link.getAttribute('href') === `#${entry.target.id}`) {
-          link.style.color = 'var(--text)';
-        }
-      });
-    }
-  });
-}, { threshold: 0.5 });
+// const sectionObserver = new IntersectionObserver((entries) => {
+//   entries.forEach(entry => {
+//     if (entry.isIntersecting) {
+//       navLinks.forEach(link => {
+//         link.style.color = '';
+//         if (link.getAttribute('href') === `#${entry.target.id}`) {
+//           link.style.color = 'var(--text)';
+//         }
+//       });
+//     }
+//   });
+// }, { threshold: 0.5 });
 
-sections.forEach(section => sectionObserver.observe(section));
+// sections.forEach(section => sectionObserver.observe(section));
 
 
 // ---------- Q&A Accordion + lazy video load ----------

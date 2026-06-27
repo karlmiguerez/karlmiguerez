@@ -20,38 +20,7 @@
 <body>
 
   <!-- NAV -->
-  <nav class="nav" id="nav">
-    <div class="logo-availability">
-      <a href="/" class="nav-logo"><img class="nav-logo-img" src="assets/images/logo.png" /></a>
-
-      <span class="nav-availability">
-        <span class="nav-avail-dot"></span>
-        Available for work
-      </span>
-    </div>
-
-    <ul class="nav-links">
-      <li><a href="/#about">About</a></li>
-      <li><a href="/#workflow">Workflow</a></li>
-      <li><a href="/#work">Work</a></li>
-      <li><a href="/#qa">Q&A</a></li>
-      <li><a href="/#contact">Contact</a></li>
-    </ul>
-
-    <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
-      <span></span><span></span>
-    </button>
-  </nav>
-
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="/#about" class="mobile-link">About</a></li>
-      <li><a href="/#workflow" class="mobile-link">Workflow</a></li>
-      <li><a href="/#work" class="mobile-link">Work</a></li>
-      <li><a href="/#contact" class="mobile-link">Contact</a></li>
-    </ul>
-  </div>
+  <div id="nav-partial"></div>
 
   <!-- BREADCRUMB -->
   <div class="breadcrumb-bar">
@@ -75,8 +44,7 @@
       </div>
       <h1 class="project-hero-title">W Labs Brand & Website Revamp</h1>
       <p class="project-hero-brief">
-        A short punchy summary of the project — what it is, who it's for, and what makes it worth looking at. Keep this
-        to 2–3 sentences max.
+        W Labs outgrew its brand. We rebuilt it from the ground up — new identity, new site, same ambition.
       </p>
     </div>
   </section>
@@ -97,10 +65,10 @@
     <div class="project-details-grid">
       <div class="project-overview">
         <h2 class="project-section-title">Overview</h2>
-        <p>Write a fuller description of the project here — the context, the problem being solved, and the approach you
-          took. This is where you tell the story behind the work.</p>
-        <p>Keep it conversational and focused. What was the challenge? What decisions did you make and why? What was the
-          outcome?</p>
+        <p>W Labs is an AI-focused software and creative studio that needed its brand to catch up with what it actually
+          does. The revamp replaced a generic spherical mark with a wave interference concept — data waves forming the W
+          — giving the identity a visual language rooted in adaptive intelligence and data flow. A brand that finally
+          looks as considered as the work behind it.</p>
       </div>
       <aside class="project-meta-aside">
         <div class="meta-block">
@@ -109,15 +77,15 @@
         </div>
         <div class="meta-block">
           <span class="meta-label">Tools</span>
-          <span class="meta-value">Figma, HTML/CSS</span>
+          <span class="meta-value">Figma, HTML/CSS, Javascript</span>
         </div>
         <div class="meta-block">
           <span class="meta-label">Year</span>
-          <span class="meta-value">2024</span>
+          <span class="meta-value">2026</span>
         </div>
         <div class="meta-block">
           <span class="meta-label">Type</span>
-          <span class="meta-value">Brand Identity</span>
+          <span class="meta-value">Brand Identity, Web Design & Development, Aesthetics Review</span>
         </div>
       </aside>
     </div>
@@ -173,10 +141,7 @@
   </nav>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <span>© <span id="year"></span> Karlmiguerez. Built with care.</span>
-    <a href="#" class="back-top">Back to top ↑</a>
-  </footer>
+  <div id="footer-partial"></div>
 
   <script src="script.js"></script>
 </body>
