@@ -157,27 +157,6 @@ function initNav() {
 }
 
 
-// ---------- Mobile menu toggle ----------
-// const navToggle = document.getElementById('navToggle');
-// const mobileMenu = document.getElementById('mobileMenu');
-// let menuOpen = false;
-
-// navToggle.addEventListener('click', () => {
-//   menuOpen = !menuOpen;
-//   mobileMenu.classList.toggle('open', menuOpen);
-//   document.body.style.overflow = menuOpen ? 'hidden' : '';
-
-//   // Animate hamburger → X
-//   const spans = navToggle.querySelectorAll('span');
-//   if (menuOpen) {
-//     spans[0].style.transform = 'rotate(45deg) translate(4px, 4px)';
-//     spans[1].style.transform = 'rotate(-45deg) translate(4px, -4px)';
-//   } else {
-//     spans[0].style.transform = '';
-//     spans[1].style.transform = '';
-//   }
-// });
-
 // Close mobile menu on link click
 document.querySelectorAll('.mobile-link').forEach(link => {
   link.addEventListener('click', () => {
@@ -189,6 +168,7 @@ document.querySelectorAll('.mobile-link').forEach(link => {
     spans[1].style.transform = '';
   });
 });
+
 
 // ---------- Scroll reveal ----------
 const revealEls = document.querySelectorAll(
@@ -212,25 +192,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 revealEls.forEach(el => observer.observe(el));
-
-// ---------- Smooth active nav link highlight ----------
-// const sections = document.querySelectorAll('section[id]');
-// const navLinks = document.querySelectorAll('.nav-links a');
-
-// const sectionObserver = new IntersectionObserver((entries) => {
-//   entries.forEach(entry => {
-//     if (entry.isIntersecting) {
-//       navLinks.forEach(link => {
-//         link.style.color = '';
-//         if (link.getAttribute('href') === `#${entry.target.id}`) {
-//           link.style.color = 'var(--text)';
-//         }
-//       });
-//     }
-//   });
-// }, { threshold: 0.5 });
-
-// sections.forEach(section => sectionObserver.observe(section));
 
 
 // ---------- Q&A Accordion + lazy video load ----------
