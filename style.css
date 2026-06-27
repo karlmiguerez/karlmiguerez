@@ -107,11 +107,17 @@ ul {
   transition: background var(--transition), box-shadow var(--transition);
 }
 
-.nav.scrolled {
+.nav .scrolled {
   background: rgba(239, 239, 237, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--border);
+}
+
+.nav .logo-availability {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .nav-logo {
