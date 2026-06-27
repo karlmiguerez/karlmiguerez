@@ -9,14 +9,6 @@ const headlineCopies = [
   'with intention.',
 ];
 
-// const animEl = document.querySelector('.headline-animate');
-
-// // Wrap in overflow-hidden container for clean clip
-// const wrapper = document.createElement('span');
-// wrapper.className = 'headline-animate-wrapper';
-// animEl.parentNode.insertBefore(wrapper, animEl);
-// wrapper.appendChild(animEl);
-
 const animEl = document.querySelector('.headline-animate');
 
 if (animEl) {
