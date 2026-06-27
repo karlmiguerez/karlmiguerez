@@ -9,13 +9,22 @@ const headlineCopies = [
   'with intention.',
 ];
 
+// const animEl = document.querySelector('.headline-animate');
+
+// // Wrap in overflow-hidden container for clean clip
+// const wrapper = document.createElement('span');
+// wrapper.className = 'headline-animate-wrapper';
+// animEl.parentNode.insertBefore(wrapper, animEl);
+// wrapper.appendChild(animEl);
+
 const animEl = document.querySelector('.headline-animate');
 
-// Wrap in overflow-hidden container for clean clip
-const wrapper = document.createElement('span');
-wrapper.className = 'headline-animate-wrapper';
-animEl.parentNode.insertBefore(wrapper, animEl);
-wrapper.appendChild(animEl);
+if (animEl) {
+  const wrapper = document.createElement('span');
+  wrapper.className = 'headline-animate-wrapper';
+  animEl.parentNode.insertBefore(wrapper, animEl);
+  wrapper.appendChild(animEl);
+}
 
 let currentIndex = 0;
 
@@ -38,7 +47,8 @@ function cycleHeadline() {
   }, 450);
 }
 
-setInterval(cycleHeadline, 3000);
+// setInterval(cycleHeadline, 3000);
+if (animEl) setInterval(cycleHeadline, 3000);
 
 // ---------- ASCII portrait glitch trigger ----------
 const asciiWrap = document.getElementById('asciiWrap');
@@ -63,14 +73,16 @@ if (asciiWrap) {
   setTimeout(triggerGlitch, 2000);
 }
 
+
 // ---------- Year in footer ----------
 document.getElementById('year').textContent = new Date().getFullYear();
 
-// ---------- Sticky nav on scroll ----------
 const nav = document.getElementById('nav');
+
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 }, { passive: true });
+
 
 // ---------- Mobile menu toggle ----------
 const navToggle = document.getElementById('navToggle');

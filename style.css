@@ -107,7 +107,7 @@ ul {
   transition: background var(--transition), box-shadow var(--transition);
 }
 
-.nav .scrolled {
+.nav.scrolled {
   background: rgba(239, 239, 237, 0.72);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
