@@ -1867,3 +1867,13 @@ ul {
 @media (prefers-reduced-motion: reduce) {
   .ptl-evt .ptl-side { opacity:1 !important; transform:none !important; transition:none; }
 }
+
+/* Case-study real images inside grids: natural aspect ratio, no row overlap.
+   (Base rule img{height:100%} was stretching them and hiding captions.) */
+.project-img-grid { align-items: start; }
+.project-img-grid > div { display: flex; flex-direction: column; }
+.project-img-grid > div img { width: 100%; height: auto; object-fit: contain; display: block; border-radius: 4px; }
+.project-img-grid .pfig-cap { margin-bottom: .25rem; }
+
+/* Media download deterrence (friction, not true prevention) */
+img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }

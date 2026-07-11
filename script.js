@@ -275,3 +275,24 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
   video.addEventListener('pause', () => wrap.classList.remove('is-playing'));
   video.addEventListener('ended', () => wrap.classList.remove('is-playing'));
 });
+
+/* ---------- Media download deterrence (friction, not true prevention) ---------- */
+(function () {
+  const inMedia = (t) =>
+    t && t.closest && t.closest('img, video, .project-cover, .project-img-block, .project-img-grid, .qa-video-wrap, .ascii-wrap');
+
+  // Block right-click context menu over media
+  document.addEventListener('contextmenu', (e) => { if (inMedia(e.target)) e.preventDefault(); });
+  // Block drag-to-save
+  document.addEventListener('dragstart', (e) => { if (e.target.closest && e.target.closest('img, video')) e.preventDefault(); });
+
+  function harden() {
+    document.querySelectorAll('video').forEach((v) => {
+      v.setAttribute('controlsList', 'nodownload noplaybackrate');
+      try { v.disablePictureInPicture = true; } catch (_) {}
+    });
+    document.querySelectorAll('img').forEach((i) => i.setAttribute('draggable', 'false'));
+  }
+  harden();
+  document.addEventListener('DOMContentLoaded', harden);
+})();
