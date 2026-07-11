@@ -194,6 +194,21 @@ const observer = new IntersectionObserver((entries) => {
 revealEls.forEach(el => observer.observe(el));
 
 
+// ---------- Timeline reveal (events slide out from the center spine) ----------
+const tlEvents = document.querySelectorAll('.ptl-evt');
+if (tlEvents.length) {
+  const tlObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('ptl-in');
+        tlObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+  tlEvents.forEach(el => tlObserver.observe(el));
+}
+
+
 // ---------- Q&A Accordion + lazy video load ----------
 function lazyLoadQaVideo(item) {
   const video = item.querySelector('.qa-video');

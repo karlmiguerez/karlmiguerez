@@ -9,7 +9,7 @@
   --bg-card: #E4E4E2;
   --text: #141414;
   --text-muted: #6B6B6B;
-  --accent: #1B4FFF;
+  --accent: #6155F5;
   --border: #D4D4D2;
   --white: #F8F8F6;
 
@@ -20,7 +20,7 @@
   --success: #4ECCA3;
   --danger: #FF6B35;
   --warning: #FFC93C;
-  --info: #348DF3;
+  --info: #8980F8;
 
   --max-w: 1100px;
   --section-gap: 9rem;
@@ -1795,4 +1795,75 @@ ul {
   .qa-question {
     font-size: 0.97rem;
   }
+}
+/* ============================================
+   PROJECT TIMELINE — case study (center axis)
+   Alternating left/right events on a central spine.
+   ============================================ */
+.ptl { position: relative; margin: 1rem 0 0; }
+.ptl::before { content:''; position:absolute; left:50%; top:0; bottom:0; width:2px; background:var(--border); transform:translateX(-50%); }
+
+.ptl-phase { position:relative; text-align:center; margin:2.5rem 0 .75rem; }
+.ptl-phase span { display:inline-block; background:var(--bg-card); border:1px solid var(--border); font-family:var(--font-mono); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--text-muted); padding:.4rem .9rem; border-radius:99px; position:relative; z-index:2; }
+
+.ptl-year { position:relative; text-align:center; margin:.5rem 0 1.5rem; }
+.ptl-year span { display:inline-block; background:var(--white); border:1px solid var(--border); font-family:var(--font-mono); font-size:.72rem; letter-spacing:.14em; color:var(--accent); padding:.4rem .95rem; border-radius:99px; position:relative; z-index:2; }
+
+.ptl-evt { position:relative; display:grid; grid-template-columns:1fr 52px 1fr; align-items:start; margin:1.75rem 0; }
+.ptl-evt .ptl-side { padding-top:2px; }
+.ptl-evt.left .ptl-side.r { visibility:hidden; }
+.ptl-evt.left .ptl-side.l { text-align:right; }
+.ptl-evt.right .ptl-side.l { visibility:hidden; }
+.ptl-evt.right .ptl-side.r { text-align:left; }
+
+.ptl-node { position:relative; display:flex; justify-content:center; padding-top:2px; }
+/* diamond marker: 11px square rotated 45° spans ~16px corner-to-corner; bg halo masks the axis line behind it */
+.ptl-node i { width:11px; height:11px; background:var(--accent); border-radius:3px; box-shadow:0 0 0 3px var(--bg); transform:rotate(45deg); z-index:2; }
+.ptl-evt.left .ptl-node::before, .ptl-evt.right .ptl-node::after { content:''; position:absolute; top:9px; width:calc(100% + 18px); border-top:1px dashed var(--border); }
+.ptl-evt.left .ptl-node::before { right:50%; }
+.ptl-evt.right .ptl-node::after { left:50%; }
+
+.ptl-when { display:block; line-height:16px; font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; color:var(--accent); }
+.ptl-evt h3 { font-family:var(--font-display); font-size:1.05rem; font-weight:700; letter-spacing:-.01em; color:var(--text); margin:.35rem 0 .4rem; line-height:1.25; }
+.ptl-evt p { font-size:.88rem; color:var(--text-muted); line-height:1.65; margin:0; max-width:42ch; }
+.ptl-evt.left p { margin-left:auto; }
+
+/* 3-up image row (extends existing .project-img-grid) */
+.project-img-grid.cols-3 { grid-template-columns:repeat(3,1fr); }
+
+/* small caption under case-study images */
+.pfig-cap { font-family:var(--font-mono); font-size:.64rem; letter-spacing:.06em; color:var(--text-muted); margin-top:.6rem; text-transform:uppercase; }
+
+@media (max-width:768px){
+  .ptl::before { left:7px; }
+  .ptl-phase, .ptl-year { text-align:left; }
+  /* single rail on the left; every event's content sits to the right of it */
+  .ptl-evt { grid-template-columns:16px 1fr; gap:1rem; }
+  .ptl-evt .ptl-node { grid-column:1; grid-row:1; justify-content:flex-start; }
+  .ptl-evt .ptl-side { grid-column:2; grid-row:1; text-align:left !important; }
+  .ptl-evt .ptl-side p { margin-left:0 !important; max-width:none; }
+  /* show only the side that actually holds content — including left events */
+  .ptl-evt.left  .ptl-side.l { display:block; visibility:visible; }
+  .ptl-evt.left  .ptl-side.r { display:none; }
+  .ptl-evt.right .ptl-side.r { display:block; visibility:visible; }
+  .ptl-evt.right .ptl-side.l { display:none; }
+  /* uniform rise-fade on mobile; no horizontal shift so nothing crosses the rail */
+  .ptl-evt .ptl-side { transform:translateY(14px) !important; }
+  .ptl-evt.ptl-in .ptl-side { transform:translateY(0) !important; }
+  .ptl-evt.left .ptl-node::before, .ptl-evt.right .ptl-node::after { display:none; }
+  .project-img-grid.cols-3 { grid-template-columns:1fr; }
+}
+
+/* Scroll reveal — timeline content slides out from the center spine.
+   Left events enter moving toward the left (start 20% toward center);
+   right events mirror it. Spine + diamonds stay anchored. */
+.ptl-evt .ptl-side { opacity:0; transition:opacity .7s ease, transform .7s cubic-bezier(.22,.61,.36,1); }
+.ptl-evt.left  .ptl-side.l { transform:translateX(20%); }
+.ptl-evt.right .ptl-side.r { transform:translateX(-20%); }
+/* revealed: settle back to original column position (must out-specify the per-side start rules above) */
+.ptl-evt.ptl-in .ptl-side { opacity:1; }
+.ptl-evt.left.ptl-in  .ptl-side.l { transform:translateX(0); }
+.ptl-evt.right.ptl-in .ptl-side.r { transform:translateX(0); }
+@media (prefers-reduced-motion: reduce) {
+  .ptl-evt .ptl-side { opacity:1 !important; transform:none !important; transition:none; }
 }
