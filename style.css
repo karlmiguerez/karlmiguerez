@@ -1877,3 +1877,50 @@ ul {
 
 /* Media download deterrence (friction, not true prevention) */
 img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+
+/* ============================================
+   LOGO STUDIES — compact cropped thumbnails + lightbox
+   ============================================ */
+.logo-studies > figure { margin: 0; cursor: zoom-in; }
+.logo-studies > figure img { width: 100%; height: 300px; object-fit: cover; object-position: top; border: 1px solid var(--border); border-radius: 4px; display: block; transition: opacity var(--transition); }
+.logo-studies > figure:hover img { opacity: .85; }
+.logo-studies figcaption { font-size: .86rem; color: var(--text-muted); line-height: 1.6; margin-top: .6rem; }
+
+/* Lightbox (click a study to view the full board) */
+#lightbox { position: fixed; inset: 0; z-index: 1000; display: none; background: rgba(20,20,20,.92); overflow: auto; padding: 2vh 2vw; cursor: zoom-out; }
+#lightbox.open { display: flex; align-items: center; justify-content: center; }
+#lightbox img { max-width: 90vw; max-height: 90vh; width: auto; height: auto; border-radius: 4px; box-shadow: 0 24px 70px rgba(0,0,0,.5); cursor: default; }
+/* tall boards (logo studies): fill a generous width and scroll vertically instead of shrinking to fit 90vh */
+#lightbox.lb-scroll.open { align-items: flex-start; }
+#lightbox.lb-scroll img { max-width: min(92vw, 1000px); max-height: none; }
+#lightbox .lb-close { position: fixed; top: 16px; right: 22px; width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-family: var(--font-mono); font-size: 1.1rem; cursor: pointer; }
+#lightbox .lb-close:hover { background: rgba(255,255,255,.24); }
+
+/* Logo-study previews — auto-pan is driven by the Web Animations API in script.js
+   (playbackRate drops to 0.5 on hover: seamless half-speed, no duration-swap jump).
+   Respects prefers-reduced-motion (handled in JS). */
+
+/* Website design boards — side-by-side, hover-zoom, click → lightbox (no auto-animation) */
+.web-studies > figure { margin: 0; overflow: hidden; border-radius: 4px; }
+.web-studies > figure img { width: 100%; height: auto; display: block; cursor: zoom-in; transition: transform .4s ease; }
+.web-studies > figure:hover img { transform: scale(1.04); }
+.web-studies figcaption { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; color: var(--text-muted); text-transform: uppercase; margin-top: .6rem; }
+
+/* Product-page shots — responsive (<picture>), cropped preview, hover-zoom, click → lightbox (scroll mode) */
+.product-shots > figure { margin: 0; overflow: hidden; border-radius: 4px; cursor: zoom-in; }
+.product-shots > figure img { width: 100%; height: 360px; object-fit: cover; object-position: top; display: block; transition: transform .4s ease; }
+.product-shots > figure:hover img { transform: scale(1.03); }
+.product-shots figcaption { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; color: var(--text-muted); text-transform: uppercase; margin-top: .6rem; }
+
+/* ============================================
+   ANIMATED VECTORS — autoplay/loop WebM tiles + Figma collection
+   ============================================ */
+/* Two columns: stacked vector loops on the left, Figma collection sticky on the right */
+.vectors-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; align-items: start; margin-top: .5rem; }
+.vectors-col { display: flex; flex-direction: column; gap: 1.5rem; }
+.vectors-col figure { margin: 0; }
+.vectors-col video { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 4px; background: var(--white); }
+.vectors-collection { margin: 0; position: sticky; top: 6rem; }
+.vectors-collection img { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 4px; cursor: zoom-in; }
+.vectors-col figcaption, .vectors-collection figcaption { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; color: var(--text-muted); text-transform: uppercase; margin-top: .5rem; }
+@media (max-width: 768px) { .vectors-layout { grid-template-columns: 1fr; } .vectors-collection { position: static; } }

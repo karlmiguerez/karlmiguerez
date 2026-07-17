@@ -2,7 +2,7 @@
 
 > **Status:** 🟢 Live  
 > **URL:** https://karlmiguerez.vercel.app  
-> **Last Updated:** June 2026 — Session 5
+> **Last Updated:** July 2026 — Session 6
 
 ---
 
@@ -19,30 +19,36 @@
 ```
 portfolio/
 ├── index.html              — main page
-├── project-1.html          — W Labs Brand & Website Revamp (Brand Identity / UI/UX)
-├── project-2.html          — SnapLive 2.0 (UI/UX / Web to Mobile)
-├── project-3.html          — TMC (UI/UX / Web to Mobile)
-├── project-4.html          — AltInvest (UI/UX / Mobile App)
-├── project-5.html          — Cirrus White Label Sales & CRM (UI/UX / Web to Mobile)
-├── project-6.html          — WIZ Assistant (Brand Identity / Motion Graphics)
+├── w-labs-brand-website-revamp.html        — W Labs Brand & Website Revamp
+├── snaplive-2.html                         — SnapLive 2.0 (Live-Simulcasting Platform)
+├── tmc.html                                — TMC Print & Publishing E-commerce
+├── wiz-assistant.html                      — WIZ Assistant (Product & Motion)
+├── smart-surveillance-system.html          — Smart Surveillance System (AI Security)
+├── lc-oct-skin-measurement-analysis.html   — LC-OCT SkinArch (Product & Motion)
+│   (renamed from project-1..6.html to title-based slugs — Session 6)
 ├── style.css               — all styles (shared across all pages)
 ├── script.js               — scroll reveal, nav, mobile menu, animations
 ├── README.md               — setup & customization guide
 └── assets/
     ├── images/
-    │   ├── logo.png            — ]k indigo nav logo
-    │   ├── favicon.svg         — svg favicon
-    │   ├── ascii-art.png       — ASCII portrait (glitch animated)
-    │   └── qa-1 to qa-10-poster.jpg — poster frames for Q&A videos (lazy-loaded)
+    │   ├── logo.png / favicon.svg / ascii-art.png
+    │   ├── qa-1..10-poster.jpg           — Q&A poster frames
+    │   ├── <slug>-cover.jpg              — home card covers (6, optimized)
+    │   ├── <slug>-inner-page-cover.jpg   — project hero covers (6, optimized)
+    │   └── wlabs/ snaplive/ tmc/ wiz/ sss/ lc-oct/  — per-project case-study images
+    │        (each has a README.txt with the Figma node → filename export map)
     └── videos/
-        └── qa-1 to qa-10.mp4  — Q&A interview video clips (lazy-loaded)
+        ├── qa-1..10.mp4               — Q&A clips (compressed, faststart)
+        ├── wiz-assistant-promo.mp4    — WIZ promo (Figma Weavy + CapCut)
+        ├── lc-oct-commercial.mp4      — SkinArch commercial (Remotion, v2)
+        └── lc-oct-dej-viewer.mp4      — DEJ Viewer demo (screen recording)
 ```
 
 ---
 
 ## Design Decisions
 
-- **Palette** — Cool gray `#EFEFED` bg, `#141414` text, `#1B4FFF` accent
+- **Palette** — Cool gray `#EFEFED` bg, `#141414` text, `#6155F5` indigo accent (Session 6; was `#1B4FFF`. `--info` now `#8980F8`)
 - **Typography** — Syne (display/headings) + DM Sans (body) + DM Mono (labels, tags)
 - **No italics** — intentional; keeps the feel neutral and structured
 - **Logo** — `]k` indigo mark replaces text monogram in nav
@@ -142,6 +148,56 @@ portfolio/
 #### index.html — Image Performance
 - Added `loading="lazy"` and `decoding="async"` to the main ASCII portrait `<img>` tag in the About section to defer its load and decode off the main thread, improving LCP.
 
+### Session 6 — July 2026
+
+#### Case studies — all 6 inner pages rebuilt
+- Researched each project from **Figma (Dev Mode MCP), Jira, and Slack**, then rebuilt all six inner pages as full case studies on a consistent structure: hero + meta, Overview, Research/Foundations, **Process (center-axis vertical timeline)**, progression, key screens, Before/After, Outcome.
+- Projects (replacing the old AltInvest/Cirrus placeholders): W Labs Brand & Website Revamp, SnapLive 2.0, TMC, WIZ Assistant, Smart Surveillance System, LC-OCT SkinArch.
+
+#### Slugs & asset naming
+- Renamed all project pages `project-N.html` → title-based slugs via `git mv` (history preserved); updated home-page cards and the prev/next loop.
+- Renamed the 12 cover images to match slugs; created per-project image folders (`wlabs/ snaplive/ tmc/ wiz/ sss/ lc-oct/`), each with a `README.txt` export map (Figma node → filename) for pending exports.
+
+#### Indigo rebrand
+- `--accent` `#1B4FFF` → `#6155F5` (brand indigo) and `--info` → `#8980F8`; all accents cascade via the CSS variable.
+
+#### Center-axis timeline (new `.ptl` component)
+- Added the vertical timeline to `style.css` — central spine, phase/year pills, events alternating left/right with diamond markers + dashed connectors; collapses to a single left rail ≤768px.
+- Added a scroll-reveal `IntersectionObserver` in `script.js` (`.ptl-evt` → `.ptl-in`) so events fade/slide out from the spine.
+
+#### Media
+- WIZ Assistant: embedded promo video (Figma Weavy + CapCut).
+- LC-OCT SkinArch: embedded Remotion commercial (v2, 40s) + 6 scene stills + 2 Remotion Studio screenshots + 4 analysis-gallery images + a DEJ Viewer screen-recording demo (viewer.wsoft.space).
+- TMC: added a "front-end prototype" section (React 19 + Vite + Tailwind + Express, built with Claude Code) — prototype recording slot pending.
+
+#### Asset optimization
+- Compressed WIZ promo 49M→6M; re-encoded LC-OCT commercial to the v2 cut (~6M).
+- Compressed the 10 Q&A clips 298M→17M (720p, faststart).
+- Optimized the 12 cover images ~18M→3M (≤1600px).
+- Generated the 10 missing `qa-N-poster.jpg` frames (fixed broken homepage poster refs).
+- Scoped `.project-img-grid img` rules to fix a base `img{height:100%}` row-overlap bug.
+
+#### Media download deterrence
+- `style.css` + `script.js`: block right-click/drag on media, `controlsList="nodownload"` + disable PiP on video, `user-select`/`-webkit-touch-callout` off. (Friction, not true prevention — the Network tab still exposes files.)
+
+#### Role & copy refinements
+- **TMC** → "UI/UX Designer & Front-End Prototyper" (tools: Figma, Claude Code, React/Vite/Tailwind); reworked "Core flows" into "Five product lines" + a tabbed "Order management" module (Request Quote → Cart → Orders → History) and added the working front-end prototype section.
+- **WIZ Assistant** & **LC-OCT SkinArch** → "Product & Motion Designer".
+- **SnapLive 2.0** reframed as a "Live-Simulcasting Platform" (simulcast-to-many differentiator).
+
+#### W Labs case-study visuals & reusable UI (cont.)
+- Wired the real W Labs logos into the Identity before/after (`wlabs/logo-old.svg` / `logo-new.svg`, equal-height 180px cards).
+- Added a **Logo studies** section — Neural "W", AI Core, Wave Intelligence 3.1 and the adopted 3.2 — from the concept PDFs rendered to JPGs, shown as cropped auto-panning previews.
+- Added **"The studies, side by side"** (former vs revamped site boards) and renamed "Homepage progression" → **"Figma Screens Map Progression"** (low-fi → mid-fi → corrections). All board images optimized to ≤256 KB (≤2000px).
+
+**Reusable components (style.css + script.js):**
+- **Lightbox** — `.lgbox` on a `<figure>`/element makes its `<img>` click-to-expand into `#lightbox`; close via Esc, backdrop, or ✕. Two modes: *default* contains the image within **90vw × 90vh** (centered, for wide boards); **`.lb-scroll`** (auto-applied when the image is inside `.logo-studies`) fills `min(92vw, 1000px)` wide with **no height cap + vertical scroll** for very tall boards.
+- **Logo-study auto-pan** — Web Animations API; previews pan top→bottom on a 24s linear loop, staggered; **hover → `playbackRate 0.5`** (seamless half-speed, no jump). Respects `prefers-reduced-motion`.
+- **Board previews** (`.web-studies`) — rounded, borderless, hover `scale(1.04)` zoom (clipped by `overflow:hidden`), click → lightbox; no auto-animation.
+- Fixed a base `img { height:100% }` bug by scoping `.project-img-grid > div img` to natural aspect ratio.
+- **Responsive screenshots** (`.product-shots` + Before/After) — each preview is a `<picture>` serving **mobile ≤640 / tablet ≤1024 / desktop** variants; the lightbox opens `img.currentSrc` (the variant the viewport actually loaded) in `.lb-scroll` mode. Naming: `wlabs-product-<name>-{desktop,tablet,mobile}.jpg`, `wlabs-home-{former,desktop,tablet,mobile}.jpg`.
+- **Animated vectors** (`.vectors-layout`) — the revamp's home/about vector animations, exported as **WebM (VP9)** instead of GIF (smaller + higher fidelity), embedded as `autoplay muted loop playsinline` tiles stacked in a left column with the **Figma collection sticky on the right** (click → lightbox). Files: `assets/videos/wlabs-vec-*.webm`. WebM-only (no MP4 fallback) — plays in Chrome/Firefox/Edge/Safari 14.1+.
+
 ---
 
 ## Still To Do
@@ -151,9 +207,12 @@ portfolio/
 - [x] Confirm social handles (LinkedIn: `/in/karlomiguelperez`, GitHub: `/karlmiguerez`)
 - [x] Add all 6 inner project pages with breadcrumbs and prev/next loop nav
 - [x] Fill in real project metadata, titles, and descriptions on home page and inner page heroes
-- [ ] Fill in real body content (overview, process, outcome) and images/mockups for all 6 inner pages
-- [/] Add cover images to project cards on `index.html` (Project 1 cover added; Projects 2–6 pending cover uploads)
-- [/] Upload and finalize Q&A video clips (`qa-1.mp4` through `qa-10.mp4`) and their poster frames (`qa-1-poster.jpg` through `qa-10-poster.jpg`) in `assets/videos/` and `assets/images/` respectively
+- [x] Fill in real body content (overview, process, outcome) for all 6 inner pages — done Session 6 (case-study copy from Figma/Jira/Slack)
+- [/] Images/mockups for inner pages — real media embedded (videos, galleries, Studio/DEJ captures); remaining Figma exports pending (see per-project `README.txt` export maps)
+- [x] Add cover images to project cards + inner pages — all 6, added & optimized (Session 6)
+- [x] Upload and finalize Q&A video clips + poster frames — compressed; the 10 posters generated (Session 6)
+- [ ] Export remaining Figma images into `assets/images/<project>/` folders and uncomment the corresponding `<img>` slots
+- [ ] Record the TMC front-end prototype walkthrough → `assets/videos/tmc-prototype.mp4` (slot ready in `tmc.html`)
 - [ ] Audit `style.css` and `script.js` for any remaining flat asset paths (pre-`assets/images/` refactor)
 - [ ] Explore dark mode toggle
 - [ ] Add "Live Site" or "View on Figma" CTA inside project meta aside where applicable

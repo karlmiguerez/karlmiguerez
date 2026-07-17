@@ -296,3 +296,43 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
   harden();
   document.addEventListener('DOMContentLoaded', harden);
 })();
+
+
+/* ---------- Lightbox (logo studies) ---------- */
+(function () {
+  const triggers = document.querySelectorAll('.lgbox img');
+  if (!triggers.length) return;
+  const lb = document.createElement('div');
+  lb.id = 'lightbox';
+  lb.innerHTML = '<button class="lb-close" aria-label="Close">✕</button><img alt="" />';
+  document.body.appendChild(lb);
+  const lbImg = lb.querySelector('img');
+  const open = (src, alt, scroll) => { lbImg.src = src; lbImg.alt = alt || ''; lb.classList.toggle('lb-scroll', !!scroll); lb.classList.add('open'); document.body.style.overflow = 'hidden'; lb.scrollTop = 0; };
+  const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; lbImg.removeAttribute('src'); };
+  triggers.forEach((img) => img.addEventListener('click', () => open(img.currentSrc || img.getAttribute('src'), img.alt, !!img.closest('.logo-studies, .product-shots'))));
+  lb.addEventListener('click', (e) => { if (e.target !== lbImg) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+})();
+
+
+/* ---------- Logo-study auto-pan (WAAPI — seamless hover slow-down) ---------- */
+(function () {
+  const imgs = document.querySelectorAll('.logo-studies > figure img');
+  if (!imgs.length) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const DURATION = 24000; // ms for a full top→bottom pass (linear)
+  imgs.forEach((img, i) => {
+    const start = () => {
+      const anim = img.animate(
+        [{ objectPosition: '50% 0%' }, { objectPosition: '50% 100%' }],
+        { duration: DURATION, iterations: Infinity, direction: 'alternate', easing: 'linear' }
+      );
+      anim.currentTime = i * (DURATION / 2); // stagger the four so they're out of sync
+      const fig = img.closest('figure');
+      fig.addEventListener('mouseenter', () => { anim.playbackRate = 0.5; }); // seamless half-speed
+      fig.addEventListener('mouseleave', () => { anim.playbackRate = 1; });
+    };
+    if (img.complete) start(); else img.addEventListener('load', start);
+  });
+})();

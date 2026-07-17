@@ -20,3 +20,16 @@ already written (commented) beside each slot in project-1.html.
 ── How to swap ──
 For each image slot in project-1.html: delete the <div class="project-img-placeholder">…</div>
 and uncomment the <img> line directly beneath it.
+
+── Website design boards (section "The studies, side by side", after Process) ──
+Save your two Figma canvas screenshots here, then uncomment the <img> beside each slot:
+  wlabs-site-former.jpg   full board of the FORMER site (wsoft-website Figma file)
+  wlabs-site-revamp.jpg   full board of the REVAMPED site (W Labs Website Revamp Figma file)
+These get click-to-lightbox + a subtle hover zoom (no auto-pan).
+
+── Product pages (section "Product pages") — RESPONSIVE, now wired ──
+Two products, each with desktop/tablet/mobile variants served via <picture> (mobile ≤640, tablet ≤1024, else desktop);
+the lightbox opens whichever variant the viewport loaded (currentSrc), in scroll mode.
+  wlabs-product-skinarch-{desktop,tablet,mobile}.jpg   SkinArch LC-OCT product page
+  wlabs-product-wiz-{desktop,tablet,mobile}.jpg        WIZ Assistant product page
+(The old single-file slots lcoct.jpg / wiz-assistant.jpg / optical-micro.jpg are no longer used.)
