@@ -1318,6 +1318,11 @@ ul {
   letter-spacing: 0.1em;
 }
 
+/* Clickable cover → zoom lightbox: hover zoom-in, clipped by the rounded frame */
+.project-cover.lgbox .project-cover-placeholder { overflow: hidden; cursor: zoom-in; }
+.project-cover.lgbox img { transition: transform .4s ease; }
+.project-cover.lgbox:hover img { transform: scale(1.03); }
+
 /* --- Project Content --- */
 .section-inner {
   max-width: var(--max-w);
@@ -1887,14 +1892,44 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
 .logo-studies figcaption { font-size: .86rem; color: var(--text-muted); line-height: 1.6; margin-top: .6rem; }
 
 /* Lightbox (click a study to view the full board) */
-#lightbox { position: fixed; inset: 0; z-index: 1000; display: none; background: rgba(20,20,20,.92); overflow: auto; padding: 2vh 2vw; cursor: zoom-out; }
-#lightbox.open { display: flex; align-items: center; justify-content: center; }
-#lightbox img { max-width: 90vw; max-height: 90vh; width: auto; height: auto; border-radius: 4px; box-shadow: 0 24px 70px rgba(0,0,0,.5); cursor: default; }
+#lightbox { position: fixed; inset: 0; z-index: 1000; display: none; background: rgba(20,20,20,.92); cursor: zoom-out; }
+#lightbox.open { display: block; }
+#lightbox .lb-stage { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; overflow: auto; padding: 2vh 2vw; }
+#lightbox .lb-stage img { max-width: 90vw; max-height: 90vh; width: auto; height: auto; border-radius: 4px; box-shadow: 0 24px 70px rgba(0,0,0,.5); cursor: default; }
 /* tall boards (logo studies): fill a generous width and scroll vertically instead of shrinking to fit 90vh */
-#lightbox.lb-scroll.open { align-items: flex-start; }
-#lightbox.lb-scroll img { max-width: min(92vw, 1000px); max-height: none; }
-#lightbox .lb-close { position: fixed; top: 16px; right: 22px; width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-family: var(--font-mono); font-size: 1.1rem; cursor: pointer; }
+#lightbox.lb-scroll .lb-stage { align-items: flex-start; padding-bottom: 6rem; }
+#lightbox.lb-scroll .lb-stage img { max-width: min(92vw, 1000px); max-height: none; }
+/* project snapshots: free zoom + pan — width set in JS, scroll both axes, drag to pan.
+   `safe center` centers the image when it fits but aligns to start when it overflows,
+   so the top/left never get clipped out of scroll reach; `flex: none` keeps the JS width. */
+#lightbox.lb-zoom { cursor: default; }
+#lightbox.lb-zoom .lb-stage { align-items: safe center; justify-content: safe center; padding: 2vh 2vw 6rem; cursor: grab; }
+#lightbox.lb-zoom .lb-stage.is-panning { cursor: grabbing; }
+#lightbox.lb-zoom .lb-stage img { flex: 0 0 auto; max-width: none; max-height: none; height: auto; }
+/* zoom toolbar */
+#lightbox .lb-tools { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 1002; display: none; gap: .4rem; }
+#lightbox.lb-zoom .lb-tools { display: flex; }
+#lightbox .lb-tools button { min-width: 38px; height: 34px; border: none; border-radius: 6px; background: rgba(255,255,255,.14); color: #fff; font-family: var(--font-mono); font-size: 1rem; line-height: 1; cursor: pointer; }
+#lightbox .lb-tools button:hover:not(:disabled) { background: rgba(255,255,255,.26); }
+#lightbox .lb-tools button:disabled { opacity: .35; cursor: default; }
+#lightbox .lb-tools .lb-zoom-fit { padding: 0 .85rem; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; }
+#lightbox .lb-close { position: fixed; top: 16px; right: 22px; width: 40px; height: 40px; border: none; border-radius: 50%; background: rgba(255,255,255,.14); color: #fff; font-family: var(--font-mono); font-size: 1.1rem; cursor: pointer; z-index: 1002; }
 #lightbox .lb-close:hover { background: rgba(255,255,255,.24); }
+
+/* Gallery pager — prev · current n / N · next (echoes the footer project pager) */
+#lightbox .lb-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 1001; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.1rem clamp(1.2rem, 5vw, 3rem) 1.3rem; background: linear-gradient(to top, rgba(20,20,20,.82), rgba(20,20,20,0)); cursor: default; }
+#lightbox .lb-bar.is-single { justify-content: center; }
+#lightbox .lb-bar.is-single .lb-nav { display: none; }
+#lightbox .lb-nav { display: flex; flex-direction: column; gap: .18rem; max-width: 38%; padding: 0; border: none; background: none; color: #fff; font-family: var(--font-mono); text-align: left; cursor: pointer; }
+#lightbox .lb-next { text-align: right; align-items: flex-end; }
+#lightbox .lb-nav.is-off { visibility: hidden; }
+#lightbox .lb-dir { font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+#lightbox .lb-adj { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .92rem; font-weight: 600; color: rgba(255,255,255,.85); transition: color var(--transition); }
+#lightbox .lb-nav:hover .lb-adj { color: #fff; }
+#lightbox .lb-meta { display: flex; flex-direction: column; align-items: center; gap: .25rem; flex: 0 0 auto; text-align: center; }
+#lightbox .lb-name { font-family: var(--font-mono); font-size: .82rem; letter-spacing: .04em; color: #fff; }
+#lightbox .lb-count { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .14em; color: rgba(255,255,255,.55); }
+@media (max-width: 640px) { #lightbox .lb-adj { display: none; } #lightbox .lb-nav { max-width: none; flex: 0 0 auto; } }
 
 /* Logo-study previews — auto-pan is driven by the Web Animations API in script.js
    (playbackRate drops to 0.5 on hover: seamless half-speed, no duration-swap jump).
@@ -1904,6 +1939,8 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
 .web-studies > figure { margin: 0; overflow: hidden; border-radius: 4px; }
 .web-studies > figure img { width: 100%; height: auto; display: block; cursor: zoom-in; transition: transform .4s ease; }
 .web-studies > figure:hover img { transform: scale(1.04); }
+/* progression row (3-up): equal-height previews via a shared aspect box + top-anchored crop */
+.web-studies.cols-3 > figure img { aspect-ratio: 3 / 2; object-fit: cover; object-position: top; }
 .web-studies figcaption { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; color: var(--text-muted); text-transform: uppercase; margin-top: .6rem; }
 
 /* Product-page shots — responsive (<picture>), cropped preview, hover-zoom, click → lightbox (scroll mode) */
@@ -1911,6 +1948,10 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
 .product-shots > figure img { width: 100%; height: 360px; object-fit: cover; object-position: top; display: block; transition: transform .4s ease; }
 .product-shots > figure:hover img { transform: scale(1.03); }
 .product-shots figcaption { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; color: var(--text-muted); text-transform: uppercase; margin-top: .6rem; }
+
+/* Pan-shots: auto-scroll the tall crop top→bottom (WAAPI controls object-position), slows on hover — no zoom */
+.pan-shots > figure img { transition: opacity var(--transition); }
+.pan-shots > figure:hover img { transform: none; opacity: .85; }
 
 /* ============================================
    ANIMATED VECTORS — autoplay/loop WebM tiles + Figma collection

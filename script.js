@@ -298,26 +298,233 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
 })();
 
 
-/* ---------- Lightbox (logo studies) ---------- */
+/* ---------- Lightbox: gallery pager + free zoom/pan for project snapshots ---------- */
 (function () {
   const triggers = document.querySelectorAll('.lgbox img');
   if (!triggers.length) return;
+
   const lb = document.createElement('div');
   lb.id = 'lightbox';
-  lb.innerHTML = '<button class="lb-close" aria-label="Close">✕</button><img alt="" />';
+  lb.innerHTML =
+    '<button class="lb-close" aria-label="Close">✕</button>' +
+    '<div class="lb-tools">' +
+      '<button class="lb-zoom-out" type="button" aria-label="Zoom out">−</button>' +
+      '<button class="lb-zoom-fit" type="button">Fit</button>' +
+      '<button class="lb-zoom-in" type="button" aria-label="Zoom in">+</button>' +
+    '</div>' +
+    '<div class="lb-stage"><img alt="" /></div>' +
+    '<div class="lb-bar">' +
+      '<button class="lb-nav lb-prev" type="button" aria-label="Previous"><span class="lb-dir">← Prev</span><span class="lb-adj lb-prev-name"></span></button>' +
+      '<div class="lb-meta"><span class="lb-name"></span><span class="lb-count"></span></div>' +
+      '<button class="lb-nav lb-next" type="button" aria-label="Next"><span class="lb-dir">Next →</span><span class="lb-adj lb-next-name"></span></button>' +
+    '</div>';
   document.body.appendChild(lb);
-  const lbImg = lb.querySelector('img');
-  const open = (src, alt, scroll) => { lbImg.src = src; lbImg.alt = alt || ''; lb.classList.toggle('lb-scroll', !!scroll); lb.classList.add('open'); document.body.style.overflow = 'hidden'; lb.scrollTop = 0; };
-  const close = () => { lb.classList.remove('open'); document.body.style.overflow = ''; lbImg.removeAttribute('src'); };
-  triggers.forEach((img) => img.addEventListener('click', () => open(img.currentSrc || img.getAttribute('src'), img.alt, !!img.closest('.logo-studies, .product-shots'))));
-  lb.addEventListener('click', (e) => { if (e.target !== lbImg) close(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && lb.classList.contains('open')) close(); });
+
+  const stage = lb.querySelector('.lb-stage');
+  const lbImg = stage.querySelector('img');
+  const bar = lb.querySelector('.lb-bar');
+  const elName = lb.querySelector('.lb-name');
+  const elCount = lb.querySelector('.lb-count');
+  const elPrev = lb.querySelector('.lb-prev');
+  const elNext = lb.querySelector('.lb-next');
+  const elPrevName = lb.querySelector('.lb-prev-name');
+  const elNextName = lb.querySelector('.lb-next-name');
+  const btnIn = lb.querySelector('.lb-zoom-in');
+  const btnOut = lb.querySelector('.lb-zoom-out');
+  const btnFit = lb.querySelector('.lb-zoom-fit');
+
+  let group = [], idx = 0, isZoom = false;
+  let fitW = 0, natW = 0, zoom = 1, zmin = 0.5, zmax = 3;
+
+  const labelOf = (fig) => {
+    const cap = fig && fig.querySelector('figcaption');
+    if (!cap) return '';
+    const strong = cap.querySelector('strong');
+    return (strong ? strong.textContent : cap.textContent).replace(/\s+/g, ' ').trim();
+  };
+  const scrollOf = (img) => !!img.closest('.logo-studies, .product-shots');
+  const snapOf = (img) => !!img.closest('.snapshot');
+  const clamp = (z) => Math.max(zmin, Math.min(zmax, z));
+
+  // Prefer an explicit hi-res source (data-hires) for the zoom view — desktop only, so
+  // phones/tablets keep their lighter responsive variant; else the loaded variant.
+  const wantHiRes = () => window.matchMedia('(min-width: 1025px)').matches;
+  const itemFor = (im) => ({
+    src: (wantHiRes() && im.getAttribute('data-hires')) || im.currentSrc || im.getAttribute('src'),
+    name: labelOf(im.closest('figure')) || (im.getAttribute('alt') || '').replace(/\s*cover image$/i, '').trim(),
+    scroll: scrollOf(im),
+    snapshot: snapOf(im)
+  });
+
+  function setWidth() { lbImg.style.width = (fitW * zoom) + 'px'; }
+  function updateTools() {
+    btnOut.disabled = zoom <= zmin + 1e-3;
+    btnIn.disabled = zoom >= zmax - 1e-3;
+  }
+  function computeFit() {
+    const cs = getComputedStyle(stage);
+    const availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    natW = lbImg.naturalWidth || availW;
+    const natH = lbImg.naturalHeight || availH;
+    fitW = Math.min(availW, natW) || availW;                    // fit-to-width (zoom = 1)
+    const containW = Math.min(availW, availH * natW / natH);    // whole image just fits the viewport
+    zmin = Math.min(1, containW / fitW);                        // floor = contain (no empty-margin zoom-out)
+    zmax = Math.max(natW / fitW, 3);                            // at least to native, at least 3× fit
+  }
+  function initZoomView() {
+    computeFit();
+    zoom = 1;                                    // fit-to-width
+    setWidth();
+    stage.scrollTop = 0;
+    stage.scrollLeft = (stage.scrollWidth - stage.clientWidth) / 2; // center horizontally
+    updateTools();
+  }
+  // Zoom keeping a focal point (defaults to viewport centre) anchored under the cursor
+  function zoomTo(nz, cx, cy, vx, vy) {
+    if (!isZoom) return;
+    nz = clamp(nz);
+    if (Math.abs(nz - zoom) < 1e-4) return;
+    if (cx == null) {
+      vx = stage.clientWidth / 2; vy = stage.clientHeight / 2;
+      cx = stage.scrollLeft + vx; cy = stage.scrollTop + vy;
+    }
+    const ratio = nz / zoom;
+    zoom = nz;
+    setWidth();
+    stage.scrollLeft = cx * ratio - vx;
+    stage.scrollTop = cy * ratio - vy;
+    updateTools();
+  }
+
+  function render() {
+    const cur = group[idx];
+    isZoom = cur.snapshot;
+    lb.classList.toggle('lb-zoom', isZoom);
+    lb.classList.toggle('lb-scroll', !isZoom && cur.scroll);
+    lbImg.style.width = '';
+    lbImg.alt = cur.name || '';
+
+    const multi = group.length > 1;
+    bar.classList.toggle('is-single', !multi);
+    elName.textContent = cur.name;
+    elCount.textContent = multi ? (idx + 1) + ' / ' + group.length : '';
+    const hasPrev = idx > 0, hasNext = idx < group.length - 1;
+    elPrev.classList.toggle('is-off', !hasPrev);
+    elNext.classList.toggle('is-off', !hasNext);
+    elPrevName.textContent = hasPrev ? group[idx - 1].name : '';
+    elNextName.textContent = hasNext ? group[idx + 1].name : '';
+
+    let done = false;
+    const onReady = () => { if (done) return; done = true; stage.scrollTop = 0; if (isZoom) initZoomView(); };
+    lbImg.onload = onReady;
+    lbImg.src = cur.src;
+    if (lbImg.complete && lbImg.naturalWidth) onReady();
+  }
+
+  function open(img) {
+    const fig = img.closest('figure.lgbox');
+    if (fig) {
+      const figs = Array.from(fig.parentElement.querySelectorAll(':scope > figure.lgbox'));
+      group = figs.map((f) => itemFor(f.querySelector('img')));
+      idx = Math.max(0, figs.indexOf(fig));
+    } else {
+      group = [itemFor(img)];
+      idx = 0;
+    }
+    lb.classList.add('open');            // reveal first so the stage has layout width
+    document.body.style.overflow = 'hidden';
+    render();
+  }
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    lbImg.removeAttribute('src');
+    lbImg.style.width = '';
+  }
+  function go(delta) {
+    const n = idx + delta;
+    if (n < 0 || n >= group.length) return;
+    idx = n;
+    render();
+  }
+
+  triggers.forEach((img) => img.addEventListener('click', () => open(img)));
+  lb.querySelector('.lb-close').addEventListener('click', close);
+  elPrev.addEventListener('click', (e) => { e.stopPropagation(); go(-1); });
+  elNext.addEventListener('click', (e) => { e.stopPropagation(); go(1); });
+  bar.addEventListener('click', (e) => e.stopPropagation());
+  lbImg.addEventListener('click', (e) => e.stopPropagation());
+
+  // Zoom controls
+  btnIn.addEventListener('click', (e) => { e.stopPropagation(); zoomTo(zoom * 1.3); });
+  btnOut.addEventListener('click', (e) => { e.stopPropagation(); zoomTo(zoom / 1.3); });
+  btnFit.addEventListener('click', (e) => { e.stopPropagation(); zoomTo(1); });
+  stage.addEventListener('wheel', (e) => {
+    if (!isZoom) return;
+    e.preventDefault();
+    const r = stage.getBoundingClientRect();
+    const vx = e.clientX - r.left, vy = e.clientY - r.top;
+    zoomTo(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), stage.scrollLeft + vx, stage.scrollTop + vy, vx, vy);
+  }, { passive: false });
+  stage.addEventListener('dblclick', (e) => {
+    if (!isZoom) return;
+    const r = stage.getBoundingClientRect();
+    const vx = e.clientX - r.left, vy = e.clientY - r.top;
+    const target = zoom > 1.01 ? 1 : Math.min(zmax, Math.max(natW / fitW, 2));
+    zoomTo(target, stage.scrollLeft + vx, stage.scrollTop + vy, vx, vy);
+  });
+
+  // Drag to pan (and swallow the click that would otherwise close)
+  let panning = false, sx = 0, sy = 0, sl = 0, st = 0, moved = false;
+  stage.addEventListener('pointerdown', (e) => {
+    if (!isZoom || e.pointerType !== 'mouse') return;   // touch keeps native scroll/momentum
+    if (e.target.closest('.lb-tools, .lb-bar, .lb-close')) return;
+    panning = true; moved = false;
+    sx = e.clientX; sy = e.clientY; sl = stage.scrollLeft; st = stage.scrollTop;
+    stage.classList.add('is-panning');
+    try { stage.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+  stage.addEventListener('pointermove', (e) => {
+    if (!panning) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+    stage.scrollLeft = sl - dx; stage.scrollTop = st - dy;
+  });
+  const endPan = (e) => {
+    if (!panning) return;
+    panning = false; stage.classList.remove('is-panning');
+    try { stage.releasePointerCapture(e.pointerId); } catch (_) {}
+  };
+  stage.addEventListener('pointerup', endPan);
+  stage.addEventListener('pointercancel', endPan);
+
+  // Click on backdrop closes — but not in zoom mode, and not right after a drag
+  stage.addEventListener('click', (e) => {
+    if (e.target === lbImg) return;
+    if (isZoom) { moved = false; return; }
+    close();
+  });
+
+  window.addEventListener('resize', () => {
+    if (!lb.classList.contains('open') || !isZoom) return;
+    const z = zoom; computeFit(); zoom = clamp(z); setWidth(); updateTools();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') close();
+    else if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'ArrowRight') go(1);
+    else if (isZoom && (e.key === '+' || e.key === '=')) zoomTo(zoom * 1.3);
+    else if (isZoom && e.key === '-') zoomTo(zoom / 1.3);
+  });
 })();
 
 
 /* ---------- Logo-study auto-pan (WAAPI — seamless hover slow-down) ---------- */
 (function () {
-  const imgs = document.querySelectorAll('.logo-studies > figure img');
+  const imgs = document.querySelectorAll('.logo-studies > figure img, .pan-shots > figure img');
   if (!imgs.length) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
