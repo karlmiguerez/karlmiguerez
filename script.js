@@ -298,6 +298,24 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
 })();
 
 
+/* ---------- Production-site status (checked server-side via /api/status) ---------- */
+(function () {
+  const badges = document.querySelectorAll('.prod-status[data-prod]');
+  if (!badges.length) return;
+
+  fetch('/api/status')
+    .then((r) => (r.ok ? r.json() : null))
+    .then((data) => {
+      if (!data) return;
+      badges.forEach((b) => {
+        const s = data[b.dataset.prod];
+        if (s && s.up) b.hidden = false;
+      });
+    })
+    .catch(() => {}); // fail quiet — show no badge rather than a false "down"
+})();
+
+
 /* ---------- Lightbox: gallery pager + free zoom/pan for project snapshots ---------- */
 (function () {
   const triggers = document.querySelectorAll('.lgbox img');

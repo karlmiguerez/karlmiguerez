@@ -1318,6 +1318,21 @@ ul {
   letter-spacing: 0.1em;
 }
 
+/* Live-site link + status badge — status is resolved server-side via /api/status.
+   The badge stays hidden unless the site is confirmed up (fail quiet, never a false "down"). */
+.prod-link { color: var(--accent); border-bottom: 1px solid transparent; transition: border-color var(--transition); }
+.prod-link:hover { border-bottom-color: var(--accent); }
+.prod-status { display: inline-flex; align-items: center; gap: .4rem; margin-left: .6rem; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; color: var(--success); }
+.prod-status[hidden] { display: none; }
+.prod-status i { width: 6px; height: 6px; border-radius: 50%; background: var(--success); box-shadow: 0 0 0 3px rgba(78,204,163,.18); }
+/* Card variant — status + site URL on one line, between the description and View Project */
+.card-prod { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin: 0 0 1.1rem; }
+.prod-status.card-status { display: flex; margin: 0; }
+.prod-status.card-status[hidden] { display: none; }
+.prod-url { display: inline-flex; align-items: center; gap: .38rem; font-family: var(--font-mono); font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); transition: opacity var(--transition); }
+.prod-url:hover { opacity: .7; }
+.prod-url svg { flex: none; opacity: .75; }
+
 /* Clickable cover → zoom lightbox: hover zoom-in, clipped by the rounded frame */
 .project-cover.lgbox .project-cover-placeholder { overflow: hidden; cursor: zoom-in; }
 .project-cover.lgbox img { transition: transform .4s ease; }
