@@ -1,2 +1,8 @@
 .vercel
 .env*
+
+# macOS
+.DS_Store
+
+# Local dev helpers — machine-specific (hardcodes an absolute home path)
+com.karlmiguerez.dev.plist
