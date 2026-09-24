@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafune: Scalp Condition Tracking — Karlmiguerez</title>
+  <meta name="description"
+    content="Cafune — an Android-first scalp-condition tracking app. Design system, screen flows and a light-theme rebuild by Karlmiguerez." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <!--
+    ASSETS TO EXPORT: see assets/images/cafune/README.txt for the Figma node map.
+    To use an image: delete the .project-img-placeholder div and uncomment the <img> beneath it.
+  -->
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <div id="nav-partial"></div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="bc-sep">→</span>
+      <a href="/#work">Projects</a>
+      <span class="bc-sep">→</span>
+      <span class="bc-current">Cafune</span>
+    </nav>
+  </div>
+
+  <!-- PROJECT HERO -->
+  <section class="project-hero">
+    <div class="project-hero-inner">
+      <div class="project-hero-meta">
+        <span class="project-type">UI / UX Design</span>
+        <span class="project-type">Mobile App</span>
+        <span class="bc-sep">·</span>
+        <span class="project-year">2026</span>
+      </div>
+      <h1 class="project-hero-title">Cafune: Scalp Condition Tracking</h1>
+      <p class="project-hero-brief">
+        A mobile app that makes scalp self-assessment repeatable — photograph up to five regions of your own head,
+        answer five short questions, and get a 0–100 condition score you can track over time. I led design and
+        branding — the design system and screen flows, then a full light-theme rebuild after client review.
+      </p>
+    </div>
+  </section>
+
+  <!-- PROJECT COVER IMAGE -->
+  <div class="project-cover lgbox snapshot">
+    <div class="project-cover-placeholder">
+      <img src="assets/images/cafune/cafune-inner-page-cover.jpg"
+        data-hires="assets/images/cafune/cafune-inner-page-cover-2x.jpg"
+        alt="Cafune: Scalp Condition Tracking Cover Image" />
+    </div>
+  </div>
+
+  <!-- PROJECT CONTENT -->
+  <article class="project-content section-inner">
+
+    <!-- Overview + Details -->
+    <div class="project-details-grid">
+      <div class="project-overview">
+        <h2 class="project-section-title">Overview</h2>
+        <p>Scalp condition is hard to judge on your own — it's out of sight, and "is this worse than last month?" is
+          almost impossible to answer from memory. Cafune turns that into something measurable: a guided capture of up
+          to five scalp regions, a five-item questionnaire, and a 0–100 score reported with a grade, a confidence
+          level, and how much of the head was actually covered. Each check is saved so the next one has something to
+          compare against.</p>
+        <p>I led the design and branding track. W Labs delivered the product for the client with a PM coordinating and
+          a separate developer on implementation, while I owned the design system, the screen flows, a mid-project
+          results redesign, and the v2 rebuild that followed the client's review — working across the spec and QA
+          documentation rather than handing off flat files.</p>
+      </div>
+      <aside class="project-meta-aside">
+        <div class="meta-block">
+          <span class="meta-label">Role</span>
+          <span class="meta-value">Design &amp; Branding Lead</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Tools</span>
+          <span class="meta-value">Figma, Claude Design, React/Vite/Tailwind</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Year</span>
+          <span class="meta-value">2026</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Type</span>
+          <span class="meta-value">UI/UX Design, Mobile App, Design System</span>
+        </div>
+        <div class="meta-block">
+          <span class="meta-label">Live site</span>
+          <span class="meta-value">
+            <a class="prod-link" href="https://cafune.wsoftlabs.dev/welcome" target="_blank" rel="noopener">cafune.wsoftlabs.dev ↗</a>
+            <span class="prod-status" data-prod="cafune" hidden><i></i>Live</span>
+          </span>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Credible, not clinical -->
+    <div class="project-body">
+      <h2 class="project-section-title">Credible, not clinical</h2>
+      <p>The hardest constraint wasn't visual — it was linguistic. Cafune measures, but it must never diagnose, and
+        that line had to hold in every string on every screen. The product carries an explicit banned vocabulary:
+        no <em>diagnose</em>, no <em>disease</em>, no <em>treatment</em>, no <em>clinical</em>, no named conditions.
+        Even the questionnaire copy deliberately avoids words a user would expect, like “dandruff” or “hair loss”.</p>
+      <p>So results are written as trends and “areas to watch” rather than verdicts, uncertainty is shown instead of
+        hidden, and status is never carried by colour alone — every state pairs colour with an icon and a label. The
+        semantic palette was tuned the same way: the “needs care” state is a muted terracotta, chosen specifically so
+        it would not read as an alarming medical red.</p>
+    </div>
+
+    <!-- User flow -->
+    <div class="project-body">
+      <h2 class="project-section-title">The flow</h2>
+      <p>The end-to-end journey, mapped before any screen was designed. Two quality gates do most of the work: a
+        per-region capture check (brightness, focus, steadiness, distance — with no override), and a confidence check
+        on the result. Each has its own recovery loop rather than a dead end.</p>
+    </div>
+    <div class="project-img-block">
+      <img src="assets/images/cafune/cafune-user-flow.svg"
+        alt="Cafune end-to-end user flow — capture, questionnaire, analysis, result, history" />
+      <p class="pfig-cap">End-to-end user flow · capture → questionnaire → analysis → result → history</p>
+    </div>
+
+    <!-- Concept explorations -->
+    <div class="project-body">
+      <h2 class="project-section-title">Concept explorations</h2>
+      <p>Before the system was locked, each hard interaction was drawn on its own — the multi-region head map, what a
+        result should say when it isn't confident, and how to offer an optional clip-on macro lens without ever
+        making it feel required.</p>
+    </div>
+    <div class="project-img-grid cols-3 web-studies snapshot">
+      <figure class="lgbox">
+        <img src="assets/images/cafune/cafune-concept-multiview-capture.svg"
+          alt="Cafune concept — multi-view scalp capture with five region markers" />
+        <figcaption class="pfig-cap">Multi-view capture</figcaption>
+      </figure>
+      <figure class="lgbox">
+        <img src="assets/images/cafune/cafune-concept-result-guidance.svg"
+          alt="Cafune concept — result screen with what you can do guidance" />
+        <figcaption class="pfig-cap">Result &amp; guidance</figcaption>
+      </figure>
+      <figure class="lgbox">
+        <img src="assets/images/cafune/cafune-concept-lens-tip.svg"
+          alt="Cafune concept — optional clip-on macro lens tip card" />
+        <figcaption class="pfig-cap">Optional lens tip</figcaption>
+      </figure>
+    </div>
+
+    <!-- Process / Timeline -->
+    <div class="project-body">
+      <h2 class="project-section-title">Process</h2>
+      <p>Milestones are anchored to the project's Jira (epic <em>MVP-203</em>) and the <em>#project-cafune</em> Slack
+        channel — from the first design-system ticket, through a rename, to the rebuild that followed client review.</p>
+    </div>
+
+    <div class="ptl">
+      <div class="ptl-phase"><span>Phase 1 · Foundations</span></div>
+      <div class="ptl-year"><span>2026</span></div>
+
+      <div class="ptl-evt left">
+        <div class="ptl-side l">
+          <span class="ptl-when">Jul 2026</span>
+          <h3>Design system &amp; screen flows</h3>
+          <p>Kicked off under the working name <em>Kapune</em>. From PRD v1.2 I built the design system and mapped the
+            screen flows — the foundation every later screen was drawn against.</p>
+        </div>
+        <div class="ptl-node"><i></i></div>
+        <div class="ptl-side r"></div>
+      </div>
+
+      <div class="ptl-evt right">
+        <div class="ptl-side l"></div>
+        <div class="ptl-node"><i></i></div>
+        <div class="ptl-side r">
+          <span class="ptl-when">Jul 2026</span>
+          <h3>Kapune → Cafune</h3>
+          <p>The product was renamed mid-flight. Display names moved first; folder paths, domains and repositories
+            were deliberately left alone so the rename couldn't break the build mid-sprint.</p>
+        </div>
+      </div>
+
+      <div class="ptl-evt left">
+        <div class="ptl-side l">
+          <span class="ptl-when">Aug 2026</span>
+          <h3>Consent, privacy &amp; edge states</h3>
+          <p>Consent handling split two ways — consented records to the server, non-consented kept on-device and
+            revocable — alongside an edge-state pass covering permission denial, rejected uploads, and going offline
+            mid-flow.</p>
+        </div>
+        <div class="ptl-node"><i></i></div>
+        <div class="ptl-side r"></div>
+      </div>
+
+      <div class="ptl-phase"><span>Phase 2 · The rebuild</span></div>
+
+      <div class="ptl-evt right">
+        <div class="ptl-side l"></div>
+        <div class="ptl-node"><i></i></div>
+        <div class="ptl-side r">
+          <span class="ptl-when">Aug 2026</span>
+          <h3>Client review — “too dark”</h3>
+          <p>Two pieces of feedback reframed the product: the questionnaire was hard to find, and the interface read
+            as too dark. Both were symptoms of the same thing — a self-care tool that felt like diagnostic equipment.</p>
+        </div>
+      </div>
+
+      <div class="ptl-evt left">
+        <div class="ptl-side l">
+          <span class="ptl-when">Aug 2026</span>
+          <h3>v2 — light theme, reordered flow</h3>
+          <p>A full light-theme rebuild in ten days: the questionnaire moved ahead of the photo request, and the
+            accent shifted from the original clinical teal to a warmer burnt orange. Shipped as a working prototype
+            and a build.</p>
+        </div>
+        <div class="ptl-node"><i></i></div>
+        <div class="ptl-side r"></div>
+      </div>
+
+      <div class="ptl-evt right">
+        <div class="ptl-side l"></div>
+        <div class="ptl-node"><i></i></div>
+        <div class="ptl-side r">
+          <span class="ptl-when">Sep 2026</span>
+          <h3>Typography &amp; design QA</h3>
+          <p>A final type pass mapped screen titles to Playfair Display — replacing a face whose licence couldn't be
+            cleared for commercial use — plus design QA against the 49-case test workbook.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Before / after -->
+    <div class="project-body">
+      <h2 class="project-section-title">Before &amp; after</h2>
+      <p>The same product, either side of the client review. Beyond the theme flip, the change was in posture — less
+        instrument, more something you'd willingly open once a month.</p>
+    </div>
+    <div class="project-img-grid product-shots pan-shots">
+      <figure class="lgbox">
+        <div class="project-img-placeholder tall">v1 — dark theme</div>
+        <!-- <img src="assets/images/cafune/cafune-v1-dark.jpg" alt="Cafune v1 dark theme" /> -->
+        <figcaption class="pfig-cap">Before — v1 (dark)</figcaption>
+      </figure>
+      <figure class="lgbox">
+        <div class="project-img-placeholder tall">v2 — light theme</div>
+        <!-- <img src="assets/images/cafune/cafune-v2-light.jpg" alt="Cafune v2 light theme" /> -->
+        <figcaption class="pfig-cap">After — v2 (light)</figcaption>
+      </figure>
+    </div>
+
+    <!-- Key screens -->
+    <div class="project-body">
+      <h2 class="project-section-title">Key screens</h2>
+      <p>The five screens the product lives or dies on — guided capture, the questionnaire, and the result in each of
+        its states.</p>
+    </div>
+    <div class="project-img-grid cols-3">
+      <div>
+        <div class="project-img-placeholder tall">Capture · head map</div>
+        <!-- <img src="assets/images/cafune/cafune-capture.jpg" alt="Cafune capture head map" /> -->
+        <p class="pfig-cap">Capture · head map · 140:3065</p>
+      </div>
+      <div>
+        <div class="project-img-placeholder tall">Result</div>
+        <!-- <img src="assets/images/cafune/cafune-result.jpg" alt="Cafune result screen" /> -->
+        <p class="pfig-cap">Result · 140:3838</p>
+      </div>
+      <div>
+        <div class="project-img-placeholder tall">History</div>
+        <!-- <img src="assets/images/cafune/cafune-history.jpg" alt="Cafune history screen" /> -->
+        <p class="pfig-cap">History · 140:4596</p>
+      </div>
+    </div>
+
+    <!-- Outcome -->
+    <div class="project-body">
+      <h2 class="project-section-title">Outcome</h2>
+      <p>Cafune shipped as a 37-screen system with full light-theme coverage, an EN/KO bilingual build, and a working
+        prototype the client could hold. Of the PRD's 66 acceptance clauses, 48 were delivered outright — and the
+        gaps were reported honestly rather than papered over, including accuracy evidence that couldn't be proven
+        without labelled reference data.</p>
+      <p>The part I'd carry into the next project is smaller than the redesign: the client never said “make it
+        lighter” as a style note. They said it felt wrong. Treating that as a positioning problem rather than a
+        colour problem is what made the rebuild worth doing.</p>
+    </div>
+
+  </article>
+
+  <!-- PROJECT NAV -->
+  <nav class="project-nav">
+    <div class="project-nav-inner">
+      <a href="brainarch-brain-ct-lesion-analysis.html" class="project-nav-prev">
+        <span class="pn-label">← Previous</span>
+        <span class="pn-title">BrainArch: Brain CT Lesion Analysis</span>
+        <span class="pn-type">Brand Identity</span>
+        <span class="pn-type">Motion</span>
+      </a>
+      <a href="w-labs-brand-website-revamp.html" class="project-nav-next">
+        <span class="pn-label">Next →</span>
+        <span class="pn-title">W Labs Brand & Website Revamp</span>
+        <span class="pn-type">Brand Identity</span>
+        <span class="pn-type">UI/UX Design</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- FOOTER -->
+  <div id="footer-partial"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

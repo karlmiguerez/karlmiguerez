@@ -1,0 +1,70 @@
+<svg viewBox="0 0 830 604" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Cafune welcome + guided sample concept</title>
+<desc id="dsc">Three screens. 1 Welcome/splash asks new or returning: Get started (new) or I already have an account (log in). 2 Guided sample: a coached capture of one random region (Top crown) with framing and quality cues, noting nothing is saved. 3 Sample result: a one-region sample score with a tip and a disclaimer, then Create account to save and unlock all areas, or log in.</desc>
+<defs>
+<style>
+text{font-family:Inter,system-ui,sans-serif}
+.frm{font:700 10px Inter;fill:#9aa4a2;letter-spacing:1px}
+.brand{font:800 20px Inter}
+.tag{font:700 16px Inter;fill:#14201f}
+.sub{font:400 12px Inter;fill:#5f6b69}
+.btnT{font:600 14px Inter;fill:#fff}
+.btnS{font:600 13px Inter;fill:#14201f}
+.link{font:600 12px Inter;fill:#0e7c7b}
+.title{font:700 15px Inter;fill:#14201f}
+.chip{font:600 11px Inter}
+.mini{font:600 10px Inter;fill:#7ed3a6}
+.note{font:400 11px Inter;fill:#5f6b69}
+.score{font:800 30px Inter;fill:#14201f}
+.tiny{font:400 9.5px Inter;fill:#9aa4a2}
+.pill{font:700 9px Inter;letter-spacing:.8px}
+</style>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9aa4a2"/></marker>
+</defs>
+<rect x="0" y="0" width="830" height="604" fill="#eceeed"/>
+
+<path d="M270,300 l16,0" stroke="#9aa4a2" stroke-width="2" marker-end="url(#ar)"/>
+<path d="M540,300 l16,0" stroke="#9aa4a2" stroke-width="2" marker-end="url(#ar)"/>
+
+<text x="140" y="30" text-anchor="middle" class="frm">1 · WELCOME</text>
+<rect x="16" y="44" width="248" height="516" rx="22" fill="#ffffff" stroke="#e6e8e7"/>
+<text x="140" y="96" text-anchor="middle" class="brand"><tspan fill="#14201f">Ca</tspan><tspan fill="#0e7c7b">fune</tspan></text>
+<rect x="116" y="120" width="48" height="48" rx="12" fill="#0e7c7b"/><text x="140" y="152" text-anchor="middle" fill="#fff" style="font:800 22px Inter">C</text>
+<text x="140" y="212" text-anchor="middle" class="tag">Track your scalp,</text>
+<text x="140" y="232" text-anchor="middle" class="tag">clearly.</text>
+<text x="140" y="262" text-anchor="middle" class="sub">See how it works first —</text>
+<text x="140" y="279" text-anchor="middle" class="sub">no account needed.</text>
+<rect x="34" y="352" width="212" height="46" rx="10" fill="#0e7c7b"/><text x="140" y="381" text-anchor="middle" class="btnT">Get started</text>
+<rect x="34" y="406" width="212" height="44" rx="10" fill="#ffffff" stroke="#d3d7d5"/><text x="140" y="434" text-anchor="middle" class="btnS">I already have an account</text>
+<text x="140" y="472" text-anchor="middle" class="link">Log in</text>
+<rect x="98" y="500" width="84" height="20" rx="10" fill="#ffffff" stroke="#d3d7d5"/><text x="140" y="514" text-anchor="middle" class="tiny">non-medical</text>
+
+<text x="410" y="30" text-anchor="middle" class="frm">2 · GUIDED SAMPLE</text>
+<rect x="286" y="44" width="248" height="516" rx="22" fill="#ffffff" stroke="#e6e8e7"/>
+<rect x="356" y="66" width="108" height="20" rx="10" fill="#e6f2f1"/><text x="410" y="80" text-anchor="middle" class="pill" fill="#0e7c7b">TRY IT · SAMPLE</text>
+<text x="410" y="112" text-anchor="middle" class="title">Let's try one spot</text>
+<rect x="352" y="122" width="116" height="22" rx="11" fill="#f4f4f3" stroke="#e6e8e7"/><text x="410" y="137" text-anchor="middle" class="chip" fill="#14201f">Top · crown</text>
+<rect x="306" y="156" width="208" height="196" rx="14" fill="#14201f"/>
+<circle cx="410" cy="248" r="52" fill="none" stroke="#7ed3a6" stroke-width="2"/>
+<rect x="330" y="322" width="66" height="18" rx="9" fill="#1f3b38"/><text x="363" y="335" text-anchor="middle" class="mini">focus ok</text>
+<rect x="404" y="322" width="60" height="18" rx="9" fill="#1f3b38"/><text x="434" y="335" text-anchor="middle" class="mini">light ok</text>
+<text x="410" y="374" text-anchor="middle" class="sub">We'll guide each step.</text>
+<text x="410" y="391" text-anchor="middle" class="note">Just a sample — nothing is saved.</text>
+<rect x="306" y="404" width="208" height="46" rx="10" fill="#0e7c7b"/><text x="410" y="433" text-anchor="middle" class="btnT">Capture</text>
+<text x="410" y="474" text-anchor="middle" class="link">Skip &amp; sign up</text>
+
+<text x="680" y="30" text-anchor="middle" class="frm">3 · SAMPLE RESULT</text>
+<rect x="556" y="44" width="248" height="516" rx="22" fill="#ffffff" stroke="#e6e8e7"/>
+<rect x="620" y="66" width="120" height="20" rx="10" fill="#e6f2f1"/><text x="680" y="80" text-anchor="middle" class="pill" fill="#0e7c7b">SAMPLE RESULT</text>
+<text x="680" y="112" text-anchor="middle" class="chip" fill="#5f6b69">Top · crown</text>
+<text x="680" y="158" text-anchor="middle" class="score">78</text>
+<circle cx="653" cy="180" r="4" fill="#2f8f6b"/><text x="664" y="185" style="font:600 14px Inter" fill="#2f8f6b">Good</text>
+<rect x="576" y="204" width="208" height="66" rx="12" fill="#fafaf9" stroke="#eef0ef"/>
+<text x="592" y="226" class="frm">A QUICK TIP</text>
+<text x="592" y="246" class="sub" fill="#14201f">Rinse well to clear product</text>
+<text x="592" y="262" class="sub" fill="#14201f">build-up near the crown.</text>
+<text x="680" y="292" text-anchor="middle" class="tiny">General guidance — not medical advice.</text>
+<rect x="576" y="352" width="208" height="46" rx="10" fill="#0e7c7b"/><text x="680" y="375" text-anchor="middle" class="btnT">Create account to save</text>
+<text x="680" y="420" text-anchor="middle" class="sub">Unlock all 5 areas &amp; keep history</text>
+<text x="680" y="452" text-anchor="middle" class="link">I already have an account · Log in</text>
+</svg>

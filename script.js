@@ -360,7 +360,7 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
     const strong = cap.querySelector('strong');
     return (strong ? strong.textContent : cap.textContent).replace(/\s+/g, ' ').trim();
   };
-  const scrollOf = (img) => !!img.closest('.logo-studies, .product-shots');
+  const scrollOf = (img) => !!img.closest('.logo-studies, .product-shots, .ba-scroll');
   const snapOf = (img) => !!img.closest('.snapshot');
   const clamp = (z) => Math.max(zmin, Math.min(zmax, z));
 

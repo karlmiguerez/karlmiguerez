@@ -1,0 +1,86 @@
+<svg viewBox="0 0 390 852" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Cafune result — enriched guidance concept</title>
+<desc id="dsc">Result screen with score 74 Good, confidence High, then a "What you can do" section with expandable per-area guidance. The Manage oiliness area is expanded showing common factors and simple things to try. A disclaimer states this is general self-care guidance, not medical advice, and to see a professional if it persists. Save to history button at the bottom.</desc>
+<defs>
+<style>
+text{font-family:Inter,system-ui,sans-serif}
+.lab{font:700 11px Inter;fill:#5f6b69;letter-spacing:1px}
+.h{font:700 20px Inter;fill:#14201f}
+.cap{font:400 13px Inter;fill:#5f6b69}
+.score{font:800 46px Inter;fill:#14201f}
+.of{font:500 15px Inter;fill:#9aa4a2}
+.grade{font:600 15px Inter;fill:#2f8f6b}
+.glab{font:500 10px Inter;fill:#9aa4a2}
+.cf{font:700 15px Inter;fill:#14201f}
+.chip{font:600 11px Inter}
+.tiny{font:700 9.5px Inter;fill:#9aa4a2;letter-spacing:.6px}
+.body{font:400 12.5px Inter;fill:#14201f}
+.bodym{font:400 12px Inter;fill:#5f6b69}
+.row{font:600 14px Inter;fill:#14201f}
+.cta{font:600 16px Inter;fill:#fff}
+</style>
+</defs>
+
+<rect x="0" y="0" width="390" height="852" fill="#eceeed"/>
+<text x="28" y="40" class="lab">RESULT</text>
+<rect x="24" y="52" width="342" height="784" rx="16" fill="#ffffff" stroke="#e6e8e7"/>
+
+<rect x="40" y="68" width="40" height="40" rx="10" fill="#ffffff" stroke="#e6e8e7"/>
+<path d="M64,80 l-8,8 l8,8" fill="none" stroke="#14201f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="96" y="95" class="h">Your result</text>
+<line x1="40" y1="124" x2="350" y2="124" stroke="#eef0ef"/>
+
+<text x="195" y="150" text-anchor="middle" class="cap">Scalp condition score</text>
+<text x="188" y="200" text-anchor="middle" class="score">74</text>
+<text x="238" y="196" class="of">/100</text>
+<circle cx="171" cy="221" r="4" fill="#2f8f6b"/><text x="182" y="226" class="grade">Good</text>
+
+<rect x="40" y="246" width="122" height="8" rx="4" fill="#c15f3c"/>
+<rect x="164" y="246" width="93" height="8" fill="#c98a1a"/>
+<rect x="259" y="246" width="91" height="8" rx="4" fill="#7ed3a6"/>
+<rect x="267" y="242" width="3" height="16" rx="1.5" fill="#14201f"/>
+<text x="40" y="272" class="glab">Needs care</text>
+<text x="195" y="272" text-anchor="middle" class="glab">Watch</text>
+<text x="350" y="272" text-anchor="end" class="glab">Good</text>
+
+<rect x="40" y="286" width="310" height="60" rx="10" fill="#fafaf9" stroke="#eef0ef"/>
+<text x="54" y="309" class="cf">Confidence</text>
+<path d="M312,304 l4,4 l8,-9" fill="none" stroke="#0e7c7b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="336" y="309" text-anchor="end" class="chip" fill="#0e7c7b">High</text>
+<rect x="54" y="318" width="90" height="5" rx="2.5" fill="#2f8f6b"/>
+<rect x="150" y="318" width="90" height="5" rx="2.5" fill="#2f8f6b"/>
+<rect x="246" y="318" width="90" height="5" rx="2.5" fill="#2f8f6b"/>
+<text x="54" y="339" class="bodym">Based on clear photos across 4 of 5 areas and your answers.</text>
+
+<text x="40" y="374" class="lab">WHAT YOU CAN DO</text>
+
+<rect x="40" y="384" width="310" height="150" rx="12" fill="#ffffff" stroke="#e6e8e7"/>
+<text x="54" y="412" class="cf">Manage oiliness</text>
+<rect x="250" y="398" width="64" height="20" rx="10" fill="#fbf3e2"/><text x="282" y="412" text-anchor="middle" class="chip" fill="#c98a1a">Moderate</text>
+<path d="M330,404 l6,6 l6,-6" fill="none" stroke="#9aa4a2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="54" y="438" class="tiny">COMMON FACTORS</text>
+<text x="54" y="455" class="bodym">Heat, product build-up, washing less often.</text>
+<text x="54" y="478" class="tiny">SIMPLE THINGS TO TRY</text>
+<circle cx="57" cy="494" r="2" fill="#0e7c7b"/><text x="66" y="498" class="body">Rinse well to clear product build-up.</text>
+<circle cx="57" cy="512" r="2" fill="#0e7c7b"/><text x="66" y="516" class="body">Use a gentle, lightweight shampoo.</text>
+<circle cx="57" cy="530" r="2" fill="#0e7c7b"/><text x="66" y="534" class="body">Keep heavy oils away from the roots.</text>
+
+<rect x="40" y="544" width="310" height="46" rx="12" fill="#ffffff" stroke="#e6e8e7"/>
+<text x="54" y="572" class="row">Care for flaking</text>
+<rect x="250" y="558" width="46" height="20" rx="10" fill="#e7f3ec"/><text x="273" y="572" text-anchor="middle" class="chip" fill="#2f8f6b">Low</text>
+<path d="M330,566 l6,6 l6,-6" fill="none" stroke="#9aa4a2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+<rect x="40" y="600" width="310" height="46" rx="12" fill="#ffffff" stroke="#e6e8e7"/>
+<text x="54" y="628" class="row">Soothe redness</text>
+<rect x="250" y="614" width="46" height="20" rx="10" fill="#e7f3ec"/><text x="273" y="628" text-anchor="middle" class="chip" fill="#2f8f6b">Low</text>
+<path d="M330,622 l6,6 l6,-6" fill="none" stroke="#9aa4a2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+<rect x="40" y="658" width="310" height="76" rx="12" fill="#f4f4f3" stroke="#e6e8e7"/>
+<circle cx="60" cy="681" r="9" fill="#ffffff" stroke="#9aa4a2"/><text x="60" y="685" text-anchor="middle" class="chip" fill="#5f6b69">i</text>
+<text x="78" y="678" class="bodym">General guidance for self-care and tracking —</text>
+<text x="78" y="694" class="bodym">not medical advice. If it persists or worsens,</text>
+<text x="78" y="710" class="bodym">consider seeing a professional.</text>
+
+<rect x="40" y="756" width="310" height="50" rx="10" fill="#0e7c7b"/>
+<text x="195" y="787" text-anchor="middle" class="cta">Save to history</text>
+</svg>

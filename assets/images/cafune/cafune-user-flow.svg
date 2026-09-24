@@ -1,0 +1,134 @@
+<svg viewBox="0 0 820 1560" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Cafune user flow and screen map (rev 3)</title>
+<desc id="dsc">Entry starts at Welcome/splash, branching new or returning. Returning goes to Log in then Home. New goes through a Guided Sample of one random region, a Sample Result (not saved), Sign up, and a short Onboarding to Home. From Home the measurement journey runs Scalp Capture (head map, live or upload) with a quality gate and retake loop, optional External Metric, Questionnaire, Analyzing, Result with a confidence gate and suggest-retake loop, Consent, and Save to History. History and Settings are reachable any time from Home.</desc>
+<defs>
+<style>
+.t{font:600 14px Inter,system-ui,sans-serif;fill:#14201f}
+.s{font:400 11px Inter,system-ui,sans-serif;fill:#5f6b69}
+.d{font:600 12px Inter,system-ui,sans-serif;fill:#8a5e0f}
+.lbl{font:600 10.5px Inter,system-ui,sans-serif;fill:#5f6b69}
+.stage{font:700 11px Inter,system-ui,sans-serif;fill:#0e7c7b;letter-spacing:1.5px}
+.h{font:700 16px Inter,system-ui,sans-serif;fill:#14201f}
+.leg{font:400 11px Inter,system-ui,sans-serif;fill:#5f6b69}
+</style>
+<marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#9aa4a2"/></marker>
+<marker id="aht" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#0e7c7b"/></marker>
+<marker id="ahe" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#c15f3c"/></marker>
+</defs>
+
+<text class="h" x="330" y="22" text-anchor="middle">Cafune — User Flow / Screen Map</text>
+
+<text class="stage" x="20" y="340" transform="rotate(-90 20 340)" text-anchor="middle">ACCESS</text>
+<text class="stage" x="20" y="900" transform="rotate(-90 20 900)" text-anchor="middle">CAPTURE &amp; INPUT</text>
+<text class="stage" x="20" y="1320" transform="rotate(-90 20 1320)" text-anchor="middle">RESULT &amp; SAVE</text>
+
+<!-- spine (teal primary) -->
+<g fill="none" stroke="#0e7c7b" stroke-width="1.6" marker-end="url(#aht)">
+<path d="M330,81 L330,116"/>
+<path d="M330,176 L330,215"/>
+<path d="M330,265 L330,311"/>
+<path d="M330,361 L330,407"/>
+<path d="M330,457 L330,503"/>
+<path d="M330,553 L330,599"/>
+<path d="M330,649 L330,695"/>
+<path d="M330,745 L330,782"/>
+<path d="M330,842 L330,879"/>
+<path d="M330,929 L330,971"/>
+<path d="M330,1021 L330,1063"/>
+<path d="M330,1113 L330,1159"/>
+<path d="M330,1209 L330,1246"/>
+<path d="M330,1306 L330,1347"/>
+<path d="M330,1397 L330,1443"/>
+</g>
+<text class="lbl" x="343" y="200">new</text>
+<text class="lbl" x="343" y="388">create acct</text>
+<text class="lbl" x="343" y="686">start</text>
+<text class="lbl" x="342" y="866">Yes</text>
+<text class="lbl" x="342" y="1336">OK</text>
+
+<!-- returning path -->
+<path d="M412,146 L505,146" fill="none" stroke="#0e7c7b" stroke-width="1.6" marker-end="url(#aht)"/>
+<text class="lbl" x="452" y="138" text-anchor="middle">returning</text>
+<path d="M675,146 L700,146 L700,624 L432,624" fill="none" stroke="#0e7c7b" stroke-width="1.6" marker-end="url(#aht)"/>
+<text class="lbl" x="712" y="386" transform="rotate(-90 712 386)" text-anchor="middle">to Home</text>
+
+<!-- dashed: skip & sign up -->
+<path d="M230,240 L195,240 L195,432 L228,432" fill="none" stroke="#9aa4a2" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+<text class="lbl" x="186" y="336" transform="rotate(-90 186 336)" text-anchor="middle">skip &amp; sign up</text>
+<!-- dashed: sample result -> log in -->
+<path d="M430,336 L468,336 L468,146 L503,146" fill="none" stroke="#9aa4a2" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+<text class="lbl" x="478" y="250" transform="rotate(-90 478 250)" text-anchor="middle">log in</text>
+
+<!-- home anytime links (dashed) -->
+<g fill="none" stroke="#9aa4a2" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah)">
+<path d="M418,602 L503,522"/>
+<path d="M424,610 L503,568"/>
+</g>
+
+<!-- quality retake loop -->
+<path d="M412,812 L503,812" fill="none" stroke="#c15f3c" stroke-width="1.5" marker-end="url(#ahe)"/>
+<text class="lbl" x="458" y="804" text-anchor="middle">poor</text>
+<path d="M590,787 L590,720 L432,720" fill="none" stroke="#9aa4a2" stroke-width="1.4" marker-end="url(#ah)"/>
+<text class="lbl" x="520" y="712" text-anchor="middle">retake</text>
+
+<!-- low confidence loop -->
+<path d="M412,1276 L503,1276" fill="none" stroke="#c15f3c" stroke-width="1.5" marker-end="url(#ahe)"/>
+<text class="lbl" x="458" y="1268" text-anchor="middle">low</text>
+<path d="M675,1276 L760,1276 L760,700 L432,700" fill="none" stroke="#9aa4a2" stroke-width="1.4" marker-end="url(#ah)"/>
+<text class="lbl" x="772" y="990" transform="rotate(-90 772 990)" text-anchor="middle">re-shoot</text>
+
+<!-- decisions -->
+<polygon points="330,116 412,146 330,176 248,146" fill="#fbf3e2" stroke="#c98a1a"/>
+<text class="d" x="330" y="150" text-anchor="middle">New / returning?</text>
+<polygon points="330,782 412,812 330,842 248,812" fill="#fbf3e2" stroke="#c98a1a"/>
+<text class="d" x="330" y="816" text-anchor="middle">Quality OK?</text>
+<polygon points="330,1246 412,1276 330,1306 248,1276" fill="#fbf3e2" stroke="#c98a1a"/>
+<text class="d" x="330" y="1280" text-anchor="middle">Confidence OK?</text>
+
+<!-- spine nodes -->
+<g><rect x="230" y="31" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="54" text-anchor="middle">Welcome</text><text class="s" x="330" y="70" text-anchor="middle">new or returning?</text></g>
+<g><rect x="230" y="215" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="238" text-anchor="middle">Guided Sample</text><text class="s" x="330" y="254" text-anchor="middle">one random region</text></g>
+<g><rect x="230" y="311" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="334" text-anchor="middle">Sample Result</text><text class="s" x="330" y="350" text-anchor="middle">not saved</text></g>
+<g><rect x="230" y="407" width="200" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5"/>
+<text class="t" x="330" y="430" text-anchor="middle">Sign up</text><text class="s" x="330" y="446" text-anchor="middle">save sample (optional)</text></g>
+<g><rect x="230" y="503" width="200" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5"/>
+<text class="t" x="330" y="526" text-anchor="middle">Onboarding</text><text class="s" x="330" y="542" text-anchor="middle">short · consent</text></g>
+<g><rect x="230" y="599" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="622" text-anchor="middle">Home</text><text class="s" x="330" y="638" text-anchor="middle">start · history · settings</text></g>
+<g><rect x="230" y="695" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="718" text-anchor="middle">Scalp Capture</text><text class="s" x="330" y="734" text-anchor="middle">head map · live/upload</text></g>
+<g><rect x="230" y="879" width="200" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5" stroke-dasharray="5 3"/>
+<text class="t" x="330" y="902" text-anchor="middle">External Metric</text><text class="s" x="330" y="918" text-anchor="middle">optional</text></g>
+<g><rect x="230" y="971" width="200" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5"/>
+<text class="t" x="330" y="994" text-anchor="middle">Questionnaire</text><text class="s" x="330" y="1010" text-anchor="middle">5 quick inputs</text></g>
+<g><rect x="230" y="1063" width="200" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5"/>
+<text class="t" x="330" y="1086" text-anchor="middle">Analyzing…</text><text class="s" x="330" y="1102" text-anchor="middle">image + answers</text></g>
+<g><rect x="230" y="1159" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="1182" text-anchor="middle">Result</text><text class="s" x="330" y="1198" text-anchor="middle">score · confidence · guidance</text></g>
+<g><rect x="230" y="1347" width="200" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5"/>
+<text class="t" x="330" y="1370" text-anchor="middle">Consent</text><text class="s" x="330" y="1386" text-anchor="middle">optional · revocable</text></g>
+<g><rect x="230" y="1443" width="200" height="50" rx="8" fill="#e6f2f1" stroke="#0e7c7b"/>
+<text class="t" x="330" y="1466" text-anchor="middle">Saved → History</text><text class="s" x="330" y="1482" text-anchor="middle">timeline &amp; trend</text></g>
+
+<!-- returning + anytime + loop nodes -->
+<g><rect x="505" y="121" width="170" height="50" rx="8" fill="#ffffff" stroke="#d3d7d5"/>
+<text class="t" x="590" y="144" text-anchor="middle">Log in</text><text class="s" x="590" y="160" text-anchor="middle">returning</text></g>
+<g><rect x="505" y="498" width="170" height="44" rx="8" fill="#ffffff" stroke="#d3d7d5" stroke-dasharray="4 3"/>
+<text class="t" x="590" y="519" text-anchor="middle">History &amp; Trends</text><text class="s" x="590" y="534" text-anchor="middle">compare over time</text></g>
+<g><rect x="505" y="546" width="170" height="44" rx="8" fill="#ffffff" stroke="#d3d7d5" stroke-dasharray="4 3"/>
+<text class="t" x="590" y="567" text-anchor="middle">Settings</text><text class="s" x="590" y="582" text-anchor="middle">manage consent</text></g>
+<g><rect x="503" y="787" width="170" height="50" rx="8" fill="#f7e9e3" stroke="#c15f3c"/>
+<text class="t" x="588" y="810" text-anchor="middle">Retake Photo</text><text class="s" x="588" y="826" text-anchor="middle">below threshold</text></g>
+<g><rect x="503" y="1251" width="170" height="50" rx="8" fill="#f7e9e3" stroke="#c15f3c"/>
+<text class="t" x="588" y="1274" text-anchor="middle">Suggest Retake</text><text class="s" x="588" y="1290" text-anchor="middle">low confidence</text></g>
+
+<!-- legend -->
+<rect x="60" y="1512" width="16" height="14" rx="3" fill="#ffffff" stroke="#d3d7d5"/><text class="leg" x="82" y="1523">Screen</text>
+<polygon points="150,1512 164,1519 150,1526 136,1519" fill="#fbf3e2" stroke="#c98a1a"/><text class="leg" x="172" y="1523">Decision</text>
+<rect x="240" y="1512" width="16" height="14" rx="3" fill="#f7e9e3" stroke="#c15f3c"/><text class="leg" x="262" y="1523">Error / loop</text>
+<line x1="352" y1="1519" x2="382" y2="1519" stroke="#0e7c7b" stroke-width="1.6" marker-end="url(#aht)"/><text class="leg" x="390" y="1523">Primary path</text>
+<line x1="486" y1="1519" x2="516" y2="1519" stroke="#9aa4a2" stroke-width="1.3" stroke-dasharray="4 3" marker-end="url(#ah)"/><text class="leg" x="524" y="1523">Optional / anytime</text>
+</svg>

@@ -10,6 +10,7 @@ const SITES = {
   'snaplive-2': 'https://snaplive.wsoftdev.space/',
   'tmc': 'https://tmc.ai.kr/',
   'smart-surveillance-system': 'http://54.180.100.89/',
+  'cafune': 'https://cafune.wsoftlabs.dev/welcome',
   // Product modules on the W Labs site rather than standalone apps — the probe still
   // checks the specific path, so a 404 on the module correctly reads as down.
   'wiz-assistant': 'https://wsoft.space/wiz-assistant',

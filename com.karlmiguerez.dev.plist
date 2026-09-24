@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.karlmiguerez.dev</string>
+
+    <!-- Runs the project's dependency-free server.js (Node built-ins only), so there is
+         nothing to install and no npx prompt to hang on under launchd.
+         Login shell (-l) so `node` is on PATH. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-lc</string>
+        <string>exec node server.js</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>/Users/karlomiguelperez/karlmiguerez</string>
+
+    <!-- Start at login, and bring it back if it ever exits. -->
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <!-- Don't hot-loop if it fails to boot (e.g. port taken). -->
+    <key>ThrottleInterval</key>
+    <integer>30</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/karlomiguelperez/Library/Logs/karlmiguerez-dev.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/karlomiguelperez/Library/Logs/karlmiguerez-dev.log</string>
+</dict>
+</plist>

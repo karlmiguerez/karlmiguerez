@@ -1,0 +1,78 @@
+<svg viewBox="0 0 390 764" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Cafune multi-view scalp capture — head map concept</title>
+<desc id="dsc">Mobile screen: a top-down head illustration with five tappable region markers (Front hairline, Top crown, Back occipital, Left temporal, Right temporal), each optional. Markers show status: captured, selected, to do, or retake. A list below repeats each region with a status label, and a Continue button is enabled once at least one region is captured.</desc>
+<defs>
+<style>
+text{font-family:Inter,system-ui,sans-serif}
+.step{font:700 11px Inter;fill:#0e7c7b;letter-spacing:1.5px}
+.h1{font:700 24px Inter;fill:#14201f}
+.sub{font:400 13px Inter;fill:#5f6b69}
+.nm{font:600 13px Inter;fill:#14201f}
+.an{font:400 12px Inter;fill:#5f6b69}
+.pill{font:600 11px Inter}
+.num{font:600 12px Inter}
+.prog{font:500 12px Inter;fill:#5f6b69}
+.cta{font:600 16px Inter;fill:#fff}
+.brand{font:700 18px Inter}
+.small{font:500 11px Inter;fill:#5f6b69}
+</style>
+</defs>
+
+<rect x="0" y="0" width="390" height="764" fill="#eceeed"/>
+<rect x="0" y="0" width="390" height="56" fill="#ffffff"/>
+<path d="M28,22 l-8,6 l8,6" fill="none" stroke="#14201f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="195" y="34" text-anchor="middle" class="brand"><tspan fill="#14201f">Ca</tspan><tspan fill="#0e7c7b">fune</tspan></text>
+<rect x="292" y="18" width="82" height="22" rx="11" fill="#ffffff" stroke="#d3d7d5"/>
+<text x="333" y="33" text-anchor="middle" class="small">non-medical</text>
+<rect x="0" y="56" width="390" height="3" fill="#e6e8e7"/>
+<rect x="0" y="56" width="195" height="3" fill="#0e7c7b"/>
+
+<text x="20" y="88" class="step">STEP 2 OF 4</text>
+<text x="20" y="116" class="h1">Capture scalp</text>
+<text x="20" y="142" class="sub">Tap a spot on the head to capture that area.</text>
+<text x="20" y="160" class="sub">Every area is optional — do as many as you like.</text>
+
+<rect x="16" y="178" width="358" height="300" rx="16" fill="#ffffff" stroke="#e6e8e7"/>
+<path d="M195,214 c8,0 12,8 12,14 c22,4 46,26 46,74 c0,58 -26,96 -58,96 c-32,0 -58,-38 -58,-96 c0,-48 24,-70 46,-74 c0,-6 4,-14 12,-14 z" fill="#f4f4f3" stroke="#d3d7d5" stroke-width="1.5"/>
+<text x="195" y="205" text-anchor="middle" class="small" fill="#9aa4a2">front of head</text>
+
+<circle cx="195" cy="262" r="16" fill="#0e7c7b"/>
+<path d="M188,262 l4,4 l8,-8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="195" cy="322" r="16" fill="#ffffff" stroke="#0e7c7b" stroke-width="2.5"/>
+<text x="195" y="326" text-anchor="middle" class="num" fill="#0e7c7b">2</text>
+<circle cx="195" cy="384" r="16" fill="#f4f4f3" stroke="#d3d7d5"/>
+<text x="195" y="388" text-anchor="middle" class="num" fill="#9aa4a2">3</text>
+<circle cx="143" cy="330" r="16" fill="#fbf3e2" stroke="#c98a1a" stroke-width="2"/>
+<text x="143" y="334" text-anchor="middle" class="num" fill="#c98a1a">4</text>
+<circle cx="247" cy="330" r="16" fill="#f4f4f3" stroke="#d3d7d5"/>
+<text x="247" y="334" text-anchor="middle" class="num" fill="#9aa4a2">5</text>
+
+<circle cx="40" cy="452" r="6" fill="#0e7c7b"/><text x="52" y="456" class="small">captured</text>
+<circle cx="132" cy="452" r="6" fill="#fff" stroke="#0e7c7b" stroke-width="2"/><text x="144" y="456" class="small">selected</text>
+<circle cx="222" cy="452" r="6" fill="#fbf3e2" stroke="#c98a1a" stroke-width="2"/><text x="234" y="456" class="small">retake</text>
+<circle cx="300" cy="452" r="6" fill="#f4f4f3" stroke="#d3d7d5"/><text x="312" y="456" class="small">to do</text>
+
+<circle cx="30" cy="502" r="10" fill="#0e7c7b"/><text x="30" y="506" text-anchor="middle" class="num" fill="#fff">1</text>
+<text x="48" y="500" class="nm">Front</text><text x="48" y="514" class="an">hairline</text>
+<rect x="300" y="491" width="74" height="22" rx="11" fill="#e6f2f1"/><text x="337" y="506" text-anchor="middle" class="pill" fill="#0e7c7b">Captured</text>
+<line x1="16" y1="527" x2="374" y2="527" stroke="#f0f1f0"/>
+<circle cx="30" cy="546" r="10" fill="#fff" stroke="#0e7c7b" stroke-width="2"/><text x="30" y="550" text-anchor="middle" class="num" fill="#0e7c7b">2</text>
+<text x="48" y="544" class="nm">Top</text><text x="48" y="558" class="an">crown</text>
+<rect x="300" y="535" width="74" height="22" rx="11" fill="#fff" stroke="#0e7c7b"/><text x="337" y="550" text-anchor="middle" class="pill" fill="#0e7c7b">Selected</text>
+<line x1="16" y1="571" x2="374" y2="571" stroke="#f0f1f0"/>
+<circle cx="30" cy="590" r="10" fill="#f4f4f3" stroke="#d3d7d5"/><text x="30" y="594" text-anchor="middle" class="num" fill="#9aa4a2">3</text>
+<text x="48" y="588" class="nm">Back</text><text x="48" y="602" class="an">occipital</text>
+<rect x="316" y="579" width="58" height="22" rx="11" fill="#f4f4f3" stroke="#d3d7d5"/><text x="345" y="594" text-anchor="middle" class="pill" fill="#5f6b69">Add</text>
+<line x1="16" y1="615" x2="374" y2="615" stroke="#f0f1f0"/>
+<circle cx="30" cy="634" r="10" fill="#fbf3e2" stroke="#c98a1a" stroke-width="2"/><text x="30" y="638" text-anchor="middle" class="num" fill="#c98a1a">4</text>
+<text x="48" y="632" class="nm">Left</text><text x="48" y="646" class="an">temporal</text>
+<rect x="308" y="623" width="66" height="22" rx="11" fill="#fbf3e2"/><text x="341" y="638" text-anchor="middle" class="pill" fill="#c98a1a">Retake</text>
+<line x1="16" y1="659" x2="374" y2="659" stroke="#f0f1f0"/>
+<circle cx="30" cy="678" r="10" fill="#f4f4f3" stroke="#d3d7d5"/><text x="30" y="682" text-anchor="middle" class="num" fill="#9aa4a2">5</text>
+<text x="48" y="676" class="nm">Right</text><text x="48" y="690" class="an">temporal</text>
+<rect x="316" y="667" width="58" height="22" rx="11" fill="#f4f4f3" stroke="#d3d7d5"/><text x="345" y="682" text-anchor="middle" class="pill" fill="#5f6b69">Add</text>
+
+<text x="195" y="716" text-anchor="middle" class="prog">1 of 5 captured · all optional</text>
+<rect x="16" y="726" width="358" height="30" rx="10" fill="#0e7c7b"/>
+<text x="195" y="746" text-anchor="middle" class="cta">Continue</text>
+</svg>
