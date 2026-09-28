@@ -173,7 +173,7 @@ document.querySelectorAll('.mobile-link').forEach(link => {
 // ---------- Scroll reveal ----------
 const revealEls = document.querySelectorAll(
   '.hero-tag, .hero-headline, .hero-sub, .hero-cta, ' +
-  '.about-grid, .workflow-step, .project-card, .contact-inner'
+  '.about-grid, .project-card, .contact-inner'
 );
 
 revealEls.forEach(el => el.classList.add('reveal'));
@@ -560,4 +560,73 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
     };
     if (img.complete) start(); else img.addEventListener('load', start);
   });
+})();
+
+
+/* ---------- Workflow step cycle (icon leads, description follows) ---------- */
+(function () {
+  const wrap = document.querySelector('.wf-cycle');
+  if (!wrap) return;
+  const steps = Array.from(wrap.querySelectorAll('.workflow-step'));
+  if (steps.length < 2) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  wrap.classList.add('is-cycling');
+
+  const dots = document.createElement('div');
+  dots.className = 'wf-dots';
+  steps.forEach((step, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    const num = step.querySelector('.step-number');
+    const title = step.querySelector('.step-title');
+    b.textContent = num ? num.textContent.trim() : String(i + 1).padStart(2, '0');
+    if (title) b.setAttribute('aria-label', title.textContent.trim());
+    b.addEventListener('click', () => { show(i); restart(); });
+    dots.appendChild(b);
+  });
+  wrap.insertAdjacentElement('afterend', dots);
+  const btns = Array.from(dots.children);
+
+  const DWELL = 3400;
+  let idx = 0, timer = null;
+
+  function show(n) {
+    idx = (n + steps.length) % steps.length;
+    steps.forEach((s, i) => s.classList.toggle('is-active', i === idx));
+    btns.forEach((b, i) => b.classList.toggle('is-on', i === idx));
+  }
+  const stop = () => clearInterval(timer);
+  const start = () => { stop(); timer = setInterval(() => show(idx + 1), DWELL); };
+  const restart = start;
+
+  show(0);
+  start();
+  [wrap, dots].forEach((el) => {
+    el.addEventListener('mouseenter', stop);
+    el.addEventListener('mouseleave', start);
+  });
+})();
+
+
+/* ---------- Skill chip tooltips (tap on touch, hover on pointer) ---------- */
+(function () {
+  const chips = Array.from(document.querySelectorAll('.skill-chip'));
+  if (!chips.length) return;
+
+  const closeAll = (except) => chips.forEach((c) => {
+    if (c !== except) { c.classList.remove('is-open'); c.setAttribute('aria-expanded', 'false'); }
+  });
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = chip.classList.toggle('is-open');
+      chip.setAttribute('aria-expanded', open ? 'true' : 'false');
+      closeAll(chip);
+    });
+  });
+
+  document.addEventListener('click', () => closeAll(null));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(null); });
 })();

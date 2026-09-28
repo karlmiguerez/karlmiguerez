@@ -700,18 +700,19 @@ ul {
 } */
 
 .workflow-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: end;
-  margin-bottom: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  margin-top: 6rem;
+  margin-bottom: 1.75rem;
 }
 
 .workflow-intro {
   font-size: 1rem;
   color: var(--text-muted);
   line-height: 1.8;
-  max-width: 48ch;
+  max-width: none;
   padding-bottom: 0.25rem;
 }
 
@@ -995,6 +996,7 @@ ul {
   color: var(--text);
   display: inline-flex;
   align-items: center;
+  align-self: flex-end;
   gap: 0.4rem;
   margin-top: 0.5rem;
   transition: color var(--transition);
@@ -2007,3 +2009,126 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
 .vectors-collection img { width: 100%; height: auto; display: block; border: 1px solid var(--border); border-radius: 4px; cursor: zoom-in; }
 .vectors-col figcaption, .vectors-collection figcaption { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .06em; color: var(--text-muted); text-transform: uppercase; margin-top: .5rem; }
 @media (max-width: 768px) { .vectors-layout { grid-template-columns: 1fr; } .vectors-collection { position: static; } }
+
+
+/* ---------- Projects: full-bleed for larger thumbnails ----------
+   Breaks out of the 1100px content column. Column counts are explicit rather
+   than auto-fill, because auto-fill would just add columns as the container
+   grows and make each card smaller. 8 projects divide evenly at 4 / 2 / 1. */
+.work.section {
+  max-width: none;
+  padding-left: clamp(1.25rem, 3vw, 3rem);
+  padding-right: clamp(1.25rem, 3vw, 3rem);
+}
+.projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1100px) { .projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1560px) { .projects-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 700px)  { .projects-grid { grid-template-columns: minmax(0, 1fr); } }
+
+
+/* ---------- Nav avatar ----------
+   Logo in a circle with a status badge at the conventional bottom-right.
+   The badge's separating ring is a padded wrapper filled with the page colour,
+   not a border or box-shadow, so it survives FLAT MODE below. */
+.nav-avatar { position: relative; display: inline-block; width: 40px; height: 40px; flex-shrink: 0; }
+.nav-avatar-img {
+  width: 100%; height: 100%; display: block; padding: 7px;
+  border-radius: 50%; background: var(--bg-card); object-fit: contain;
+  transition: opacity var(--transition);
+}
+.nav-avatar:hover .nav-avatar-img { opacity: .85; }
+.nav-avatar-badge {
+  position: absolute; right: -1px; bottom: -1px; padding: 2.5px;
+  background: var(--bg); border-radius: 50%; line-height: 0;
+}
+.nav-avatar-badge i {
+  display: block; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--success); animation: pulse 2.2s ease infinite;
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+
+/* ---------- Workflow step cycle ----------
+   One step visible at a time, cross-fading on a loop. Steps are stacked in a
+   single grid cell so the container takes the height of the tallest one and
+   never jumps. The icon leads; the description follows ~160ms behind so the
+   two don't move in lockstep. Everything is gated on .is-cycling, which JS
+   adds — with JS off (or reduced motion) all six steps render normally. */
+.wf-cycle.is-cycling { display: grid; }
+.wf-cycle.is-cycling > .workflow-step {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  transition: visibility 0s linear .5s;
+}
+.wf-cycle.is-cycling > .workflow-step.is-active {
+  visibility: visible;
+  transition: visibility 0s linear 0s;
+}
+.wf-cycle.is-cycling .step-left,
+.wf-cycle.is-cycling .step-content {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .5s ease, transform .5s ease;
+}
+.wf-cycle.is-cycling .step-content { transition-delay: .16s; }
+.wf-cycle.is-cycling .is-active .step-left,
+.wf-cycle.is-cycling .is-active .step-content { opacity: 1; transform: none; }
+
+.wf-dots { display: flex; flex-wrap: wrap; gap: 1.1rem; margin-top: 2.25rem; }
+.wf-dots button {
+  border: 0; background: none; padding: .2rem 0; cursor: pointer;
+  font-family: var(--font-mono); font-size: .62rem; letter-spacing: .12em;
+  color: var(--text-muted); transition: color var(--transition);
+}
+.wf-dots button:hover { color: var(--text); }
+.wf-dots button.is-on { color: var(--accent); }
+
+
+/* ---------- Skills row: standalone, with tap/hover tooltips ----------
+   Chips are buttons so they are keyboard- and touch-reachable. The tip shows on
+   hover for fine pointers and on .is-open (tap/click/Enter) for touch, since
+   :hover is unreliable there. */
+.skills-row { margin-top: 3rem; }
+.skill-chip { position: relative; cursor: pointer; }
+.skill-tip {
+  position: absolute; left: 0; top: calc(100% + 8px); z-index: 30;
+  width: max-content; max-width: 260px;
+  padding: .6rem .75rem; border-radius: 4px;
+  background: var(--text); color: var(--white);
+  font-family: var(--font-sans); font-size: .74rem; letter-spacing: 0;
+  line-height: 1.55; text-transform: none; text-align: left;
+  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
+}
+.skill-chip.is-open .skill-tip { opacity: 1; visibility: visible; transform: none; }
+@media (hover: hover) and (pointer: fine) {
+  .skill-chip:hover .skill-tip,
+  .skill-chip:focus-visible .skill-tip { opacity: 1; visibility: visible; transform: none; }
+}
+.skills-row .skill-chip:nth-last-child(-n+3) .skill-tip { left: auto; right: 0; }
+
+/* ============================================
+   FLAT MODE — temporary
+   Strips every border, rule, spine and shadow site-wide so the layout can be
+   reworked structurally. Content, controls and JS wiring are untouched.
+   Delete this whole block to restore the original styling.
+   ============================================ */
+*, *::before, *::after {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+.nav.scrolled { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+/* Purely decorative rules and spines */
+.ptl::before,
+.ptl-evt.left .ptl-node::before,
+.ptl-evt.right .ptl-node::after,
+.workflow-step::before,
+.qa-trigger::before,
+.scroll-line,
+.divider { display: none !important; }
