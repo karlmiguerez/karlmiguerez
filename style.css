@@ -2094,13 +2094,13 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
 .skills-row { margin-top: 3rem; }
 .skill-chip { position: relative; cursor: pointer; }
 .skill-tip {
-  position: absolute; left: 0; top: calc(100% + 8px); z-index: 30;
+  position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 30;
   width: max-content; max-width: 260px;
   padding: .6rem .75rem; border-radius: 4px;
   background: var(--text); color: var(--white);
   font-family: var(--font-sans); font-size: .74rem; letter-spacing: 0;
   line-height: 1.55; text-transform: none; text-align: left;
-  opacity: 0; visibility: hidden; transform: translateY(-4px);
+  opacity: 0; visibility: hidden; transform: translateY(4px);
   transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
 }
 .skill-chip.is-open .skill-tip { opacity: 1; visibility: visible; transform: none; }
@@ -2109,6 +2109,29 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
   .skill-chip:focus-visible .skill-tip { opacity: 1; visibility: visible; transform: none; }
 }
 .skills-row .skill-chip:nth-last-child(-n+3) .skill-tip { left: auto; right: 0; }
+
+
+/* Q&A group labels — split the ten answers into practice (1-5) and leadership (6-10) */
+.qa-group {
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 2.75rem 0 1rem;
+}
+.qa-list > .qa-group:first-child { margin-top: 0; }
+
+
+/* Inline cross-links to other case studies (underline returns when FLAT MODE is removed) */
+.inline-link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: opacity var(--transition);
+}
+.inline-link:hover { opacity: .7; }
 
 /* ============================================
    FLAT MODE — temporary
