@@ -9,6 +9,11 @@
 
 
   <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+  <!-- Preload only the display face: the hero <h1> is the LCP element, and
+       without this the font is discovered only after style.css parses,
+       costing a full round-trip on a slow connection. DM Sans is not
+       preloaded on purpose — it would compete for the same bandwidth. -->
+  <link rel="preload" href="assets/fonts/syne-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="style.css" />
   <!--
     ASSETS TO EXPORT: see assets/images/snaplive/README.txt for the Figma node map.
