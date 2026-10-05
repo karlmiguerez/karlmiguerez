@@ -222,13 +222,20 @@ function lazyLoadQaVideo(item) {
   video.dataset.loaded = 'true';
 }
 
-document.querySelectorAll('.qa-trigger').forEach(trigger => {
-  trigger.addEventListener('click', () => {
-    const item = trigger.closest('.qa-item');
-    const isOpen = item.classList.contains('open');
+(function () {
+  const items = Array.from(document.querySelectorAll('.qa-item'));
+  if (!items.length) return;
 
-    // Close all — and pause/reset any video currently playing
-    document.querySelectorAll('.qa-item').forEach(i => {
+  // A collapsed .qa-body is only clipped to 0fr — its contents (the video and its
+  // controls) stay in the tab order while invisible. `inert` takes the whole closed
+  // panel out of focus and out of the accessibility tree.
+  const setInert = (item, closed) => {
+    const body = item.querySelector('.qa-body');
+    if (body) body.inert = closed;
+  };
+
+  function closeAll() {
+    items.forEach(i => {
       const v = i.querySelector('.qa-video');
       if (v && !v.paused) {
         v.pause();
@@ -237,25 +244,54 @@ document.querySelectorAll('.qa-trigger').forEach(trigger => {
       i.classList.remove('open');
       i.querySelector('.qa-trigger').setAttribute('aria-expanded', 'false');
       i.querySelector('.qa-body').setAttribute('aria-hidden', 'true');
+      setInert(i, true);
+    });
+  }
+
+  // play=false is the keyboard-focus path: the panel opens so the user can see what
+  // they're about to tab into, without ten videos firing as they tab past.
+  function openItem(item, play) {
+    closeAll();
+    item.classList.add('open');
+    item.querySelector('.qa-trigger').setAttribute('aria-expanded', 'true');
+    item.querySelector('.qa-body').setAttribute('aria-hidden', 'false');
+    setInert(item, false);
+    lazyLoadQaVideo(item);
+    if (!play) return;
+
+    const video = item.querySelector('.qa-video');
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay blocked (rare) — play button overlay stays visible as fallback
+      });
+    }
+  }
+
+  // A pointer press and the focus it causes can arrive in either order depending on
+  // the browser. Rather than depend on that order, ignore any focus that happens in
+  // the same moment as a pointer interaction — those belong to the click handler.
+  let pointerAt = 0;
+  document.addEventListener('pointerdown', () => { pointerAt = Date.now(); }, true);
+  const fromPointer = () => Date.now() - pointerAt < 500;
+
+  items.forEach(item => {
+    const trigger = item.querySelector('.qa-trigger');
+    if (!trigger) return;
+    setInert(item, !item.classList.contains('open'));
+
+    trigger.addEventListener('click', () => {
+      if (item.classList.contains('open')) closeAll();
+      else openItem(item, true);
     });
 
-    // Open clicked if it was closed
-    if (!isOpen) {
-      item.classList.add('open');
-      trigger.setAttribute('aria-expanded', 'true');
-      item.querySelector('.qa-body').setAttribute('aria-hidden', 'false');
-      lazyLoadQaVideo(item);
-
-      // Auto-play the newly opened item's video
-      const video = item.querySelector('.qa-video');
-      if (video) {
-        video.play().catch(() => {
-          // Autoplay blocked (rare) — play button overlay stays visible as fallback
-        });
-      }
-    }
+    // Keyboard focus reveals the panel so its contents aren't a hidden surprise.
+    trigger.addEventListener('focus', () => {
+      if (item.classList.contains('open')) return;
+      if (fromPointer() || !trigger.matches(':focus-visible')) return;
+      openItem(item, false);
+    });
   });
-});
+})();
 
 
 // ---------- Q&A video play/pause ----------
@@ -323,6 +359,9 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
 
   const lb = document.createElement('div');
   lb.id = 'lightbox';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Image viewer');
   lb.innerHTML =
     '<button class="lb-close" aria-label="Close">✕</button>' +
     '<div class="lb-tools">' +
@@ -351,7 +390,7 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
   const btnOut = lb.querySelector('.lb-zoom-out');
   const btnFit = lb.querySelector('.lb-zoom-fit');
 
-  let group = [], idx = 0, isZoom = false;
+  let group = [], idx = 0, isZoom = false, lastFocused = null;
   let fitW = 0, natW = 0, zoom = 1, zmin = 0.5, zmax = 3;
 
   const labelOf = (fig) => {
@@ -450,15 +489,20 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
       group = [itemFor(img)];
       idx = 0;
     }
+    lastFocused = document.activeElement;
     lb.classList.add('open');            // reveal first so the stage has layout width
     document.body.style.overflow = 'hidden';
     render();
+    const c = lb.querySelector('.lb-close');
+    if (c) c.focus();
   }
   function close() {
     lb.classList.remove('open');
     document.body.style.overflow = '';
     lbImg.removeAttribute('src');
     lbImg.style.width = '';
+    if (lastFocused && lastFocused.focus) lastFocused.focus();   // return focus to the trigger
+    lastFocused = null;
   }
   function go(delta) {
     const n = idx + delta;
@@ -467,7 +511,15 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
     render();
   }
 
-  triggers.forEach((img) => img.addEventListener('click', () => open(img)));
+  triggers.forEach((img) => {
+    img.tabIndex = 0;                                  // images aren't focusable by default
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', (img.alt || 'Image') + ' \u2014 open larger view');
+    img.addEventListener('click', () => open(img));
+    img.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(img); }
+    });
+  });
   lb.querySelector('.lb-close').addEventListener('click', close);
   elPrev.addEventListener('click', (e) => { e.stopPropagation(); go(-1); });
   elNext.addEventListener('click', (e) => { e.stopPropagation(); go(1); });
@@ -583,6 +635,9 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
     b.textContent = num ? num.textContent.trim() : String(i + 1).padStart(2, '0');
     if (title) b.setAttribute('aria-label', title.textContent.trim());
     b.addEventListener('click', () => { show(i); restart(); });
+    // Automatic activation: focusing a dot shows its step, so a keyboard user sees
+    // each slide while arrowing/tabbing through rather than having to press Enter.
+    b.addEventListener('focus', () => { show(i); });
     dots.appendChild(b);
   });
   wrap.insertAdjacentElement('afterend', dots);
@@ -605,6 +660,13 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
   [wrap, dots].forEach((el) => {
     el.addEventListener('mouseenter', stop);
     el.addEventListener('mouseleave', start);
+  });
+
+  // Hold the cycle while a dot has keyboard focus — otherwise the timer advances
+  // past the step the user just focused.
+  dots.addEventListener('focusin', stop);
+  dots.addEventListener('focusout', () => {
+    if (!dots.contains(document.activeElement)) start();
   });
 })();
 
@@ -629,4 +691,43 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
 
   document.addEventListener('click', () => closeAll(null));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(null); });
+})();
+
+
+/* ---------- Project card attract loop (one spotlit at a time) ---------- */
+(function () {
+  const grid = document.querySelector('.projects-grid');
+  if (!grid) return;
+  const cards = Array.from(grid.querySelectorAll('.project-card'));
+  if (cards.length < 2) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const DWELL = 2000;
+  let i = -1, timer = null, paused = false;
+
+  const clear = () => cards.forEach((c) => c.classList.remove('is-spot'));
+  const step = () => {
+    if (paused) return;
+    clear();
+    i = (i + 1) % cards.length;
+    cards[i].classList.add('is-spot');
+  };
+  const start = () => { stop(); step(); timer = setInterval(step, DWELL); };
+  const stop = () => { clearInterval(timer); timer = null; };
+
+  // Real hover wins: pause the loop and drop the synthetic highlight.
+  grid.addEventListener('mouseenter', () => { paused = true; stop(); clear(); }, true);
+  grid.addEventListener('mouseleave', () => { paused = false; start(); });
+
+  // Only run while the grid is on screen.
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting && !paused) start();
+        else stop();
+      });
+    }, { threshold: 0.15 }).observe(grid);
+  } else {
+    start();
+  }
 })();

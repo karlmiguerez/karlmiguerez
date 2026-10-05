@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foundations: The System Behind This Site — Karlmiguerez</title>
+  <meta name="description"
+    content="The design foundations behind this portfolio — color, type, spacing, motion and accessibility — audited against the Design System Checklist, including what still needs fixing." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@300;400&display=swap"
+    rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <div id="nav-partial"></div>
+
+  <div id="main" tabindex="-1"></div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span class="bc-sep">→</span>
+      <span class="bc-current">Foundations</span>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section class="project-hero">
+    <div class="project-hero-inner">
+      <div class="project-hero-meta">
+        <span class="project-type">Design System</span>
+        <span class="project-type">Accessibility</span>
+        <span class="bc-sep">·</span>
+        <span class="project-year">2026</span>
+      </div>
+      <h1 class="project-hero-title">Foundations: The System Behind This Site</h1>
+      <p class="project-hero-brief">
+        This site runs on a small, deliberate token layer rather than a pile of one-off values. This page documents it —
+        and audits it against the public
+        <a class="prod-link" href="https://www.designsystemchecklist.com/" target="_blank" rel="noopener">Design System
+          Checklist&nbsp;↗</a>, including the parts that failed and what I did about them.
+      </p>
+    </div>
+  </section>
+
+  <article class="project-content section-inner">
+
+    <!-- Why -->
+    <div class="project-body">
+      <h2 class="project-section-title">Why publish this</h2>
+      <p>A portfolio usually shows the output and hides the method. This page shows the method. I ran my own site
+        through an external standard, measured it, found real defects, fixed them, and left the remainder visible
+        instead of quietly tidying it away.</p>
+      <p>That is the job I want to be doing: not producing screens, but deciding what "good" means, making it
+        measurable, and holding the work to it — including when the work is mine.</p>
+    </div>
+
+    <!-- Principles -->
+    <div class="project-body">
+      <h2 class="project-section-title">Principles</h2>
+      <p>Four rules that decide the arguments before they start.</p>
+    </div>
+    <div class="fd-group">
+      <ul class="fd-open">
+        <li>
+          <strong>Evidence over aesthetics</strong>
+          <span>A choice I can defend with a reason beats one I can only defend with taste. Contrast ratios, not
+            "it looks fine to me."</span>
+        </li>
+        <li>
+          <strong>Accessible by default, not by request</strong>
+          <span>Keyboard access, focus order and contrast are part of the definition of done — not a pass someone
+            does later, and not a feature a client has to ask for.</span>
+        </li>
+        <li>
+          <strong>Ship it, then keep it honest</strong>
+          <span>A system that exists and is 77% adopted beats a perfect one in a slide deck. Measure the gap and
+            publish it.</span>
+        </li>
+        <li>
+          <strong>Decisions get written down</strong>
+          <span>Every token here encodes a decision someone would otherwise have to re-litigate. Z-index layers are
+            named so "what sits above what" is recorded, not rediscovered.</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Color -->
+    <div class="project-body">
+      <h2 class="project-section-title">Color</h2>
+      <p>Eleven tokens: a neutral base, one accent, and four semantic colors. Every value used as text clears
+        WCAG AA (4.5:1) against all three surfaces — <code>--bg</code>, <code>--bg-card</code> and
+        <code>--white</code>.</p>
+      <p>The audit caught three failures here. <code>--text-muted</code> and <code>--accent</code> were nudged
+        until they passed. The interesting one was <code>--success</code>: the mint green reads at
+        <strong>1.74:1</strong> as text — effectively unreadable — but it works as a 6px status dot, where the bar
+        is 3:1 for non-text UI. One value could not do both jobs, so it became two.</p>
+    </div>
+    <div class="fd-group">
+      <p class="fd-label">Surface &amp; text</p>
+      <ul class="fd-swatches">
+        <li class="fd-swatch"><span class="fd-chip" style="background:#EFEFED"></span>
+          <span class="fd-meta"><span class="fd-name">--bg</span><span class="fd-val">#EFEFED</span>
+            <span class="fd-ratio na">surface</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#E4E4E2"></span>
+          <span class="fd-meta"><span class="fd-name">--bg-card</span><span class="fd-val">#E4E4E2</span>
+            <span class="fd-ratio na">surface</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#F8F8F6"></span>
+          <span class="fd-meta"><span class="fd-name">--white</span><span class="fd-val">#F8F8F6</span>
+            <span class="fd-ratio na">surface</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#141414"></span>
+          <span class="fd-meta"><span class="fd-name">--text</span><span class="fd-val">#141414</span>
+            <span class="fd-ratio pass">16.0:1 AA</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#666666"></span>
+          <span class="fd-meta"><span class="fd-name">--text-muted</span><span class="fd-val">#666666</span>
+            <span class="fd-ratio pass">4.99:1 AA</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#5649F4"></span>
+          <span class="fd-meta"><span class="fd-name">--accent</span><span class="fd-val">#5649F4</span>
+            <span class="fd-ratio pass">4.99:1 AA</span></span>
+        </li>
+      </ul>
+    </div>
+    <div class="fd-group">
+      <p class="fd-label">Semantic — fill vs. label</p>
+      <ul class="fd-swatches">
+        <li class="fd-swatch"><span class="fd-chip" style="background:#4ECCA3"></span>
+          <span class="fd-meta"><span class="fd-name">--success</span><span class="fd-val">#4ECCA3</span>
+            <span class="fd-ratio na">dot / fill only</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#217359"></span>
+          <span class="fd-meta"><span class="fd-name">--success-text</span><span class="fd-val">#217359</span>
+            <span class="fd-ratio pass">4.98:1 AA</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#FF6B35"></span>
+          <span class="fd-meta"><span class="fd-name">--danger</span><span class="fd-val">#FF6B35</span>
+            <span class="fd-ratio na">fill only</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#FFC93C"></span>
+          <span class="fd-meta"><span class="fd-name">--warning</span><span class="fd-val">#FFC93C</span>
+            <span class="fd-ratio na">fill only</span></span>
+        </li>
+        <li class="fd-swatch"><span class="fd-chip" style="background:#8980F8"></span>
+          <span class="fd-meta"><span class="fd-name">--info</span><span class="fd-val">#8980F8</span>
+            <span class="fd-ratio na">fill only</span></span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Spacing -->
+    <div class="project-body">
+      <h2 class="project-section-title">Spacing</h2>
+      <p>Sixteen steps, derived from the values the site was already using rather than imposed on top of them —
+        so adopting the scale moved nothing. <strong>125 of 162 spacing declarations (77%)</strong> sit on it
+        exactly, at zero pixel drift, verified by diffing the geometry of 442 elements before and after.</p>
+      <p>The other 37 are listed as open work below. Snapping them would shift some elements by up to 16px, which
+        is a design decision, not a refactor — so they stay visible rather than silently corrected.</p>
+    </div>
+    <div class="fd-group">
+      <ul class="fd-ramp">
+        <li><code>--space-4xs · 0.2rem</code><span class="fd-bar" style="width:3.2px"></span></li>
+        <li><code>--space-3xs · 0.4rem</code><span class="fd-bar" style="width:6.4px"></span></li>
+        <li><code>--space-2xs · 0.5rem</code><span class="fd-bar" style="width:8px"></span></li>
+        <li><code>--space-xs · 0.6rem</code><span class="fd-bar" style="width:9.6px"></span></li>
+        <li><code>--space-sm · 0.75rem</code><span class="fd-bar" style="width:12px"></span></li>
+        <li><code>--space-md · 1rem</code><span class="fd-bar" style="width:16px"></span></li>
+        <li><code>--space-lg · 1.25rem</code><span class="fd-bar" style="width:20px"></span></li>
+        <li><code>--space-xl · 1.5rem</code><span class="fd-bar" style="width:24px"></span></li>
+        <li><code>--space-2xl · 1.75rem</code><span class="fd-bar" style="width:28px"></span></li>
+        <li><code>--space-3xl · 2rem</code><span class="fd-bar" style="width:32px"></span></li>
+        <li><code>--space-4xl · 2.5rem</code><span class="fd-bar" style="width:40px"></span></li>
+        <li><code>--space-5xl · 3rem</code><span class="fd-bar" style="width:48px"></span></li>
+        <li><code>--space-6xl · 4rem</code><span class="fd-bar" style="width:64px"></span></li>
+        <li><code>--space-7xl · 5rem</code><span class="fd-bar" style="width:80px"></span></li>
+        <li><code>--space-8xl · 6rem</code><span class="fd-bar" style="width:96px"></span></li>
+        <li><code>--space-9xl · 9rem</code><span class="fd-bar" style="width:144px"></span></li>
+      </ul>
+    </div>
+
+    <!-- Type -->
+    <div class="project-body">
+      <h2 class="project-section-title">Typography</h2>
+      <p>Three families, all SIL OFL licensed: <strong>Syne</strong> for display, <strong>DM Sans</strong> for body,
+        <strong>DM Mono</strong> for labels and metadata. Loaded with <code>preconnect</code> and
+        <code>display=swap</code>, each with a real system fallback, so text is never invisible while fonts
+        download.</p>
+      <p>Display sizes are fluid — <code>clamp()</code> across six headline scales — so type responds to the
+        viewport continuously instead of jumping at breakpoints. Below display size the scale is not yet
+        tokenized; see open work.</p>
+    </div>
+
+    <!-- Elevation + z-index -->
+    <div class="project-body">
+      <h2 class="project-section-title">Elevation &amp; layering</h2>
+      <p>Z-index is a named ladder, not a set of escalating guesses. Every stacking value on the site resolves to
+        one of these nine layers, so adding a component means picking a layer rather than inventing a number.</p>
+    </div>
+    <div class="fd-group">
+      <table class="fd-table">
+        <thead>
+          <tr><th>Token</th><th>Value</th><th>What sits here</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>--z-raised</code></td><td>2</td><td>Lifted elements within a section</td></tr>
+          <tr><td><code>--z-tooltip</code></td><td>30</td><td>Skill-chip tooltips</td></tr>
+          <tr><td><code>--z-sticky</code></td><td>90</td><td>Sticky section furniture</td></tr>
+          <tr><td><code>--z-nav</code></td><td>100</td><td>Primary navigation</td></tr>
+          <tr><td><code>--z-nav-tip</code></td><td>120</td><td>Avatar tooltip, above the nav</td></tr>
+          <tr><td><code>--z-skip</code></td><td>999</td><td>Skip link — must beat page chrome</td></tr>
+          <tr><td><code>--z-overlay</code></td><td>1000</td><td>Lightbox backdrop</td></tr>
+          <tr><td><code>--z-modal</code></td><td>1001</td><td>Lightbox content</td></tr>
+          <tr><td><code>--z-modal-ui</code></td><td>1002</td><td>Lightbox controls and pager</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Motion -->
+    <div class="project-body">
+      <h2 class="project-section-title">Motion</h2>
+      <p>Two easing curves and three durations — <code>--dur-fast</code> 0.25s, <code>--dur-base</code> 0.4s,
+        <code>--dur-slow</code> 0.6s — so transitions feel like one hand made them.</p>
+      <p>Every one of them collapses to ~0 under <code>prefers-reduced-motion</code>. The audit found this was
+        only a third wired: three JavaScript features checked the preference, but seven infinite CSS animations —
+        the pulsing avatar badge, scanlines, flicker — ignored it entirely. That is now a global rule, with one
+        explicit exception: the hero scroll indicator animates to <code>scaleY(0)</code>, so freezing it at its
+        final frame would have made it vanish.</p>
+    </div>
+
+    <!-- Accessibility -->
+    <div class="project-body">
+      <h2 class="project-section-title">Accessibility</h2>
+      <p>The commitments this site actually keeps, not the ones it aspires to.</p>
+    </div>
+    <div class="fd-group">
+      <ul class="fd-open">
+        <li><strong>Every text color clears AA</strong>
+          <span>4.5:1 minimum against all three surfaces, measured rather than eyeballed.</span></li>
+        <li><strong>A skip link opens the tab order</strong>
+          <span>WCAG 2.4.1. One Tab and Enter bypasses the nav on every page.</span></li>
+        <li><strong>Collapsed panels are inert</strong>
+          <span>A closed Q&amp;A panel clips to zero height but used to keep its video focusable — 20 invisible
+            tab stops. Closed panels are now removed from the tab order and the accessibility tree entirely.</span>
+        </li>
+        <li><strong>Keyboard focus reveals what it reaches</strong>
+          <span>Focusing a question opens it; focusing a workflow dot shows its step and holds the carousel. You
+            can see where you are before you commit.</span></li>
+        <li><strong>Motion is a preference, not a default</strong>
+          <span>All animation respects <code>prefers-reduced-motion</code>.</span></li>
+        <li><strong>Decorative images say nothing</strong>
+          <span>All seven inline SVG icons carry <code>aria-hidden</code>, so screen readers aren't read
+            decoration.</span></li>
+      </ul>
+    </div>
+
+    <!-- Open work -->
+    <div class="project-body">
+      <h2 class="project-section-title">Open work</h2>
+      <p>What the audit found that is still outstanding. Listing it is the point: a system you can't name the gaps
+        in isn't being managed, it's being hoped over.</p>
+    </div>
+    <div class="fd-group">
+      <ul class="fd-open">
+        <li><strong>No dark mode</strong>
+          <span>Zero <code>prefers-color-scheme</code> queries. The elevation tokens are already written to swap
+            shadow for surface color when it lands.</span></li>
+        <li><strong>Type scale not tokenized</strong>
+          <span>46 distinct font sizes below display size. Needs a scale and a design pass, since snapping
+            changes how the page reads.</span></li>
+        <li><strong>37 spacing declarations off-scale</strong>
+          <span>Values like 2.75rem and 1.1rem. Each needs a judgement call, not a find-and-replace.</span></li>
+        <li><strong>Elevation tokens defined but unadopted</strong>
+          <span>Seven hand-written shadows remain. Consolidating them to three changes how surfaces read, so it's
+            a design decision rather than a refactor.</span></li>
+        <li><strong>~12 ad-hoc breakpoints</strong>
+          <span>768, 760, 700, 680, 640, 620. Should collapse to a defined set.</span></li>
+      </ul>
+    </div>
+
+    <div class="project-body">
+      <h2 class="project-section-title">Method</h2>
+      <p>Contrast ratios were computed from the token values using the WCAG relative-luminance formula, not sampled
+        by eye. The spacing migration was verified by capturing width, height and document-absolute position for all
+        442 elements on the homepage before and after, then diffing: one element differed, and it was the rotating
+        headline, which changes width as the phrase changes.</p>
+    </div>
+
+  </article>
+
+  <!-- FOOTER -->
+  <div id="footer-partial"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

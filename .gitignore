@@ -6,3 +6,6 @@
 
 # Local dev helpers — machine-specific (hardcodes an absolute home path)
 com.karlmiguerez.dev.plist
+
+# Per-machine agent tool settings (the shared contract lives in CLAUDE.md)
+.claude/settings.local.json

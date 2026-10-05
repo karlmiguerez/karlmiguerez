@@ -1,0 +1,53 @@
+#!/bin/sh
+#
+# pre-commit — documentation gate (warning, non-blocking).
+#
+# Two checks:
+#   1. Token values quoted in the docs must match style.css :root.
+#   2. If source changed, README.md should have changed too.
+#
+# This WARNS and lets the commit through. It is a prompt to think, not a wall.
+# If a warning is wrong, the fix is to improve the check, not to ignore it.
+#
+# Enable (once per clone):  git config core.hooksPath .githooks
+
+RED=''; YLW=''; GRN=''; OFF=''
+if [ -t 1 ]; then RED='\033[31m'; YLW='\033[33m'; GRN='\033[32m'; OFF='\033[0m'; fi
+
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+[ -z "$staged" ] && exit 0
+
+warned=0
+
+# --- 1. Docs vs. style.css -------------------------------------------------
+if command -v node >/dev/null 2>&1; then
+  if ! node tools/check-docs.mjs --warn 2>/dev/null | grep -q '✓'; then
+    printf "${YLW}⚠  Docs disagree with style.css :root${OFF}\n"
+    node tools/check-docs.mjs --warn 2>/dev/null | sed 's/^/   /'
+    warned=1
+  fi
+else
+  printf "${YLW}⚠  node not found — skipped the docs/token check${OFF}\n"
+fi
+
+# --- 2. Source changed without README ---------------------------------------
+# "Source" = things that change how the site works or looks.
+source_changed=$(printf '%s\n' "$staged" | grep -E '\.(html|css|js|mjs)$' | grep -v '^docs/' | head -1)
+readme_changed=$(printf '%s\n' "$staged" | grep -c '^README\.md$')
+
+if [ -n "$source_changed" ] && [ "$readme_changed" -eq 0 ]; then
+  printf "${YLW}⚠  Source changed but README.md did not${OFF}\n"
+  printf "   Changed: %s\n" "$(printf '%s\n' "$staged" | grep -E '\.(html|css|js|mjs)$' | grep -v '^docs/' | tr '\n' ' ')"
+  printf "   README.md is the entry point any human or AI reads first.\n"
+  printf "   If this commit changes structure, tokens, conventions or how to run\n"
+  printf "   the project, update it. If it genuinely doesn't, carry on.\n"
+  warned=1
+fi
+
+if [ "$warned" -eq 1 ]; then
+  printf '%b\n' "${YLW}--- committing anyway (warnings only) ---${OFF}"
+else
+  printf '%b\n' "${GRN}✓ docs in sync${OFF}"
+fi
+
+exit 0

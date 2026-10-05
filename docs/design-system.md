@@ -8,19 +8,29 @@ A map of the portfolio's existing elements onto **Atomic Design** (Foundations �
 
 The DNA — nothing renders on its own, but everything inherits from it. Defined in `:root` and the reset/typography blocks.
 
-**Color** — `--bg` `#EFEFED`, `--bg-card` `#E4E4E2`, `--text` `#141414`, `--text-muted` `#6B6B6B`, `--accent` `#6155F5` (indigo), `--border` `#D4D4D2`, `--white` `#F8F8F6`. Semantic: `--success` `#4ECCA3`, `--danger` `#FF6B35`, `--warning` `#FFC93C`, `--info` `#8980F8`.
+> `style.css :root` is the source of truth for every value below. Where this file
+> and `:root` disagree, `:root` is right — run `node tools/check-docs.mjs`.
+> The rendered, self-auditing version of this section is `foundations.html`.
 
-**Typography** — `--font-display` Syne (headings), `--font-sans` DM Sans (body, weight 300), `--font-mono` DM Mono (labels/meta). Type scale via `clamp()` on `.section-heading`; base 16px, line-height 1.7.
+**Color** — `--bg` `#EFEFED`, `--bg-card` `#E4E4E2`, `--text` `#141414`, `--text-muted` `#666666`, `--accent` `#5649F4` (indigo), `--border` `#D4D4D2`, `--white` `#F8F8F6`. Semantic fills: `--success` `#4ECCA3`, `--danger` `#FF6B35`, `--warning` `#FFC93C`, `--info` `#8980F8`.
 
-**Spacing & layout** — `--max-w` 1100px, `--section-gap` 9rem, section padding `9rem 2rem`, CSS grid for columns.
+**Color as text vs. fill** — the semantic colors are tuned for dots and fills and are too light to read as text. `--success-text` `#217359` exists because the mint reads at 1.74:1 on `--bg`, far below the 4.5:1 AA threshold, while still working as a 6px status dot (3:1 for non-text UI). One value could not do both jobs. Add a `-text` variant rather than reusing a fill colour for a label. Every text token clears AA on all three surfaces.
 
-**Radius** — 4px (cards, images, media), 99px (pills/chips), 50% (round icon buttons), 3px (timeline node).
+**Typography** — `--font-display` Syne (headings), `--font-sans` DM Sans (body, weight 300), `--font-mono` DM Mono (labels/meta). Display sizes fluid via `clamp()` across six headline scales; base 16px, line-height 1.7. Loaded with `preconnect` + `display=swap` and real system fallbacks. Sizes below display scale are **not yet tokenized** — 46 distinct values; see open work in `foundations.html`.
 
-**Elevation & surface** — lightbox shadow `0 24px 70px rgba(0,0,0,.5)`, nav hairline + `backdrop-filter: blur()`, card fills.
+**Spacing** — a 16-step scale, `--space-4xs` (0.2rem) through `--space-9xl` (9rem), derived from the values the site already used so adopting it moved nothing. 77% of spacing declarations sit on it exactly; 37 remain off-scale and are listed as open work. Also `--max-w` 1100px and `--section-gap` 9rem for layout.
 
-**Motion** — `--transition` 0.25s ease; scroll-reveal (0.7s cubic-bezier), WAAPI auto-pan (24s linear, `playbackRate 0.5` on hover), ASCII glitch timing. Respects `prefers-reduced-motion`.
+**Radius** — 4px (cards, images, media), 99px (pills/chips), 50% (round icon buttons), 3px (timeline node). Not tokenized.
 
-**Breakpoints** — 640 (mobile), 768, 1024 (tablet), 1025+ (desktop; also the `data-hires` threshold).
+**Elevation** — `--shadow-sm` / `--shadow-md` / `--shadow-lg` are defined but **not yet adopted**; seven hand-written shadows remain, including the lightbox's `0 24px 70px rgba(0,0,0,.5)`. Consolidating them changes how surfaces read, so it is a design decision rather than a refactor.
+
+**Layering** — nine named z-index layers, `--z-raised` (2) through `--z-modal-ui` (1002), covering raised elements, tooltips, sticky furniture, nav, skip link and the lightbox stack. Never write a bare `z-index`; pick a layer.
+
+**Motion** — `--ease-standard` and `--ease-out`; durations `--dur-fast` 0.25s, `--dur-base` 0.4s, `--dur-slow` 0.6s. Legacy `--transition` (0.25s ease) is still used by older rules. Plus scroll-reveal (0.7s cubic-bezier), WAAPI auto-pan (24s linear, `playbackRate 0.5` on hover) and the ASCII glitch. **All of it** respects `prefers-reduced-motion` via a global block at the end of `style.css`, with one documented exception: `.scroll-line` animates to `scaleY(0)`, so it gets `animation: none` rather than being frozen at its final frame.
+
+**Breakpoints** — 640 (mobile), 768, 1024 (tablet), 1025+ (desktop; also the `data-hires` threshold). About a dozen ad-hoc values exist in practice (760, 700, 680, 620); collapsing them to a defined set is open work.
+
+**Block order in `style.css`** — `FLAT MODE`, then `ACCESSIBILITY`, then `REDUCED MOTION` **last**. The latter two rely on `!important` to beat FLAT MODE's blanket `outline: 0`. Appending CSS after them silently breaks focus indicators.
 
 **Base/reset** — `box-sizing: border-box`, `img` defaults, smooth scroll, link/list resets.
 

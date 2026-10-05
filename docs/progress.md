@@ -204,6 +204,38 @@ portfolio/
 - **Animated vectors** (`.vectors-layout`) — the revamp's home/about vector animations, exported as **WebM (VP9)** instead of GIF (smaller + higher fidelity), embedded as `autoplay muted loop playsinline` tiles stacked in a left column with the **Figma collection sticky on the right** (click → lightbox). Files: `assets/videos/wlabs-vec-*.{webm,mp4}`.
   - **iOS-Safari fix (Session 7):** the source WebMs carry `alpha_mode=1` (transparency). iOS Safari doesn't play VP9-alpha WebM in `<video>`, so it showed a dark placeholder that clashed with the gradients. Each `<video>` now uses two `<source>`s — WebM first (Chrome/Firefox/Edge keep the small transparent file on the white element bg), then an **MP4 (H.264) fallback with a white background baked in** for iOS Safari. The MP4s were made by compositing the alpha over white (`overlay` on a `color=white` layer via `scale2ref`, then `format=yuv420p`) — a plain transcode would have flattened onto *black*. Regen recipe: `ffmpeg -c:v libvpx-vp9 -i IN.webm -filter_complex "[0:v]format=yuva420p[fg];color=c=white[bgc];[bgc][fg]scale2ref=w=iw:h=ih[bg][fg2];[bg][fg2]overlay=shortest=1,format=yuv420p[o]" -map "[o]" -an -c:v libx264 -crf 24 -preset veryfast -movflags +faststart OUT.mp4`.
 
+### Session 8 — October 2026
+
+#### Keyboard accessibility — focus reveals what it reaches
+- **`.qa-body` focus black hole (pre-existing bug).** Collapsed Q&A panels use `grid-template-rows: 0fr`, which clips the panel to zero height but leaves its contents in the tab order — **20 focusable elements** (videos and their controls) sat inside invisible panels. Closed panels now get the `inert` attribute, removing them from both the tab order and the accessibility tree. Verified: 0 reachable focusables inside closed panels.
+- Focusing a `.qa-trigger` by keyboard now opens that panel, so the user can see what they're about to tab into. Opens **without** autoplay (the click path still autoplays) — otherwise tabbing the list would fire ten videos.
+- Focusing a `.wf-dots` button shows its step (automatic-activation tab pattern) and the 3.4s cycle holds while any dot has focus.
+- **Gotcha worth remembering:** `:focus-visible` matches on a *mouse* click when the last interaction was keyboard, so gating purely on it made clicking a closed question open-then-immediately-close. Fixed with a `pointerdown` timestamp guard — the focus handler ignores focus arriving within 500ms of a pointer press, making it independent of focus/click event ordering.
+
+#### Design System Checklist audit (designsystemchecklist.com)
+Audited against Design language (10 items) and Foundations (26). Core components (166) and Maintenance (28) were skipped as inapplicable — they assume a component library consumed by other teams.
+
+- **Three contrast failures, measured not eyeballed.** `--success` as text on `--bg` was **1.74:1** (the "LIVE" badge — effectively unreadable); `--text-muted` on `--bg-card` 4.19:1; `--accent` on `--bg` 4.42:1.
+  - `--text-muted` `#6B6B6B` → `#666666`, `--accent` `#6155F5` → `#5649F4` — sub-perceptual nudges, both now 4.99:1.
+  - `--success` **split into two tokens**: mint stays for the dot (non-text UI, 3:1 bar), new `--success-text` `#217359` for the label. One value couldn't serve both jobs.
+- **Reduced motion was only a third wired.** Three JS features checked the preference; **seven infinite CSS animations ignored it entirely**. Added a global block at the end of `style.css`, with `.scroll-line` handled explicitly (it animates *to* `scaleY(0)`, so collapsing it to its final frame would have made it vanish).
+
+#### Foundation tokens
+- Added spacing (16 steps), elevation, z-index (9 named layers) and motion scales to `:root`.
+- Spacing scale **derived from values already in use** rather than imposed — 125 of 162 declarations (**77%**) migrated at **zero pixel drift**. The other 37 left off-scale deliberately: snapping some would shift elements up to 16px, which is a design decision, not a refactor.
+- Verified by capturing width/height/document-absolute position for **all 442 homepage elements** before and after and diffing. One element differed — the rotating headline, which changes width as the phrase changes. Document height identical (10882px).
+- Elevation tokens defined but **not adopted**; 7 hand-written shadows remain.
+
+#### `foundations.html` — new page
+Public, self-auditing documentation of the system: principles, color swatches with live contrast ratios, the spacing ramp, z-index layer table, motion, accessibility commitments, and an honest **Open work** section listing five unfixed gaps. Linked from the footer on every page.
+
+#### Documentation contract + drift enforcement
+- **`README.md` fully rewritten** — the old one was the original template (wrong accent colour, "all edits live in 3 files"). Now the entry point for humans and AI agents: architecture, runtime-injected partials, the IIFE pattern, token rules, accessibility invariants, CSS block ordering.
+- **`tools/check-docs.mjs`** — dependency-free Node script. Parses `style.css :root` and verifies every token value quoted in `README.md`, `docs/*.md` and `foundations.html` matches. It caught three *different* stale accent values across three files on its first run. Recognises changelog transitions (`#1B4FFF → #6155F5`) as historical; `<!-- doc-check:ignore -->` opts a line out.
+- **`.githooks/pre-commit`** — warning-only hook running the checker and flagging source changes that leave `README.md` untouched. Enable per clone: `git config core.hooksPath .githooks`.
+- **`CLAUDE.md`** — the contract AI agents read first.
+- **`style.css :root` is now the declared single source of truth** for tokens; docs describe it and are machine-checked against it.
+
 ---
 
 ## Still To Do
@@ -220,8 +252,15 @@ portfolio/
 - [ ] Export remaining Figma images into `assets/images/<project>/` folders and uncomment the corresponding `<img>` slots
 - [ ] Record the TMC front-end prototype walkthrough → `assets/videos/tmc-prototype.mp4` (slot ready in `tmc.html`)
 - [ ] Audit `style.css` and `script.js` for any remaining flat asset paths (pre-`assets/images/` refactor)
-- [ ] Explore dark mode toggle
+- [ ] Explore dark mode toggle — zero `prefers-color-scheme` queries today; `--shadow-*` tokens are already written to swap shadow for surface colour when it lands
 - [ ] Add "Live Site" or "View on Figma" CTA inside project meta aside where applicable
+- [ ] Tokenize the type scale — 46 distinct font sizes below display size; needs a design pass since snapping changes how pages read
+- [ ] Normalize the 37 off-scale spacing declarations (2.75rem, 1.1rem, 7rem…) — each is a judgement call, not a find-and-replace
+- [ ] Adopt `--shadow-sm/md/lg` — 7 hand-written shadows remain; consolidating changes how surfaces read
+- [ ] Collapse the ~12 ad-hoc breakpoints (768, 760, 700, 680, 640, 620) to a defined set
+- [ ] Decide whether to keep FLAT MODE or delete the block and restore borders
+- [ ] Cafune before/after section is still placeholders (only v1-dark captures show the removed NFC flow)
+- [ ] Add BrainArch to `api/status.js` once Ben's deploy is live (one line in the `SITES` map)
 
 ---
 
