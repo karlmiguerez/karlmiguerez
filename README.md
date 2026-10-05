@@ -70,6 +70,7 @@ the entire loop.
 │
 ├── assets/
 │   ├── partials/               # nav.html + footer.html, fetched at runtime
+│   ├── fonts/                  # self-hosted woff2 (4 files) + OFL.txt
 │   ├── images/                 # 1x and @2x pairs; see naming rules below
 │   └── videos/                 # Q&A answers, promos, animated vectors
 │
@@ -80,9 +81,25 @@ the entire loop.
 ├── docs/
 │   ├── design-system.md        # Atomic-design map of every class
 │   └── progress.md             # Session-by-session history
-├── tools/check-docs.mjs        # Verifies docs match style.css :root
+├── tools/
+│   ├── check-docs.mjs          # Verifies docs match style.css :root
+│   └── fetch-fonts.sh          # Downloads the 4 webfonts into assets/fonts/
 └── .githooks/pre-commit        # Warns on doc drift (see below)
 ```
+
+## First-time setup
+
+```bash
+sh tools/fetch-fonts.sh          # populate assets/fonts/ (run once)
+git config core.hooksPath .githooks
+```
+
+The fonts are self-hosted so the hero `<h1>` — the LCP element — doesn't wait on
+two third-party connections before painting in its real typeface. Syne and DM Sans
+are variable fonts (one file covers each family's whole weight range), DM Mono is
+static and needs two, so it's four files in total. Until `fetch-fonts.sh` has been
+run, each `@font-face` falls back to Google's copy, so the site still renders
+correctly — it's just slower.
 
 ## Architecture
 
@@ -142,6 +159,9 @@ one place to change, and `tools/check-docs.mjs` enforces that any value the docs
 
 Non-negotiable, and already implemented — don't regress it:
 
+- Every page wraps its content in `<main id="main">` — the skip link targets a real
+  landmark, not a marker. Each `<nav>` carries a unique `aria-label` (Primary,
+  Mobile, Breadcrumb, Project) so landmarks stay distinguishable.
 - Skip link is the first tab stop on every page (WCAG 2.4.1).
 - All text meets AA contrast, verified by computation not eyeballing.
 - Collapsed Q&A panels are `inert` — a clipped panel must never keep focusable

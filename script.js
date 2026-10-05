@@ -731,3 +731,31 @@ document.querySelectorAll('.qa-video-wrap').forEach(wrap => {
     start();
   }
 })();
+
+
+/* ---------- Cross-page hash targets ----------
+   Arriving at /#contact from another page used to land at the top of the home
+   page instead of the section. The browser scrolls to the anchor while the
+   document is still short — nav/footer partials are fetched and injected, and
+   images below the fold have no reserved height — so everything above the
+   target then grows and pushes it far past the resting scroll position.
+   Re-apply the scroll once the page has settled. Affects every /#... link. */
+(function () {
+  if (!location.hash) return;
+
+  let target;
+  try { target = document.querySelector(location.hash); } catch { return; }
+  if (!target) return;
+
+  // behavior:'auto' overrides the stylesheet's scroll-behavior: smooth — a
+  // smooth 10,000px animation on arrival is not what anyone wants.
+  const settle = () => {
+    const el = document.querySelector(location.hash);
+    if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+  };
+
+  window.addEventListener('load', () => {
+    settle();
+    setTimeout(settle, 200);   // once more after late images report their size
+  });
+})();

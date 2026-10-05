@@ -1,13 +1,18 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
-<nav class="nav" id="nav">
+<nav class="nav" id="nav" aria-label="Primary">
   <div class="logo-availability">
-    <a href="/#contact" class="nav-avatar"
-      aria-label="Karlmiguerez — available for work. Get in touch.">
-      <img class="nav-avatar-img" src="/assets/images/logo.png" alt="" />
-      <span class="nav-avatar-badge" aria-hidden="true"><i></i></span>
-      <span class="nav-tip" role="tooltip">Have any problems that might need design solutions? Let’s talk</span>
-    </a>
+    <!-- The tooltip is a SIBLING of the avatar link, not a child: it contains its
+         own link, and an <a> inside an <a> is invalid and breaks keyboard/AT.
+         No role="tooltip" either — that role must not hold interactive content. -->
+    <div class="nav-avatar-wrap">
+      <a href="/" class="nav-avatar" aria-label="Karlmiguerez — home">
+        <img class="nav-avatar-img" src="/assets/images/logo.png" alt="" />
+        <span class="nav-avatar-badge" aria-hidden="true"><i></i></span>
+      </a>
+      <span class="nav-tip">Have any problems that might need design solutions?
+        <a class="nav-tip-link" href="/#contact">Let’s talk</a></span>
+    </div>
   </div>
   <ul class="nav-links">
     <li><a href="/#work">Projects</a></li>
@@ -20,11 +25,11 @@
   </button>
 </nav>
 
-<div class="mobile-menu" id="mobileMenu">
+<nav class="mobile-menu" id="mobileMenu" aria-label="Mobile">
   <ul>
     <li><a href="/#work" class="mobile-link">Projects</a></li>
     <li><a href="/#about" class="mobile-link">What I do</a></li>
     <li><a href="/#qa" class="mobile-link">Q&A</a></li>
     <li><a href="/#contact" class="mobile-link">Let’s talk</a></li>
   </ul>
-</div>
+</nav>

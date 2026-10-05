@@ -1,0 +1,10 @@
+Syne, DM Sans and DM Mono are licensed under the SIL Open Font License 1.1.
+
+  Syne    — https://fonts.google.com/specimen/Syne/license
+  DM Sans — https://fonts.google.com/specimen/DM+Sans/license
+  DM Mono — https://fonts.google.com/specimen/DM+Mono/license
+
+Full licence text: https://openfontlicense.org/
+
+These files are redistributed unmodified. The OFL permits bundling and
+self-hosting; it requires this notice travel with the font files.

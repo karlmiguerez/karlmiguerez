@@ -236,6 +236,34 @@ Public, self-auditing documentation of the system: principles, color swatches wi
 - **`CLAUDE.md`** — the contract AI agents read first.
 - **`style.css :root` is now the declared single source of truth** for tokens; docs describe it and are machine-checked against it.
 
+#### Nav avatar vs. tooltip link (corrected request)
+- The avatar now goes to **home**; only the tooltip's "Let's talk" goes to `/#contact`.
+- Structural constraint: the tooltip was *inside* the avatar's `<a>`, so putting a link in it would nest an anchor inside an anchor — invalid HTML, broken for keyboard and AT. The tooltip is now a **sibling** inside `.nav-avatar-wrap`, which is the positioning context and hover target. Dropped `role="tooltip"` too: that role must not contain interactive content.
+- A `::before` bridge spans the 10px gap so the pointer can travel from avatar into the tooltip without it vanishing. `:focus-within` lives outside the `hover:hover` media query so keyboard users reach the link on any device.
+
+#### Cross-page hash targets were silently broken (pre-existing)
+Arriving at `/#contact` from another page landed at the **top of the home page**, not the section — `scrollY` stayed 0 with the target at 10330px. The browser scrolls to the anchor while the document is still short (partials are injected, below-fold images have no reserved height), then everything above grows and pushes the target away. Affected **every** `/#...` link including the nav's own. Fixed with a small IIFE that re-applies the scroll on `load` (and once more 200ms later), using `behavior:'auto'` to override the stylesheet's `scroll-behavior: smooth`.
+
+### Session 9 — October 2026 · Lighthouse
+
+Baseline on the live site: Performance 92, Accessibility 94, Best Practices 100, SEO 100. CLS 0 and TBT 0ms were already excellent and were left alone.
+
+#### Accessibility 94 → axe-clean on all 10 pages
+Audited with axe-core (the engine Lighthouse uses), run in same-origin iframes so every page could be checked in one pass.
+
+- **No `<main>` landmark.** `<div id="main" tabindex="-1"></div>` was an *empty div* used only as the skip-link target, leaving 33 content nodes outside any landmark. Now a real `<main id="main">` wraps page content on all 10 pages — the skip link lands on a landmark instead of a marker.
+- **`landmark-unique`** — project pages had two unlabelled `<nav>`s. Each nav now has a unique `aria-label`: Primary, Mobile, Breadcrumb, Project.
+- **`region`** — the mobile menu was a `<div>` outside any landmark; it is now `<nav class="mobile-menu" aria-label="Mobile">`.
+- **`.scroll-label` at 1.95:1.** The real contrast failure, and almost certainly the Lighthouse deduction: `.hero-scroll` carried `opacity: .3`, rendering the "Scroll" label at `#ADADAC` on `#EFEFED` at 9.28px. It only appears at desktop widths, which is why narrow-viewport checks missed it and Lighthouse (desktop) caught it. The opacity now sits on the decorative `.scroll-line` only; the label takes `--text-muted` at full opacity.
+- **Headline contrast flicker.** The rotating headline both slid inside an `overflow:hidden` wrapper *and* faded opacity 1→0, dipping `--accent` under 4.5:1 mid-transition — an intermittent flag (1 hit in 11 runs). The clip alone does the concealing, so the opacity was removed from both keyframes. Motion is unchanged.
+
+#### Performance — LCP
+The LCP element is the hero `<h1>`, measured via `PerformanceObserver`. FCP 0.9s is the fallback font painting; LCP 1.7s is Syne arriving and the headline repainting. The gap was entirely third-party font loading.
+
+- **Self-hosted the fonts.** Removed the render-blocking `fonts.googleapis.com` stylesheet and both preconnects from all 10 pages; added `@font-face` to `style.css`. Syne and DM Sans are **variable** (one file each spans their weight range), DM Mono is static — **four files**, not the ten the weight list implies. `tools/fetch-fonts.sh` downloads them; each `src` falls back to Google's copy so the site is correct before the script is run.
+- **Lazy-loaded below-the-fold images** — `loading="lazy" decoding="async"` on gallery and workflow images, skipping hero and project covers. The six workflow SVGs were costing ~290ms each at first load.
+- Caveat worth remembering: the first pass also edited ~50 `<img>` tags sitting **inside HTML comments** (placeholder slots awaiting Figma exports). Reverted. Most project pages have only one real image — the cover.
+
 ---
 
 ## Still To Do

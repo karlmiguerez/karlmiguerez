@@ -3,6 +3,58 @@
    Cool Gray · Geometric · Minimal
    ============================================ */
 
+/* ---------- WEBFONTS (self-hosted) ----------
+   Served from our own origin so the hero headline — the LCP element — doesn't
+   wait on two third-party hops (fonts.googleapis.com for the CSS, then
+   fonts.gstatic.com for the files).
+
+   Syne and DM Sans are variable: one file each spans their whole weight range,
+   declared as a range (`font-weight: 400 800`). DM Mono is static, so 300 and
+   400 are separate files.
+
+   Files are committed to the repo (`sh tools/fetch-fonts.sh` regenerates them if
+   Google revs a font version). No third-party font requests are made at runtime.
+
+   unicode-range matches Google's latin subset — it stops the browser fetching
+   these for pages of non-latin text. All three families are SIL OFL 1.1;
+   see assets/fonts/OFL.txt. */
+
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('assets/fonts/syne-variable.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 300 500;
+  font-display: swap;
+  src: url('assets/fonts/dmsans-variable.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('assets/fonts/dmmono-300.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('assets/fonts/dmmono-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ---------- CSS VARIABLES ---------- */
 :root {
   --bg: #EFEFED;
@@ -403,6 +455,9 @@ ul {
   transform: translateY(-2px);
 }
 
+/* The container used to carry opacity: .3, which rendered the label at #ADADAC —
+   1.95:1, far under AA, and it is real visible text. The opacity now sits on the
+   decorative line only; the label gets an accessible colour instead. */
 .hero-scroll {
   position: absolute;
   bottom: 3rem;
@@ -411,13 +466,13 @@ ul {
   flex-direction: column;
   align-items: center;
   gap: var(--space-2xs);
-  opacity: 0.3;
 }
 
 .scroll-line {
   display: block;
   width: 1px;
   height: 48px;
+  opacity: 0.3;
   background: var(--text);
   animation: scrollDown 1.8s ease infinite;
 }
@@ -450,6 +505,7 @@ ul {
   letter-spacing: 0.18em;
   text-transform: uppercase;
   writing-mode: vertical-rl;
+  color: var(--text-muted);
 }
 
 /* ---------- ABOUT ---------- */
@@ -1180,27 +1236,26 @@ ul {
   animation: slideIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
+/* No opacity fade: the wrapper's overflow:hidden already conceals the text, and
+   fading --accent over --bg drops it under 4.5:1 mid-transition, which axe and
+   Lighthouse intermittently catch as a contrast failure. The clip does the work. */
 @keyframes slideOut {
   0% {
     transform: translateY(0);
-    opacity: 1;
   }
 
   100% {
     transform: translateY(-110%);
-    opacity: 0;
   }
 }
 
 @keyframes slideIn {
   0% {
     transform: translateY(110%);
-    opacity: 0;
   }
 
   100% {
     transform: translateY(0);
-    opacity: 1;
   }
 }
 
@@ -2090,7 +2145,10 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
    Logo in a circle with a status badge at the conventional bottom-right.
    The badge's separating ring is a padded wrapper filled with the page colour,
    not a border or box-shadow, so it survives FLAT MODE below. */
-.nav-avatar { position: relative; display: inline-block; width: 40px; height: 40px; flex-shrink: 0; }
+/* The wrapper is the positioning context and the hover target, so the pointer can
+   travel from the avatar into the tooltip to reach its link. */
+.nav-avatar-wrap { position: relative; display: inline-block; flex-shrink: 0; }
+.nav-avatar { position: relative; display: block; width: 40px; height: 40px; }
 .nav-avatar-img {
   width: 100%; height: 100%; display: block; padding: 7px;
   border-radius: 50%; background: var(--bg-card); object-fit: contain;
@@ -2206,10 +2264,22 @@ img, video { -webkit-user-drag: none; -webkit-user-select: none; user-select: no
   opacity: 0; visibility: hidden; transform: translateY(-4px);
   transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
 }
-@media (hover: hover) and (pointer: fine) {
-  .nav-avatar:hover .nav-tip,
-  .nav-avatar:focus-visible .nav-tip { opacity: 1; visibility: visible; transform: none; }
+/* Invisible bridge across the 10px gap — without it the tooltip hides the moment
+   the pointer leaves the avatar, making its link unclickable. */
+.nav-tip::before {
+  content: ''; position: absolute; left: 0; right: 0; top: -10px; height: 10px;
 }
+.nav-tip-link {
+  color: var(--white); text-decoration: underline; text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.nav-tip-link:hover { opacity: .8; }
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-avatar-wrap:hover .nav-tip { opacity: 1; visibility: visible; transform: none; }
+}
+/* Outside the hover query so keyboard users reach the link on any device. */
+.nav-avatar-wrap:focus-within .nav-tip { opacity: 1; visibility: visible; transform: none; }
 
 
 /* Attract loop — mirrors the :hover state so one card is spotlit at a time.
